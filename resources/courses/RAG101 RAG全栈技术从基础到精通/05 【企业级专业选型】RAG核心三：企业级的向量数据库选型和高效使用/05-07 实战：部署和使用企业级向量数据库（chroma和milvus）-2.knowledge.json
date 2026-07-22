@@ -1,0 +1,95 @@
+{
+  "section": "05-07",
+  "title": "实战：部署和使用企业级向量数据库（chroma和milvus）-2",
+  "course_id": "RAG101",
+  "total_cues": 265,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "创建Milvus向量集合",
+      "kp_summary": "讲解如何在Milvus中创建向量集合，包括声明字段（主键、文档、嵌入向量、元数据）和创建集合的步骤。",
+      "key_points": [
+        "声明字段：主键（字符串，长度100）、文档（字符串）、嵌入向量（浮点型，维度1024）、元数据（如verse）",
+        "使用Collection类创建集合，指定名称（如ragdb）和字段模式",
+        "设置数据强一致性标识"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 35,
+      "start_sec": 0,
+      "end_sec": 117
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "向Milvus插入数据",
+      "kp_summary": "演示如何手动将文档转换为嵌入向量并插入到Milvus向量集合中，与Chroma的自动嵌入形成对比。",
+      "key_points": [
+        "Milvus不会自动调用嵌入函数，需手动将文档转为嵌入向量",
+        "使用Hugging Face的GTE模型生成嵌入",
+        "按声明的字段组装数据（主键、文档、嵌入、元数据）",
+        "通过insert函数将数据插入集合"
+      ],
+      "cue_start_idx": 36,
+      "cue_end_idx": 67,
+      "start_sec": 122,
+      "end_sec": 239
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "为Milvus集合创建索引",
+      "kp_summary": "讲解如何为Milvus向量集合手动创建索引（以IVF倒排索引为例），包括声明索引类型、相似度量和聚类数量。",
+      "key_points": [
+        "Milvus支持多种索引，需手动创建",
+        "声明索引类型（IVF）、相似度量（L2欧式距离）、聚类数量（128）",
+        "通过CreateIndex在嵌入字段上创建索引"
+      ],
+      "cue_start_idx": 68,
+      "cue_end_idx": 87,
+      "start_sec": 245,
+      "end_sec": 319
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "在Milvus中进行向量检索",
+      "kp_summary": "演示如何在Milvus中加载集合、将查询转为嵌入向量并执行检索，包括设置检索参数和返回字段。",
+      "key_points": [
+        "通过集合名称获取并加载集合",
+        "将查询问题转为嵌入向量",
+        "使用search方法指定检索向量、字段、度量方式（L2）、返回数量（2）和返回字段（文档、元数据）",
+        "查看检索结果：相似度距离和文档信息"
+      ],
+      "cue_start_idx": 88,
+      "cue_end_idx": 121,
+      "start_sec": 323,
+      "end_sec": 437
+    },
+    {
+      "kp_index": 4,
+      "kp_title": "Milvus混合检索与总结",
+      "kp_summary": "演示Milvus支持通过元数据过滤进行混合检索，并总结Milvus的基本操作。",
+      "key_points": [
+        "在search函数中添加过滤表达式（如verse < 10）",
+        "混合检索返回符合条件的结果",
+        "总结Milvus向量数据库的基本操作"
+      ],
+      "cue_start_idx": 122,
+      "cue_end_idx": 131,
+      "start_sec": 441,
+      "end_sec": 478
+    },
+    {
+      "kp_index": 5,
+      "kp_title": "手动实现Flat和IVF索引",
+      "kp_summary": "通过手动实现全表扫描（Flat）和倒排索引（IVF）两种算法，加深对索引原理的理解。",
+      "key_points": [
+        "使用NumPy和KMeans构造随机数据（128维，1000个向量）",
+        "全表扫描：计算查询与所有向量的欧式距离并排序",
+        "IVF索引构建：用KMeans将数据分为100个簇，记录簇中心和归属",
+        "IVF检索：先找最近簇，再在簇内扫描；选择多个簇可提高精度"
+      ],
+      "cue_start_idx": 132,
+      "cue_end_idx": 264,
+      "start_sec": 482,
+      "end_sec": 882
+    }
+  ]
+}

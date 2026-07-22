@@ -1,0 +1,99 @@
+{
+  "section": "04-07",
+  "title": "实战：embedding模型加载和使用对比",
+  "course_id": "RAG101",
+  "total_cues": 356,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "课程介绍与三种调用方式概览",
+      "kp_summary": "介绍本集实战的两个主要内容：三种embedding模型调用方式（transformers、sentence transformers、langchain）和embedding基本操作（相似度计算、聚类）。",
+      "key_points": [
+        "介绍三种embedding模型调用方式",
+        "介绍embedding基本操作：相似度计算和聚类",
+        "使用pyInstall安装相应包"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 9,
+      "start_sec": 0,
+      "end_sec": 30
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "通过Transformers调用embedding模型",
+      "kp_summary": "详细讲解如何使用transformers库加载GTE embedding模型，包括导入类、加载分词器和模型、将文本转换为token、模型推理、输出embedding及相似度计算。",
+      "key_points": [
+        "导入transformers库的分词器和模型类",
+        "加载GTE模型的分词器和模型参数",
+        "将文本转换为token并处理padding",
+        "模型输出包含token级和句子级embedding",
+        "使用分类token作为句子embedding",
+        "计算embedding的余弦相似度"
+      ],
+      "cue_start_idx": 10,
+      "cue_end_idx": 173,
+      "start_sec": 32,
+      "end_sec": 685
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "通过Sentence-Transformers调用embedding模型",
+      "kp_summary": "讲解如何使用sentence-transformers库调用embedding模型，该库是对transformers的封装，使用更便捷，并验证结果与transformers一致。",
+      "key_points": [
+        "sentence-transformers是对transformers的再封装",
+        "直接传入模型路径初始化模型",
+        "使用encode方法生成embedding",
+        "embedding结果与transformers完全一致"
+      ],
+      "cue_start_idx": 174,
+      "cue_end_idx": 210,
+      "start_sec": 690,
+      "end_sec": 842
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "通过LangChain调用embedding模型",
+      "kp_summary": "讲解如何使用LangChain框架中的HuggingFaceEmbeddings类调用embedding模型，该方式是对sentence-transformers的再次封装，并验证结果一致。",
+      "key_points": [
+        "LangChain使用HuggingFaceEmbeddings类",
+        "通过embedDocuments和embedQuery生成embedding",
+        "输出为列表需转换为NumPy格式",
+        "相似度计算结果与前面一致"
+      ],
+      "cue_start_idx": 211,
+      "cue_end_idx": 260,
+      "start_sec": 844,
+      "end_sec": 1025
+    },
+    {
+      "kp_index": 4,
+      "kp_title": "Embedding相似度计算：余弦与欧式距离",
+      "kp_summary": "讲解embedding的两种基本相似度计算方法：余弦相似度和欧式距离，并通过手动实现与库函数对比验证结果。",
+      "key_points": [
+        "余弦相似度计算两个向量夹角的余弦值",
+        "欧式距离计算向量差值的平方和",
+        "手动实现余弦相似度与库函数结果一致",
+        "向量越相似，余弦相似度越大，欧式距离越小"
+      ],
+      "cue_start_idx": 261,
+      "cue_end_idx": 318,
+      "start_sec": 1028,
+      "end_sec": 1212
+    },
+    {
+      "kp_index": 5,
+      "kp_title": "Embedding聚类操作演示",
+      "kp_summary": "通过K-Means聚类算法对水果和动物文本的embedding进行聚类，验证语义相似的对象在向量空间中更接近。",
+      "key_points": [
+        "语义相似的对象在embedding空间中更接近",
+        "使用K-Means算法进行聚类",
+        "水果和动物被正确分为两类",
+        "验证了embedding的语义表示能力"
+      ],
+      "cue_start_idx": 319,
+      "cue_end_idx": 355,
+      "start_sec": 1216,
+      "end_sec": 1341
+    }
+  ]
+}

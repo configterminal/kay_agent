@@ -1,0 +1,23 @@
+{
+  "section": "13-01",
+  "title": "本章介绍",
+  "course_id": "RAG101",
+  "total_cues": 9,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "本章介绍：RAG模型微调",
+      "kp_summary": "本章介绍RAG流程中嵌入模型和大语言模型的微调方法，包括微调概述、高效微调方法LoRA、微调框架实战以及嵌入模型微调。",
+      "key_points": [
+        "RAG流程中嵌入模型和大语言模型需要微调以提升特定领域性能",
+        "本章将讲解大语言模型微调概述和高效微调方法LoRA",
+        "通过微调框架实战演示数据准备、调参和训练跟踪",
+        "最后讲解嵌入模型微调方法并做章节总结"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 8,
+      "start_sec": 0,
+      "end_sec": 83
+    }
+  ]
+}

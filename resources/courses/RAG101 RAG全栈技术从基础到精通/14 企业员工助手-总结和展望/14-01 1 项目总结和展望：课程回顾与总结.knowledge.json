@@ -1,0 +1,117 @@
+{
+  "section": "14-01",
+  "title": "1 项目总结和展望：课程回顾与总结",
+  "course_id": "RAG101",
+  "total_cues": 293,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "课程回顾总览",
+      "kp_summary": "讲师通过思维导图回顾整个课程，将内容分为五大模块：RAG三大组件、RAG评估、RAG家、RAG项目以及AI开发软技能。",
+      "key_points": [
+        "课程回顾总结分为五大模块",
+        "包括RAG三大组件、评估、家、项目和软技能",
+        "通过思维导图展示知识点"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 11,
+      "start_sec": 0,
+      "end_sec": 36
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "RAG三大组件之大语言模型",
+      "kp_summary": "详细回顾大语言模型的基础知识，包括文字接龙原理、Token与分词、Transformer架构、训练过程（预训练、指令微调、强化学习）、主流产品、选型标准以及使用方式。",
+      "key_points": [
+        "大语言模型是文字接龙，预测下一个Token",
+        "介绍了Token、分词算法和Transformer架构",
+        "训练过程包括预训练、指令微调和强化学习",
+        "选型需考虑模型大小、能力评测、推理成本、部署设备和企业数据安全",
+        "三种使用方式：Transformers库、Ollama部署、第三方API"
+      ],
+      "cue_start_idx": 12,
+      "cue_end_idx": 77,
+      "start_sec": 39,
+      "end_sec": 223
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "RAG三大组件之知识库：Embedding模型",
+      "kp_summary": "回顾知识库中的Embedding模型，包括其技术架构（BERT）、训练方法、评测基准MTEB、主流中文模型（GTE和BGE）、选型标准以及调用方式。",
+      "key_points": [
+        "Embedding模型基于Transformer的Encoder架构（BERT）",
+        "训练通过完形填空和预测下一句",
+        "MTEB基准测试集用于评估模型表现",
+        "主流中文模型GTE和BGE添加了相似性度量学习和对比学习",
+        "选型需结合MTEB属性和实际项目迭代验证",
+        "三种调用方式和两种应用：相似度计算和聚类"
+      ],
+      "cue_start_idx": 78,
+      "cue_end_idx": 128,
+      "start_sec": 226,
+      "end_sec": 371
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "RAG三大组件之知识库：向量数据库",
+      "kp_summary": "回顾向量数据库（Chroma和Milvus）的特点、索引技术（Flat、IVF、乘积量化、HNSW）以及实际使用方法。",
+      "key_points": [
+        "Chroma易于使用，适合小规模；Milvus支持云原生和分布式扩展",
+        "四种索引技术：Flat、IVF、乘积量化、HNSW",
+        "IVF和HNSW基于划分的索引技术",
+        "根据检索精度和向量集合大小选择索引",
+        "实际使用包括连接、元数据设置、构建集合、构建索引和查询"
+      ],
+      "cue_start_idx": 129,
+      "cue_end_idx": 168,
+      "start_sec": 374,
+      "end_sec": 488
+    },
+    {
+      "kp_index": 4,
+      "kp_title": "RAG三大组件之知识库：文件解析与分块",
+      "kp_summary": "回顾文件解析和分块技术，包括数据质量原则、不同文件格式的解析方法、DeepDoc模块以及三种分块技术。",
+      "key_points": [
+        "强调Garbage in Garbage out原则，重视原始数据质量",
+        "解析多种文件格式：PDF、HTML、TXT、Markdown、JSON、XML、Office套件",
+        "DeepDoc基于视觉解析复杂PDF文档",
+        "三种分块技术：递归文本分块、基于Embedding的语义分块、基于模型的分块"
+      ],
+      "cue_start_idx": 169,
+      "cue_end_idx": 197,
+      "start_sec": 492,
+      "end_sec": 587
+    },
+    {
+      "kp_index": 5,
+      "kp_title": "RAG三大组件之知识库：图数据库",
+      "kp_summary": "回顾图数据库的知识，包括三元组结构、产品（Nebula Graph和Neo4j）、Cypher语句以及实战中的Py2Neo使用。",
+      "key_points": [
+        "图数据库基于三元组（主体、谓语、客体）组织知识",
+        "数据具有强关联性",
+        "介绍了Nebula Graph和Neo4j两种产品",
+        "详细讲解Neo4j的安装和Cypher语句",
+        "实战中使用Py2Neo访问Neo4j"
+      ],
+      "cue_start_idx": 198,
+      "cue_end_idx": 218,
+      "start_sec": 590,
+      "end_sec": 659
+    },
+    {
+      "kp_index": 6,
+      "kp_title": "RAG三大组件之检索增强技术",
+      "kp_summary": "回顾检索组件中的多种增强技术，包括查询增强、多索引增强、检索后增强以及模块化检索方法。",
+      "key_points": [
+        "查询增强方法：Query2DOC、HYDE、子问题查询、查询改写、Take a step back",
+        "多索引增强：复制索引、总结索引、假设问题索引",
+        "检索后增强：ReRank重排和混合检索",
+        "模块化检索：迭代检索生成和Self-RAG"
+      ],
+      "cue_start_idx": 219,
+      "cue_end_idx": 292,
+      "start_sec": 663,
+      "end_sec": 903
+    }
+  ]
+}

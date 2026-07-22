@@ -1,0 +1,83 @@
+{
+  "section": "09-05",
+  "title": "多索引增强：从不同维度构建索引，强化相关内容",
+  "course_id": "RAG101",
+  "total_cues": 77,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "多索引檢索概述",
+      "kp_summary": "介紹多索引檢索的概念、動機和有效性，說明其屬於檢索前增強，通過對同一文檔提供不同類型的embedding索引來提高檢索性能。",
+      "key_points": [
+        "多索引檢索從知識庫索引角度優化檢索性能",
+        "通過對同一文檔提供不同類型embedding索引",
+        "能從不同角度匹配用戶問題，提高檢索性能",
+        "屬於檢索前的增強處理"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 9,
+      "start_sec": 0,
+      "end_sec": 76
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "複子文檔（大小文檔）索引",
+      "kp_summary": "講解複子文檔索引的思路和過程：將大文檔分塊拆成小塊，用小塊的embedding進行檢索匹配，返回對應的大文檔內容。",
+      "key_points": [
+        "從文檔不同大小粒度建立embedding索引",
+        "大文檔分塊拆成小塊，小塊做embedding",
+        "檢索匹配小塊embedding，返回大塊文檔",
+        "短文本embedding語意提取效果更好"
+      ],
+      "cue_start_idx": 10,
+      "cue_end_idx": 27,
+      "start_sec": 87,
+      "end_sec": 240
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "總結索引",
+      "kp_summary": "講解總結索引的思路：對大文檔分塊生成摘要，用摘要的embedding進行檢索匹配，返回對應的大文檔內容，適合抽象或經驗性查詢。",
+      "key_points": [
+        "對大文檔分塊生成總結摘要",
+        "用摘要embedding進行相似度匹配",
+        "返回摘要對應的大文檔內容",
+        "適合抽象或經驗性問題的檢索"
+      ],
+      "cue_start_idx": 28,
+      "cue_end_idx": 42,
+      "start_sec": 249,
+      "end_sec": 346
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "文檔假設問題索引",
+      "kp_summary": "講解文檔假設問題索引的思路：對大文檔生成假設性問題，用問題embedding進行檢索匹配，返回對應的大文檔內容，實現問題對問題的匹配。",
+      "key_points": [
+        "對大文檔生成假設性問題",
+        "用假設性問題embedding進行匹配",
+        "返回問題對應的大文檔內容",
+        "問題對問題匹配增加檢索性能"
+      ],
+      "cue_start_idx": 43,
+      "cue_end_idx": 67,
+      "start_sec": 353,
+      "end_sec": 493
+    },
+    {
+      "kp_index": 4,
+      "kp_title": "三種方法總結",
+      "kp_summary": "總結三種多索引檢索方法的共同思路：檢索時不直接用原始文檔索引，而是通過拆分、總結或生成假設問題建立替代索引，提高對不同問題的適應性和檢索相關性。",
+      "key_points": [
+        "三種方法基本思路一致",
+        "用替代索引（小塊、摘要、假設問題）匹配問題",
+        "增加對問題的泛化性",
+        "提高上下文相關性和生成答案質量"
+      ],
+      "cue_start_idx": 68,
+      "cue_end_idx": 76,
+      "start_sec": 502,
+      "end_sec": 552
+    }
+  ]
+}

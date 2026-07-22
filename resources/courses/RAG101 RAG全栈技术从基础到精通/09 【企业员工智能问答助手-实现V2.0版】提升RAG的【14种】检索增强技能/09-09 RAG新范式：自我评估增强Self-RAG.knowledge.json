@@ -1,0 +1,55 @@
+{
+  "section": "09-09",
+  "title": "RAG新范式：自我评估增强Self-RAG",
+  "course_id": "RAG101",
+  "total_cues": 205,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "Self-RAG 概念引入与动机",
+      "kp_summary": "回顾传统RAG流程，指出评估在生成之后进行，引出Self-RAG的核心思想：将评估嵌入到RAG流程的各个步骤中，动态选择策略以提升准确性。",
+      "key_points": [
+        "回顾RAG流程：问题→检索→生成→评估→迭代优化",
+        "传统评估在生成之后，未直接参与生成过程",
+        "Self-RAG将判别步骤嵌入RAG流程中",
+        "通过判别结果动态选择策略，自动迭代生成最佳答案"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 61,
+      "start_sec": 0,
+      "end_sec": 187
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "Self-RAG 的判别步骤详解",
+      "kp_summary": "详细讲解Self-RAG中可加入判别的两个主要步骤：检索阶段的文档相关性判别，以及生成阶段的答案上下文支持度和问题可用性判别，并说明如何根据判别结果采取不同策略。",
+      "key_points": [
+        "检索阶段：判断检索文档与问题的相关性，只取相关文档",
+        "检索失效时可采用查询增强策略（如改写、假设文档）",
+        "生成阶段：判断答案是否符合上下文（有依据）",
+        "生成阶段：判断答案是否能回答原始问题",
+        "不符合时：可多次生成、告知无法回答或进入下一轮迭代"
+      ],
+      "cue_start_idx": 62,
+      "cue_end_idx": 116,
+      "start_sec": 190,
+      "end_sec": 353
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "Self-RAG 流程图示与实现方式",
+      "kp_summary": "通过流程图展示Self-RAG中三个判别环节（文档相关性、答案支持度、答案可用性）在RAG流程中的位置，并介绍使用Lang-Graph框架实现Self-RAG的方法。",
+      "key_points": [
+        "三个判别环节：文档相关性、答案上下文支持度、答案可用性",
+        "判别结果决定后续步骤：通过/重试/结束",
+        "判别均利用大语言模型能力，通过提示词实现",
+        "可通过If-Else或Lang-Graph（有向图）实现流程控制",
+        "实战中将使用Lang-Graph构建Self-RAG流程"
+      ],
+      "cue_start_idx": 117,
+      "cue_end_idx": 204,
+      "start_sec": 356,
+      "end_sec": 643
+    }
+  ]
+}

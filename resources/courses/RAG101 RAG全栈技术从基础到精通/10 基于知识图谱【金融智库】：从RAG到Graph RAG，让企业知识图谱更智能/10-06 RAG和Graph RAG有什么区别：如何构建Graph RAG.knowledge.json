@@ -1,0 +1,68 @@
+{
+  "section": "10-06",
+  "title": "RAG和Graph RAG有什么区别：如何构建Graph RAG",
+  "course_id": "RAG101",
+  "total_cues": 348,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "普通RAG与Graph RAG对比",
+      "kp_summary": "从知识表达、检索机制、上下文理解和推理能力四个维度对比了普通RAG和基于知识图谱的Graph RAG的区别。",
+      "key_points": [
+        "普通RAG采用平面文档结构表示知识，Graph RAG采用图结构表示知识",
+        "普通RAG依赖向量相似度搜索，Graph RAG采用图遍历算法",
+        "Graph RAG能更好理解复杂多步骤关系和进行深入推理",
+        "Graph RAG更适合多跳关系、语义关联、知识推理和聚合统计等查询场景"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 99,
+      "start_sec": 0,
+      "end_sec": 374
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "Graph RAG适用场景举例",
+      "kp_summary": "通过手机知识图谱的具体例子，对比普通RAG和Graph RAG在多跳关系、语义关联和高层次总结性问题上的能力差异。",
+      "key_points": [
+        "Graph RAG能通过节点关系回答复杂查询，如超感光摄影手机",
+        "普通RAG依赖文本块匹配，难以处理隐含关系",
+        "Graph RAG能通过层级关系收集数据，回答趋势总结类问题",
+        "Graph RAG利用层级关系推理，擅长强关联和多跳关系问题"
+      ],
+      "cue_start_idx": 100,
+      "cue_end_idx": 195,
+      "start_sec": 377,
+      "end_sec": 659
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "构建Graph RAG的三个步骤",
+      "kp_summary": "介绍了构建Graph RAG的三个核心步骤：提取问题关键词、在图数据库中检索实体和关系、整合上下文信息送入大语言模型生成答案。",
+      "key_points": [
+        "第一步：利用大语言模型从用户问题中提取关键词",
+        "第二步：将关键词转换为图数据库查询语言，检索实体和关系",
+        "第三步：整合检索到的实体、关系和属性信息作为上下文",
+        "将整合后的上下文送入大语言模型生成最终答案"
+      ],
+      "cue_start_idx": 196,
+      "cue_end_idx": 289,
+      "start_sec": 662,
+      "end_sec": 918
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "从文本提取三元组构建图数据",
+      "kp_summary": "讲解了如何利用大语言模型从非结构化文本中自动提取知识三元组（主体-谓语-客体），以构建图数据。",
+      "key_points": [
+        "通过设计提示词引导大语言模型从文本中提取三元组",
+        "提示词包括任务说明和示例，如提取队友关系或公司创立信息",
+        "从一段文本中可提取多个三元组，如公司、创始人、时间",
+        "如何高效准确提取三元组是Graph RAG的重要研究方向"
+      ],
+      "cue_start_idx": 290,
+      "cue_end_idx": 347,
+      "start_sec": 922,
+      "end_sec": 1080
+    }
+  ]
+}

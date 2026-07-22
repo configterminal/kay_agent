@@ -1,0 +1,85 @@
+{
+  "section": "11-02",
+  "title": "大模型的手脚：AI智能体Agent",
+  "course_id": "RAG101",
+  "total_cues": 273,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "什么是AI Agent",
+      "kp_summary": "通过北京旅游的例子，直观说明AI Agent是以大语言模型为核心，自动完成用户设定目标或任务的智能体。",
+      "key_points": [
+        "Agent常被翻译为智能体或代理，代替人类做事",
+        "以LLM为核心，自动完成任务",
+        "通过北京旅游的例子展示人类思路与Agent思路的对比"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 53,
+      "start_sec": 0,
+      "end_sec": 162
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "Agent的四大功能模块",
+      "kp_summary": "介绍Agent总览图中的四大功能：规划、知识记忆、工具选择、任务执行，并补充另一种强调环境感知的设计逻辑。",
+      "key_points": [
+        "规划：任务分解，使用思维链等技术",
+        "知识记忆：长期记忆与短期记忆",
+        "工具选择：根据任务选择合适的工具",
+        "任务执行：使用工具自动完成任务",
+        "另一种框架强调环境感知与多模态输入"
+      ],
+      "cue_start_idx": 54,
+      "cue_end_idx": 120,
+      "start_sec": 166,
+      "end_sec": 349
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "Agent各步骤的提示词设计",
+      "kp_summary": "详细讲解Agent中任务分解与规划、工具使用、记忆模块三个核心步骤的提示词设计方法。",
+      "key_points": [
+        "Agent通过定制prompt实现，不修改LLM参数",
+        "任务分解使用COT思维链，要求JSON格式输出",
+        "工具使用需详细描述功能和输入参数",
+        "短期记忆通过提示词中的信息实现",
+        "长期记忆通过外挂知识库（RAG）实现"
+      ],
+      "cue_start_idx": 121,
+      "cue_end_idx": 200,
+      "start_sec": 352,
+      "end_sec": 631
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "著名Agent项目介绍",
+      "kp_summary": "列举了通用场景和特定领域的著名Agent项目，如AutoGPT、HuggingGPT、MetaGPT等。",
+      "key_points": [
+        "通用场景：AutoGPT、BabyAGI、微软AutoGen",
+        "特定领域：HuggingGPT调运AI模型",
+        "MetaGPT和ChatDEV模拟软件开发流程",
+        "斯坦福小镇模拟人类社交社区"
+      ],
+      "cue_start_idx": 201,
+      "cue_end_idx": 238,
+      "start_sec": 637,
+      "end_sec": 759
+    },
+    {
+      "kp_index": 4,
+      "kp_title": "大语言模型交互方式总结",
+      "kp_summary": "总结LLM的四种交互方式：问答、RAG、Agent、多Agent，并指出Agent是通往AGI的有效途径。",
+      "key_points": [
+        "问答系统：直接与LLM对话",
+        "RAG：利用外部知识库增强问答",
+        "Agent：模拟人类规划并使用工具自动完成任务",
+        "多Agent：多个Agent协作完成任务",
+        "Agent增强自主性，但对LLM能力要求更高"
+      ],
+      "cue_start_idx": 239,
+      "cue_end_idx": 272,
+      "start_sec": 761,
+      "end_sec": 862
+    }
+  ]
+}

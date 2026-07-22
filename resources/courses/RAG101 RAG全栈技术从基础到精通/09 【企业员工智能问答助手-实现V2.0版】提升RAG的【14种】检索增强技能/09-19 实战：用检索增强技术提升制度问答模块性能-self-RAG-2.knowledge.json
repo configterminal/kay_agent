@@ -1,0 +1,88 @@
+{
+  "section": "09-19",
+  "title": "实战：用检索增强技术提升制度问答模块性能-self-RAG-2",
+  "course_id": "RAG101",
+  "total_cues": 291,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "评估文档相关性节点设计",
+      "kp_summary": "讲解评估文档相关性节点的输入、遍历文档、调用评估Chain、输出Yes/No、以及根据结果进行条件判断和输出。",
+      "key_points": [
+        "节点输入为问题和文档",
+        "遍历检索到的每个文档，用评估Chain判断相关性",
+        "输出Yes（相关）或No（不相关）",
+        "相关文档放入新列表，不相关则标记需要增强",
+        "限制Query2DLC增强操作最多一次",
+        "输出相关文档拼接的Context和增强判断结果"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 43,
+      "start_sec": 0,
+      "end_sec": 156
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "答案相关度节点设计",
+      "kp_summary": "讲解答案相关度节点的设计，包括支持度评估和有用性评估两个子任务，以及根据结果进行条件分支。",
+      "key_points": [
+        "节点输入包括问题、文档、生成的答案和计数变量",
+        "先评估支持度：答案是否在Context中有事实支持",
+        "支持度Yes则继续评估有用性：答案能否解决原始问题",
+        "支持度No输出Not Support",
+        "有用性No且查询重写次数小于1则执行查询重写",
+        "节点输出有用、没用、End或不支持等结果"
+      ],
+      "cue_start_idx": 44,
+      "cue_end_idx": 82,
+      "start_sec": 160,
+      "end_sec": 328
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "构建Self-RAG流程图",
+      "kp_summary": "讲解如何将各个节点通过边连接成完整的Self-RAG流程图，包括条件边的创建和路径选择。",
+      "key_points": [
+        "流程包含检索、查询增强、生成、两个判别节点",
+        "通过StateGraph类创建工作流",
+        "添加所有节点并设置起始节点",
+        "为文档判别节点创建条件边，根据结果选择generate或query2DLC路径",
+        "为生成节点创建条件边，根据结果选择end或查询重写路径",
+        "查询重写节点连接到检索节点形成循环"
+      ],
+      "cue_start_idx": 83,
+      "cue_end_idx": 213,
+      "start_sec": 332,
+      "end_sec": 810
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "测试Self-RAG流程",
+      "kp_summary": "通过输入两个问题测试Self-RAG流程的执行过程，展示节点执行情况和最终答案输出。",
+      "key_points": [
+        "输入问题并执行整个流程",
+        "第一个问题：经过检索、文档判断、Query2DLC增强、再次检索、生成、答案判断，最终输出有用答案",
+        "第二个问题：经过检索、文档判断、Query2DLC增强、再次检索（全部不相关但次数已达上限）、生成、答案判断，最终输出有用答案",
+        "展示了流程中多次检索和判断的细节"
+      ],
+      "cue_start_idx": 214,
+      "cue_end_idx": 283,
+      "start_sec": 812,
+      "end_sec": 1035
+    },
+    {
+      "kp_index": 4,
+      "kp_title": "Self-RAG总结与提示词调整",
+      "kp_summary": "总结Self-RAG流程的实现过程，并强调在应用到其他领域时需要调整三个判别器的提示词以获得更好结果。",
+      "key_points": [
+        "Self-RAG整个流程的实现完成",
+        "应用到其他领域需调整判别器提示词",
+        "提示词是引导大模型生成答案的重要手段"
+      ],
+      "cue_start_idx": 284,
+      "cue_end_idx": 290,
+      "start_sec": 1039,
+      "end_sec": 1064
+    }
+  ]
+}

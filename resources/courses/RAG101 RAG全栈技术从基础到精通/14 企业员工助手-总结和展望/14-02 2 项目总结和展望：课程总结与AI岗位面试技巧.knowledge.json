@@ -1,0 +1,68 @@
+{
+  "section": "14-02",
+  "title": "2 项目总结和展望：课程总结与AI岗位面试技巧",
+  "course_id": "RAG101",
+  "total_cues": 243,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "RAG评估的重要性与标准",
+      "kp_summary": "讲解RAG评估是构建RAG系统最重要的环节，并介绍了三大评估标准：忠实性、答案相关性和上下文相关性。",
+      "key_points": [
+        "RAG评估决定系统好坏，为优化提供方向",
+        "三大标准：忠实性、答案相关性、上下文相关性",
+        "使用Ragas框架进行自动化评估",
+        "评估指标包括忠实性、答案相关性、上下文召回和上下文精度"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 33,
+      "start_sec": 0,
+      "end_sec": 163
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "RAG的三个扩展技术",
+      "kp_summary": "介绍了RAG的三个扩展方向：Graph RAG、Agent技术（React思维）和模型微调（LoRA）。",
+      "key_points": [
+        "Graph RAG利用图数据库处理多跳关系查询",
+        "Graph RAG构建步骤：提取关键词、检索关联实体、生成答案",
+        "React思维结合推理与行动，实现RAG路由",
+        "模型微调包括大模型和Embedding模型，推荐LoRA方法"
+      ],
+      "cue_start_idx": 34,
+      "cue_end_idx": 106,
+      "start_sec": 167,
+      "end_sec": 431
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "RAG实战项目与课程总结",
+      "kp_summary": "总结RAG实战项目（企业员工助手）和课程知识点，并给出未来学习扩展方向。",
+      "key_points": [
+        "实战项目：企业员工助手，含制度问答和金融智库模块",
+        "通过Gradio整合模块和RAG Router",
+        "课程穿插AI应用开发软技能",
+        "扩展方向：学习开源项目、跟踪前沿技术、多模态RAG"
+      ],
+      "cue_start_idx": 107,
+      "cue_end_idx": 141,
+      "start_sec": 435,
+      "end_sec": 620
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "AI岗位面试技巧分享",
+      "kp_summary": "分享AI岗位面试的准备方法、项目展示技巧和面试官看重的核心能力。",
+      "key_points": [
+        "面试准备：结构化整理知识点、了解岗位匹配度、精简自我介绍",
+        "项目展示：使用STAR法则（背景、任务、行动、结果）",
+        "结果量化：用数据和具体例子说明成就",
+        "面试官看重：业务能力（含编程题）、沟通表达能力和学习能力"
+      ],
+      "cue_start_idx": 142,
+      "cue_end_idx": 242,
+      "start_sec": 624,
+      "end_sec": 956
+    }
+  ]
+}

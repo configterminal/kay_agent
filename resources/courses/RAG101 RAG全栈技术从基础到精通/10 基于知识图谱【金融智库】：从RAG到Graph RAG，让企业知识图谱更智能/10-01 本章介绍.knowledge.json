@@ -1,0 +1,25 @@
+{
+  "section": "10-01",
+  "title": "本章介绍",
+  "course_id": "RAG101",
+  "total_cues": 77,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "本章介绍：知识图谱与Graph RAG",
+      "kp_summary": "介绍本章将学习如何将知识图谱嵌入RAG流程，提升系统性能，并概述了知识图谱的特点、图数据库、Graph RAG对比及实战案例等内容。",
+      "key_points": [
+        "知识图谱以三元组形式描述实体、属性和关系",
+        "将知识图谱引入RAG可提升系统性能",
+        "本章将介绍知识图谱数据特点、图数据库（NEO4J、Nebula Graph）",
+        "动手构建金融智库知识图谱",
+        "对比普通RAG与Graph RAG的区别",
+        "通过案例构建金融智库Graph RAG，并做总结与展望"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 76,
+      "start_sec": 0,
+      "end_sec": 168
+    }
+  ]
+}

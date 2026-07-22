@@ -1,0 +1,53 @@
+{
+  "section": "09-03",
+  "title": "检索的两大形态：稀疏 vs 稠密",
+  "course_id": "RAG101",
+  "total_cues": 159,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "稀疏检索概述与TFIDF算法",
+      "kp_summary": "介绍稀疏检索的概念，并详细讲解TFIDF算法的两个组成部分（TF和IDF）及其计算方式与特点。",
+      "key_points": [
+        "稀疏检索通过关键词匹配和词频统计来评估文档相关性",
+        "TFIDF由TF（词频）和IDF（逆文档频率）两部分组成",
+        "TF衡量词在文档中的重要性，IDF衡量词的普遍区分能力",
+        "TFIDF计算简单，但不考虑词语顺序和上下文信息"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 83,
+      "start_sec": 0,
+      "end_sec": 297
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "BM25算法与稀疏检索缺点",
+      "kp_summary": "介绍BM25算法作为TFIDF的变种，并通过例子说明稀疏检索因忽略词序和上下文导致的语义理解问题。",
+      "key_points": [
+        "BM25是TFIDF的变种，统计方式更复杂，有经验参数设置",
+        "BM25已有成熟开源实现，可直接使用",
+        "稀疏检索只考虑词频，不关注词语顺序和上下文",
+        "通过'男朋友送的礼物'和'送男朋友的礼物'等例子说明语义差异"
+      ],
+      "cue_start_idx": 84,
+      "cue_end_idx": 128,
+      "start_sec": 304,
+      "end_sec": 463
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "稠密检索：基于Embedding的方法",
+      "kp_summary": "介绍稠密检索的概念，即通过Embedding将文本转换为包含语义信息的向量，并说明其与稀疏检索的对比及融合趋势。",
+      "key_points": [
+        "稠密检索使用Embedding向量，包含词语顺序和上下文语义",
+        "常见Embedding算法如GTE和BGE基于BERT架构",
+        "Embedding将稀疏文本压缩为固定长度向量，存在信息丢失风险",
+        "稀疏与稠密检索各有优缺点，常被融合使用"
+      ],
+      "cue_start_idx": 129,
+      "cue_end_idx": 158,
+      "start_sec": 468,
+      "end_sec": 581
+    }
+  ]
+}

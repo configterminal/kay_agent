@@ -1,0 +1,56 @@
+{
+  "section": "09-16",
+  "title": "实战：用检索增强技术提升制度问答模块性能-rerank重排",
+  "course_id": "RAG101",
+  "total_cues": 88,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "Rerank重排模型初始化",
+      "kp_summary": "介绍Rerank重排的概念，并演示使用BGE Rerank模型进行初始化的过程，包括设置GPU、导入模型和分词器类、加载模型并放到GPU上。",
+      "key_points": [
+        "Rerank是对检索结果按相关性重新排序",
+        "使用BGE Rerank开源模型",
+        "设置GPU卡号并导入Transformer库",
+        "初始化模型和分词器",
+        "将模型放到GPU上"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 14,
+      "start_sec": 0,
+      "end_sec": 84
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "构造配对数据并推理",
+      "kp_summary": "演示如何构造Rerank模型所需的query-文档配对数据，并进行模型推理，获取每个配对的排序分数。",
+      "key_points": [
+        "使用BM25检索结果作为待重排文档",
+        "构造query与文档的配对列表",
+        "对配对数据进行分词和token化",
+        "将数据输入模型获取逻辑分数",
+        "输出分数并观察相关性判断"
+      ],
+      "cue_start_idx": 15,
+      "cue_end_idx": 47,
+      "start_sec": 90,
+      "end_sec": 250
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "排序并应用重排结果",
+      "kp_summary": "演示如何根据Rerank模型输出的分数进行排序，选择最相关的文档，并将其放入RAG流程中让大语言模型生成更准确的答案。",
+      "key_points": [
+        "将分数从CUDA tensor转为CPU并排序",
+        "获取排序后的文档索引",
+        "选择最相关的文档",
+        "将重排后文档放入RAG pipeline",
+        "大模型生成包含更多细节的答案"
+      ],
+      "cue_start_idx": 48,
+      "cue_end_idx": 87,
+      "start_sec": 255,
+      "end_sec": 388
+    }
+  ]
+}

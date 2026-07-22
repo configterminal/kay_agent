@@ -1,0 +1,61 @@
+{
+  "industry": "IT",
+  "roles": [
+    {
+      "role_id": "rag_ai_engineer",
+      "title": "RAG / AI 应用工程师（站内课程方向）",
+      "industry": "IT",
+      "required_skills": [
+        "RAG",
+        "Embedding",
+        "向量数据库",
+        "检索增强",
+        "Agent",
+        "知识图谱"
+      ],
+      "preferred_skills": [
+        "Graph RAG",
+        "Prompt Engineering",
+        "企业问答实战"
+      ],
+      "salary_range": "站内能力模型，非市场薪资",
+      "description": "对标站内课程 RAG101：从 Embedding、向量检索到 Graph RAG / Agent 的 AI 应用落地能力。匹配结果仅反映课程覆盖与学习进度，非实时招聘市场要求。"
+    },
+    {
+      "role_id": "career_transition_engineer",
+      "title": "程序员职业跃迁（站内课程方向）",
+      "industry": "IT",
+      "required_skills": [
+        "简历优化",
+        "技术面试",
+        "跳槽策略",
+        "谈薪晋升",
+        "职业规划"
+      ],
+      "preferred_skills": [
+        "择业副业",
+        "在职成长"
+      ],
+      "salary_range": "站内能力模型，非市场薪资",
+      "description": "对标站内课程 CAREER201：面向在职程序员的求职与职业发展软技能。匹配结果仅反映课程覆盖与学习进度，非实时招聘市场要求。"
+    }
+  ],
+  "skill_mappings": [
+    {"skill_name": "RAG", "role_id": "rag_ai_engineer", "is_required": true, "module_id": "RAG101", "coverage_status": "covered"},
+    {"skill_name": "Embedding", "role_id": "rag_ai_engineer", "is_required": true, "module_id": "RAG101", "coverage_status": "covered"},
+    {"skill_name": "向量数据库", "role_id": "rag_ai_engineer", "is_required": true, "module_id": "RAG101", "coverage_status": "covered"},
+    {"skill_name": "检索增强", "role_id": "rag_ai_engineer", "is_required": true, "module_id": "RAG101", "coverage_status": "covered"},
+    {"skill_name": "Agent", "role_id": "rag_ai_engineer", "is_required": true, "module_id": "RAG101", "coverage_status": "covered"},
+    {"skill_name": "知识图谱", "role_id": "rag_ai_engineer", "is_required": true, "module_id": "RAG101", "coverage_status": "covered"},
+    {"skill_name": "Graph RAG", "role_id": "rag_ai_engineer", "is_required": false, "module_id": "RAG101", "coverage_status": "covered"},
+    {"skill_name": "Prompt Engineering", "role_id": "rag_ai_engineer", "is_required": false, "module_id": "RAG101", "coverage_status": "covered"},
+    {"skill_name": "企业问答实战", "role_id": "rag_ai_engineer", "is_required": false, "module_id": "RAG101", "coverage_status": "covered"},
+    {"skill_name": "简历优化", "role_id": "career_transition_engineer", "is_required": true, "module_id": "CAREER201", "coverage_status": "covered"},
+    {"skill_name": "技术面试", "role_id": "career_transition_engineer", "is_required": true, "module_id": "CAREER201", "coverage_status": "covered"},
+    {"skill_name": "跳槽策略", "role_id": "career_transition_engineer", "is_required": true, "module_id": "CAREER201", "coverage_status": "covered"},
+    {"skill_name": "谈薪晋升", "role_id": "career_transition_engineer", "is_required": true, "module_id": "CAREER201", "coverage_status": "covered"},
+    {"skill_name": "职业规划", "role_id": "career_transition_engineer", "is_required": true, "module_id": "CAREER201", "coverage_status": "covered"},
+    {"skill_name": "择业副业", "role_id": "career_transition_engineer", "is_required": false, "module_id": "CAREER201", "coverage_status": "covered"},
+    {"skill_name": "在职成长", "role_id": "career_transition_engineer", "is_required": false, "module_id": "CAREER201", "coverage_status": "covered"}
+  ]
+}

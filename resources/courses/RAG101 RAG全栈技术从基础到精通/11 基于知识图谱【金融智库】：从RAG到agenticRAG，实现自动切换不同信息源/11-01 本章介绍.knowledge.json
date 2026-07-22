@@ -1,0 +1,23 @@
+{
+  "section": "11-01",
+  "title": "本章介绍",
+  "course_id": "RAG101",
+  "total_cues": 18,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "本章介绍：RAG与Agent结合",
+      "kp_summary": "本章将介绍如何在RAG流程中引入Agent技术，包括Agent简介、React框架讲解，以及基于Agent实现多文档RAG路由。",
+      "key_points": [
+        "Agent将大语言模型作为核心计算引擎，实现感知、规划、行动",
+        "RAG与Agent结合能自动完成复杂任务",
+        "本章先介绍Agent，再详细讲解React框架",
+        "最后基于Agent实现多文档RAG路由，自动决策检索文档类型"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 17,
+      "start_sec": 0,
+      "end_sec": 77
+    }
+  ]
+}

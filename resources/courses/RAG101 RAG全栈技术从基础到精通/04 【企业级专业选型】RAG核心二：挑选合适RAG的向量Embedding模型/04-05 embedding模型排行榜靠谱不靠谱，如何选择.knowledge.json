@@ -1,0 +1,54 @@
+{
+  "section": "04-05",
+  "title": "embedding模型排行榜靠谱不靠谱，如何选择",
+  "course_id": "RAG101",
+  "total_cues": 79,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "从MTEB榜单开始筛选Embedding模型",
+      "kp_summary": "介绍如何利用MTEB基准测试榜单作为起点，为RAG应用挑选合适的Embedding模型，并说明榜单提供的有用信息。",
+      "key_points": [
+        "MTEB榜单是挑选Embedding模型的好起点",
+        "榜单提供模型大小、最大token数等属性",
+        "RAG应用应关注检索任务下的模型"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 10,
+      "start_sec": 0,
+      "end_sec": 28
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "关注MTEB榜单的六个关键维度",
+      "kp_summary": "详细讲解从MTEB榜单挑选Embedding模型时应关注的六个重要维度：任务类型、语言支持、测试得分、模型大小、输出维度、最大token数。",
+      "key_points": [
+        "优先选择检索任务下的模型",
+        "中文语境需选择多语言支持模型",
+        "参考测试得分和发布机构信誉",
+        "模型大小影响部署资源和性能",
+        "输出维度需在语义捕捉和性能间折中",
+        "最大token数影响文本分割策略"
+      ],
+      "cue_start_idx": 11,
+      "cue_end_idx": 56,
+      "start_sec": 34,
+      "end_sec": 170
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "MTEB榜单的局限性及迭代筛选方法",
+      "kp_summary": "指出MTEB榜单并非完全可靠，并介绍通过初步筛选、构建测试数据集、迭代测试来最终确定合适Embedding模型的方法。",
+      "key_points": [
+        "MTEB评测集公开，可能存在水分",
+        "结合发布机构和多个维度初步筛选",
+        "将初选模型作为基线进行测试",
+        "通过迭代测试动态调整模型选择"
+      ],
+      "cue_start_idx": 57,
+      "cue_end_idx": 78,
+      "start_sec": 172,
+      "end_sec": 246
+    }
+  ]
+}

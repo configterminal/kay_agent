@@ -1,0 +1,104 @@
+{
+  "section": "09-12",
+  "title": "实战：用检索增强技术提升制度问答模块性能-查询增强-2",
+  "course_id": "RAG101",
+  "total_cues": 551,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "改进版RAG流程概述",
+      "kp_summary": "介绍改进版RAG流程中新增的参数（context query、提示词模板、温度参数）以及文档检索的调整，并说明如何使用LangChain提示词模板和流式/非流式输出。",
+      "key_points": [
+        "新增context query参数用于传入查询增强内容",
+        "提示词模板和温度参数作为参数传入",
+        "文档检索支持embedding、直接文档、文本三种类型",
+        "使用LangChain提示词模板拼接question和context",
+        "区分流式输出与非流式输出，非流式添加温度参数"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 47,
+      "start_sec": 0,
+      "end_sec": 128
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "Query2Doc实现与测试",
+      "kp_summary": "实现Query2Doc技术，利用大模型生成伪文档并与原始问题拼接作为新查询，通过测试展示其提升检索性能的效果。",
+      "key_points": [
+        "Query2Doc思路：用大模型生成伪文档，与query一起检索",
+        "构建生成伪文档的提示词，包含角色描述",
+        "将伪文档与原始问题拼接作为context query",
+        "测试显示增强后回答包含加班、请假等有价值信息",
+        "角色描述确保伪文档与公司制度相关"
+      ],
+      "cue_start_idx": 48,
+      "cue_end_idx": 178,
+      "start_sec": 132,
+      "end_sec": 458
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "HYDE实现与测试",
+      "kp_summary": "实现HYDE查询增强方法，使用LangChain的假设性文档嵌入类，通过伪文档的embedding向量进行检索，并测试其效果。",
+      "key_points": [
+        "HYDE与Query2Doc区别：用伪文档的embedding而非文本拼接",
+        "使用LangChain的HypotheticalDocumentEmbedder类",
+        "支持是否将原始query的embedding合并到伪文档embedding",
+        "返回embedding向量用于向量检索",
+        "测试显示HYDE增强后回答更具体、更有价值"
+      ],
+      "cue_start_idx": 179,
+      "cue_end_idx": 295,
+      "start_sec": 461,
+      "end_sec": 812
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "子问题查询实现与测试",
+      "kp_summary": "实现子问题查询技术，将复杂问题拆解为多个小问题，分别检索并综合答案，通过测试展示其价值。",
+      "key_points": [
+        "子问题查询思路：复杂问题拆解为易理解的小问题",
+        "设计提示词指导大模型拆解问题，包含角色描述",
+        "使用LangChain构建生成子问题的chain",
+        "遍历子问题列表，分别检索并生成答案",
+        "测试显示子问题回答能综合回答原始复杂问题"
+      ],
+      "cue_start_idx": 296,
+      "cue_end_idx": 358,
+      "start_sec": 817,
+      "end_sec": 1047
+    },
+    {
+      "kp_index": 4,
+      "kp_title": "查询改写实现与测试",
+      "kp_summary": "实现查询改写技术，通过大模型从不同层次改写查询，使其描述更清晰、信息更丰富，并测试其效果。",
+      "key_points": [
+        "查询改写目的：使查询描述更清晰、信息更丰富",
+        "设计提示词要求大模型从不同层次生成改写版本",
+        "改写版本增加规章制度关键词以丰富信息",
+        "将改写后的查询传入RAG Pipeline生成答案",
+        "测试显示改写后检索到相关上下文，答案更准确"
+      ],
+      "cue_start_idx": 359,
+      "cue_end_idx": 427,
+      "start_sec": 1051,
+      "end_sec": 1263
+    },
+    {
+      "kp_index": 5,
+      "kp_title": "Take Step Back实现与测试",
+      "kp_summary": "实现Take Step Back技术，通过提供示例和提示词模板，将细节混乱的问题抽象概括为一般性问题，并测试其效果。",
+      "key_points": [
+        "Take Step Back思路：对细节混乱问题做一般性抽象概括",
+        "提供与场景相关的示例帮助大模型生成",
+        "使用FewShotPromptTemplate和对话型提示词模板",
+        "构建推理chain，将query转换为一般性问题",
+        "测试显示转换后问题目的更明确，答案更准确"
+      ],
+      "cue_start_idx": 428,
+      "cue_end_idx": 550,
+      "start_sec": 1267,
+      "end_sec": 1613
+    }
+  ]
+}

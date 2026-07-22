@@ -1,0 +1,84 @@
+{
+  "section": "03-04",
+  "title": "没有GPU如何调用大模型-大模型调用的三种方式",
+  "course_id": "RAG101",
+  "total_cues": 98,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "GPU与大模型的关系",
+      "kp_summary": "讲解GPU为何适合大模型计算，对比CPU与GPU架构差异，并通过实例说明GPU在深度学习中的性能优势。",
+      "key_points": [
+        "大模型计算需要大量简单的乘法和加法运算",
+        "GPU拥有大量计算单元，并行计算能力强",
+        "CPU控制单元复杂但核数少，适合调度",
+        "GPU的并行计算能力与大模型需求高度契合",
+        "谷歌猫狗识别实验：1.6万CPU vs 1块GPU效果相当"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 36,
+      "start_sec": 0,
+      "end_sec": 187
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "大模型推理的步骤与文件组成",
+      "kp_summary": "介绍大语言模型文件的组成部分和推理过程，为后续调用方式做铺垫。",
+      "key_points": [
+        "模型文件包含参数文件、分尺信息、尺表和模型配置",
+        "推理分三步：加载分尺算法、加载模型参数、推理生成答案",
+        "输入文本经分尺器转为Token，模型输出Token再逆分尺为文本"
+      ],
+      "cue_start_idx": 37,
+      "cue_end_idx": 49,
+      "start_sec": 192,
+      "end_sec": 277
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "有GPU时调用大模型的方法",
+      "kp_summary": "讲解在拥有GPU的情况下，如何使用Transformers库调用大语言模型，包括环境设置、加载模型和推理过程。",
+      "key_points": [
+        "通过环境变量设置要使用的GPU",
+        "使用Transformers库的Tokenizer加载分尺器",
+        "使用Automodel加载模型参数，DeviceMap设为Auto自动识别GPU",
+        "推理时指定分尺器、提示词和输出参数（温度、TopP、TopK）"
+      ],
+      "cue_start_idx": 50,
+      "cue_end_idx": 60,
+      "start_sec": 286,
+      "end_sec": 349
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "无GPU时调用大模型：OLLAMA工具",
+      "kp_summary": "介绍在没有GPU的情况下，使用OLLAMA工具在CPU上部署和调用大语言模型，并说明其优势与使用方法。",
+      "key_points": [
+        "CPU上可用Transformers库但速度慢，推荐OLLAMA",
+        "OLLAMA基于Llama.cpp，对CPU推理做了优化",
+        "支持多种平台（Linux、Windows、MacOS）和几乎所有开源模型",
+        "安装简单，通过OLLAMA Run命令下载并启动模型服务",
+        "提供类似OpenAI的API接口，调用方便"
+      ],
+      "cue_start_idx": 61,
+      "cue_end_idx": 78,
+      "start_sec": 352,
+      "end_sec": 466
+    },
+    {
+      "kp_index": 4,
+      "kp_title": "通过API调用大模型",
+      "kp_summary": "讲解如何通过大模型厂商提供的API接口调用模型，包括注册、获取密钥、调用方式及主流厂商列表。",
+      "key_points": [
+        "在厂商平台注册账号并创建应用获取密钥",
+        "使用密钥和API接口调用模型，按Token收费",
+        "多数厂商提供与OpenAI兼容的接口，便于迁移",
+        "主流厂商包括百度、腾讯、阿里、讯飞、字节、月之暗面、智谱AI、深度求索等"
+      ],
+      "cue_start_idx": 79,
+      "cue_end_idx": 97,
+      "start_sec": 469,
+      "end_sec": 568
+    }
+  ]
+}

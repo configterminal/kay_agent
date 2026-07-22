@@ -1,0 +1,111 @@
+{
+  "section": "03-02",
+  "title": "大模型入门：核心要点和技术演变（token、transformer、训练）",
+  "course_id": "RAG101",
+  "total_cues": 301,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "大模型的生成与概率机制",
+      "kp_summary": "介绍大语言模型作为生成式模型，通过文字接龙方式逐字生成，并基于概率选择输出，解释了流式输出和随机性的原因。",
+      "key_points": [
+        "大模型是生成式模型，工作方式为文字接龙，逐字串行生成",
+        "模型每次生成时计算所有字的概率，根据概率高低选择输出",
+        "流式输出是为了减少延迟，提升用户体验",
+        "模型输出具有随机性，同一问题多次回答可能不同"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 37,
+      "start_sec": 0,
+      "end_sec": 178
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "Token与词表的概念",
+      "kp_summary": "解释Token的定义、计费方式、词表大小，以及Token作为介于单词和字母之间的子词单位的优势。",
+      "key_points": [
+        "Token是大模型预测的基本单位，按Token计费",
+        "所有Token组成词表，不同模型词表大小不同",
+        "Token是子词，介于单词和字母之间，可节省词表数量",
+        "子词能保留语义并避免超出词表的问题"
+      ],
+      "cue_start_idx": 38,
+      "cue_end_idx": 101,
+      "start_sec": 181,
+      "end_sec": 475
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "分词过程与BPE算法",
+      "kp_summary": "介绍分词的作用和BPE算法的具体流程，通过合并高频子词生成词表。",
+      "key_points": [
+        "分词将文本转为Token，模型输出也需逆分词还原",
+        "BPE算法从最小单元开始，不断合并高频组合生成新Token",
+        "合并过程持续到词表达到预设大小为止"
+      ],
+      "cue_start_idx": 102,
+      "cue_end_idx": 127,
+      "start_sec": 479,
+      "end_sec": 559
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "Transformer架构与自注意力机制",
+      "kp_summary": "介绍Transformer架构的编码器-解码器结构，重点讲解自注意力机制如何捕捉全局语义关系。",
+      "key_points": [
+        "Transformer由编码器、解码器和分类层组成",
+        "自注意力机制捕捉每个Token与其他所有Token的全局关系",
+        "好的语义特征需结合上下文，自注意力优于RNN和LSTM",
+        "Transformer为大模型时代奠定基础"
+      ],
+      "cue_start_idx": 128,
+      "cue_end_idx": 183,
+      "start_sec": 563,
+      "end_sec": 828
+    },
+    {
+      "kp_index": 4,
+      "kp_title": "大模型发展史与训练框架",
+      "kp_summary": "以OpenAI产品为例，介绍从GPT-1到ChatGPT的演变，以及预训练、指令微调、强化学习的三阶段训练框架。",
+      "key_points": [
+        "GPT-1到GPT-3参数规模从1.2亿增长到1750亿，架构基本不变",
+        "预训练阶段学习通用知识，指令微调增强特定任务能力",
+        "强化学习通过人类反馈对齐模型与人类价值观",
+        "ChatGPT的成功源于三阶段训练框架"
+      ],
+      "cue_start_idx": 184,
+      "cue_end_idx": 255,
+      "start_sec": 833,
+      "end_sec": 1105
+    },
+    {
+      "kp_index": 5,
+      "kp_title": "指令微调与强化学习详解",
+      "kp_summary": "详细说明指令微调和强化学习的具体过程，包括数据收集、奖励模型训练和模型对齐。",
+      "key_points": [
+        "指令微调需要人工标注不同任务的指令数据",
+        "强化学习通过训练奖励模型作为导师，评估生成结果",
+        "奖励模型使用相对等级而非绝对数值进行判定",
+        "对齐包括安全性和可用性两方面"
+      ],
+      "cue_start_idx": 256,
+      "cue_end_idx": 288,
+      "start_sec": 1107,
+      "end_sec": 1219
+    },
+    {
+      "kp_index": 6,
+      "kp_title": "大模型的能力分类",
+      "kp_summary": "将大模型的能力归纳为基础能力、应用能力和增强能力三大类。",
+      "key_points": [
+        "基础能力包括世界知识、理解、代码和多语言能力",
+        "应用能力体现在推理和指令跟随",
+        "增强能力包括自我批判和使用工具"
+      ],
+      "cue_start_idx": 289,
+      "cue_end_idx": 300,
+      "start_sec": 1222,
+      "end_sec": 1253
+    }
+  ]
+}

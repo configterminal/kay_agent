@@ -1,0 +1,115 @@
+{
+  "section": "10-07",
+  "title": "实战：利用Graph RAG构建金融智库知识库应用",
+  "course_id": "RAG101",
+  "total_cues": 552,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "Graph RAG三步流程概述",
+      "kp_summary": "介绍基于图数据库的Graph RAG构建的三个步骤：提取关键词、图数据库检索、大模型生成答案。",
+      "key_points": [
+        "Graph RAG分为三个步骤",
+        "第一步：提取问题关键词",
+        "第二步：通过关键词在图数据库检索",
+        "第三步：根据上下文让大模型生成答案"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 12,
+      "start_sec": 0,
+      "end_sec": 31
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "提取关键词的提示词设计",
+      "kp_summary": "讲解如何设计提示词模板，让大语言模型从问题中提取关键词，并测试模板效果。",
+      "key_points": [
+        "导入大语言模型类和提示词模板",
+        "创建大语言模型实例",
+        "设计提取关键词的提示词文本",
+        "创建提示词模板并测试",
+        "测试输出三个关键词：隔离电器、事件、新网"
+      ],
+      "cue_start_idx": 13,
+      "cue_end_idx": 56,
+      "start_sec": 35,
+      "end_sec": 140
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "封装关键词提取函数",
+      "kp_summary": "将关键词提取步骤封装为pass_query函数，并测试函数效果。",
+      "key_points": [
+        "建立pass_query函数，输入查询语句和关键词数量",
+        "通过提示词模板生成实际提示词",
+        "调用大模型并格式化输出",
+        "测试函数输出关键词列表：公司、企业转型、总结"
+      ],
+      "cue_start_idx": 57,
+      "cue_end_idx": 91,
+      "start_sec": 143,
+      "end_sec": 229
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "通过关键词查询图数据库节点",
+      "kp_summary": "构建getNode函数，判断关键词是否匹配图数据库中的节点，并返回节点名称。",
+      "key_points": [
+        "导入py2neo库并连接Neo4j图数据库",
+        "编写match查询语句，按节点类型和名称匹配关键词",
+        "实现getNode函数，返回匹配的节点名称或None",
+        "测试函数：比亚迪匹配公司节点，返回比亚迪股份有限公司"
+      ],
+      "cue_start_idx": 92,
+      "cue_end_idx": 178,
+      "start_sec": 230,
+      "end_sec": 470
+    },
+    {
+      "kp_index": 4,
+      "kp_title": "构建查询节点关系的上下文函数",
+      "kp_summary": "实现getContext函数，根据匹配的节点查询其关系（投资者、公司、事件类型）并拼接为文本上下文。",
+      "key_points": [
+        "构建get_info函数，输入关键词和是否包含内容标志",
+        "通过getNode判断关键词匹配的节点类型",
+        "设计match查询语句获取所有关系",
+        "将关系信息拼接为文本上下文",
+        "通过level参数处理无投资关系的情况"
+      ],
+      "cue_start_idx": 179,
+      "cue_end_idx": 357,
+      "start_sec": 472,
+      "end_sec": 985
+    },
+    {
+      "kp_index": 5,
+      "kp_title": "测试上下文查询函数",
+      "kp_summary": "测试get_info函数，以瑞幸咖啡为例展示查询结果，包括事件类型和属性。",
+      "key_points": [
+        "测试瑞幸咖啡关键词，匹配公司节点",
+        "查询公司节点关联的投资者和事件类型",
+        "返回结果包括丑闻、股价异常波动等事件",
+        "展示上下文文本内容"
+      ],
+      "cue_start_idx": 358,
+      "cue_end_idx": 403,
+      "start_sec": 988,
+      "end_sec": 1121
+    },
+    {
+      "kp_index": 6,
+      "kp_title": "构建Graph RAG Pipeline",
+      "kp_summary": "将关键词提取和图数据库查询流程整合为Graph RAG Pipeline，并测试多个查询示例。",
+      "key_points": [
+        "创建大语言模型对象和提示词文本",
+        "构建Graph RAG Pipeline类",
+        "流程：提取关键词→遍历关键词查询上下文→生成答案",
+        "测试示例：企业转型公司列表、瑞幸咖啡分析、投资机构查询"
+      ],
+      "cue_start_idx": 404,
+      "cue_end_idx": 551,
+      "start_sec": 1124,
+      "end_sec": 1572
+    }
+  ]
+}

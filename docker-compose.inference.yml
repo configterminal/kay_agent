@@ -1,0 +1,48 @@
+# TEI 推理服务 — Embedding + Reranker（仅 EMBEDDING/RERANKER_BACKEND=http 时使用）
+#
+# 当前项目默认 local GPU，一般不必启动本文件。
+#
+# 启动：
+#   docker compose -f docker-compose.inference.yml up -d
+#
+# Windows Docker Desktop（CPU）：官方 BGE 仓常无可用 ONNX。
+# Embed：可挂载 ./models/bge-large-zh-v1.5-onnx
+# Rerank：CPU 实验可用 bge-reranker-base；与 config 默认 v2-m3 可能不同，切 http 时请对齐。
+
+services:
+  tei-embed:
+    image: ghcr.io/huggingface/text-embeddings-inference:cpu-1.7
+    container_name: tei-embed
+    ports:
+      - "8090:80"
+    volumes:
+      - ./models/bge-large-zh-v1.5-onnx:/data
+    command:
+      - "--model-id"
+      - "/data"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+
+  tei-rerank:
+    image: ghcr.io/huggingface/text-embeddings-inference:cpu-1.7
+    container_name: tei-rerank
+    ports:
+      - "8091:80"
+    volumes:
+      # 先落到 F:，避免 Docker named volume 占满 C:
+      - ./tei-data/rerank:/data
+    command:
+      - "--model-id"
+      - "BAAI/bge-reranker-base"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 180s

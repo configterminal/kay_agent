@@ -1,0 +1,27 @@
+.env
+__pycache__/
+*.pyc
+.cache/
+tmp/
+logs/
+tei-data/
+models/
+services/cosyvoice_tts/vendor/
+.playwright-mcp/
+.codegraph/
+db/
+.venv/
+jupyter/
+
+# 课程大媒体（本机 resources/ 保留，不进 GitHub）
+*.mp4
+*.MP4
+*.pdf
+*.PDF
+
+# 评测跑批输出
+eval/runs/
+
+# 本地截图杂项
+neo4j-browser-empty.png
+

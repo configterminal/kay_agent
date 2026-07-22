@@ -1,0 +1,25 @@
+{
+  "section": "02-06",
+  "title": "本课程案例分析与说明",
+  "course_id": "RAG101",
+  "total_cues": 30,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "企业员工助手案例总览",
+      "kp_summary": "介绍本课程实现的企业员工助手案例，包括制度问答和金融智库两个模块，以及开发环境、技术栈和系统框架。",
+      "key_points": [
+        "案例由制度问答和金融智库两个模块组成",
+        "开发环境包括Python 3.9、LangChain、LlamaIndex、PyTorch等",
+        "前端使用Gradio，后端使用FastAPI，数据库为Chroma和Neo4j",
+        "制度问答模块处理公司制度相关查询",
+        "金融智库模块基于知识图谱提供金融知识问答",
+        "系统通过意图识别分流到不同模块"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 29,
+      "start_sec": 0,
+      "end_sec": 138
+    }
+  ]
+}

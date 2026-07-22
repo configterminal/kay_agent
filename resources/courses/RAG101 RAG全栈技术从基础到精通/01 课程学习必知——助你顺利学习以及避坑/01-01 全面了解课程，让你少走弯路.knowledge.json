@@ -1,0 +1,134 @@
+{
+  "section": "01-01",
+  "title": "全面了解课程，让你少走弯路",
+  "course_id": "RAG101",
+  "total_cues": 178,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "课程介绍与讲师背景",
+      "kp_summary": "讲师米可介绍自己和课程目标，强调RAG全栈技术的重要性，并分享个人AI研发经验。",
+      "key_points": [
+        "课程目标：从零到一打造高精准AI应用",
+        "讲师有十年AI研发经验，涉及机器学习、计算机视觉和大语言模型",
+        "讲师擅长萃取知识，分享于技术社区"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 9,
+      "start_sec": 5,
+      "end_sec": 52
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "AI应用爆发与RAG的基石地位",
+      "kp_summary": "分析当前AI应用爆发趋势，指出RAG和智能体是AI应用开发的两大基石，强调学习RAG的必要性。",
+      "key_points": [
+        "DeepSeek等模型推动AI应用爆发",
+        "2025年AI应用开发将迎来增长",
+        "RAG是大语言模型利用企业内部数据的高效方式",
+        "RAG是智能体agent的重要组成部分"
+      ],
+      "cue_start_idx": 10,
+      "cue_end_idx": 36,
+      "start_sec": 59,
+      "end_sec": 161
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "RAG系统构建的挑战与课程特色",
+      "kp_summary": "指出企业构建RAG系统常遇到的问题，并说明本课程体系化、全栈性的特色，区别于简单介绍。",
+      "key_points": [
+        "企业RAG系统常因效果不佳被弃用",
+        "RAG系统需要动态迭代和深刻理解",
+        "课程特色：体系化、全栈性，覆盖整体框架和实现细节"
+      ],
+      "cue_start_idx": 37,
+      "cue_end_idx": 50,
+      "start_sec": 167,
+      "end_sec": 218
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "RAG的概念与类比",
+      "kp_summary": "通过人类类比解释RAG的概念：大语言模型借助外部知识减少幻觉，且知识可更新。",
+      "key_points": [
+        "RAG类比：人类查资料，大模型借助外部知识",
+        "RAG提供认知外知识，减少幻觉",
+        "RAG知识可更新，保持同步"
+      ],
+      "cue_start_idx": 51,
+      "cue_end_idx": 69,
+      "start_sec": 225,
+      "end_sec": 293
+    },
+    {
+      "kp_index": 4,
+      "kp_title": "RAG的应用案例与市场需求",
+      "kp_summary": "列举RAG在企业和开源领域的应用案例，并分析人才市场对RAG技术的需求。",
+      "key_points": [
+        "2024世界人工智能大会展示RAG应用案例",
+        "开源领域有RAG Flow、FastGPT等项目",
+        "人才市场RAG岗位薪资可观，行业分布广泛"
+      ],
+      "cue_start_idx": 70,
+      "cue_end_idx": 101,
+      "start_sec": 296,
+      "end_sec": 406
+    },
+    {
+      "kp_index": 5,
+      "kp_title": "学习RAG的困难与课程解决方案",
+      "kp_summary": "总结学习RAG的三大困难，并介绍课程如何通过体系化、实战化、工具化来解决这些问题。",
+      "key_points": [
+        "困难：技术繁杂、缺实战、精度提升难",
+        "课程提供系统化技术讲解和多种精度提升工具",
+        "结合两个实战项目（智能问答、金融智库）"
+      ],
+      "cue_start_idx": 102,
+      "cue_end_idx": 126,
+      "start_sec": 409,
+      "end_sec": 487
+    },
+    {
+      "kp_index": 6,
+      "kp_title": "课程安排与学习收获",
+      "kp_summary": "介绍课程循序渐进的结构，从三大组件到迭代优化，再到扩展部分，并列出学习收获。",
+      "key_points": [
+        "课程结构：三大组件、迭代优化、引入Agent和知识图谱、模型微调",
+        "学习收获：掌握RAG全栈技术、构建企业级应用、提升AI回答精准度"
+      ],
+      "cue_start_idx": 127,
+      "cue_end_idx": 140,
+      "start_sec": 491,
+      "end_sec": 530
+    },
+    {
+      "kp_index": 7,
+      "kp_title": "课程适合人群与学习建议",
+      "kp_summary": "说明课程适合有一定Python基础或想转型AI应用开发的开发者，并给出学习建议。",
+      "key_points": [
+        "适合人群：有Python基础或想转型AI应用开发者",
+        "学习建议：深度理解原理，动手实践",
+        "课程提供答疑支持"
+      ],
+      "cue_start_idx": 141,
+      "cue_end_idx": 169,
+      "start_sec": 534,
+      "end_sec": 625
+    },
+    {
+      "kp_index": 8,
+      "kp_title": "课程总结与行动号召",
+      "kp_summary": "总结课程重点，强调体系化、理论结合实战，并鼓励学员积极入局AI浪潮。",
+      "key_points": [
+        "课程重点：结构体系化剖析RAG，理论结合实战",
+        "适合AI小白和基础研发人员",
+        "鼓励学员积极入局，不做旁观者"
+      ],
+      "cue_start_idx": 170,
+      "cue_end_idx": 177,
+      "start_sec": 629,
+      "end_sec": 654
+    }
+  ]
+}

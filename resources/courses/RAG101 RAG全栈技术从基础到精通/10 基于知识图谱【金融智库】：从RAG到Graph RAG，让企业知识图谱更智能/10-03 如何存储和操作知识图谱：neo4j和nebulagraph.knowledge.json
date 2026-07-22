@@ -1,0 +1,115 @@
+{
+  "section": "10-03",
+  "title": "如何存储和操作知识图谱：neo4j和nebulagraph",
+  "course_id": "RAG101",
+  "total_cues": 339,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "图数据库概述：Neo4j与Nebula Graph",
+      "kp_summary": "介绍将原始数据转换为三元组并构建图结构后，需要图数据库来存储和操作，引出Neo4j和Nebula Graph两款典型产品，并简要说明各自特点。",
+      "key_points": [
+        "原始数据需转换为三元组形式以构建图结构",
+        "典型图数据库有Neo4j和Nebula Graph",
+        "Neo4j是高性能NoSQL图形数据库，支持Cypher查询语言",
+        "Nebula Graph适合超大规模数据，支持毫秒级查询延迟，是分布式解决方案"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 21,
+      "start_sec": 0,
+      "end_sec": 71
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "Neo4j与Nebula Graph对比分析",
+      "kp_summary": "从数据模型、分布式能力、事务支持和查询语言四个维度对比Neo4j和Nebula Graph，并给出适用场景建议。",
+      "key_points": [
+        "两者均基于图数据模型，使用节点、边和属性",
+        "Nebula Graph原生分布式，Neo4j通过集群实现水平扩展",
+        "两者都支持事务处理，保证数据一致性",
+        "Neo4j使用声明式Cypher语言，易于学习；Nebula Graph使用过程式GQL语言",
+        "Neo4j适合千万级以下小规模数据，Nebula Graph适合超大规模和高并发场景"
+      ],
+      "cue_start_idx": 22,
+      "cue_end_idx": 87,
+      "start_sec": 76,
+      "end_sec": 248
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "Neo4j安装与可视化界面",
+      "kp_summary": "讲解Neo4j的安装前提（需JDK 17+）、下载社区版、解压即用，以及启动/停止命令和默认7474端口的可视化界面功能。",
+      "key_points": [
+        "Neo4j基于Java开发，需安装JDK 17或以上版本",
+        "下载社区版安装包，解压后即可使用",
+        "通过neo4j start/stop命令启动和停止服务",
+        "可视化界面默认端口7474，支持图、文本、表格、代码四种展示方式",
+        "可在界面上执行Cypher命令并查看知识图谱节点和关系"
+      ],
+      "cue_start_idx": 88,
+      "cue_end_idx": 143,
+      "start_sec": 252,
+      "end_sec": 409
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "Cypher语法：创建节点与关系",
+      "kp_summary": "介绍Cypher查询语言中创建节点和创建关系的基本语法，包括节点标签、属性定义以及关系方向表示。",
+      "key_points": [
+        "创建节点使用CREATE语句，格式为变量:标签 {属性}",
+        "节点可包含多个属性，如名称、标题等",
+        "创建关系使用中括号和箭头表示方向，如-[关系]->",
+        "关系也可带属性，如年份和评分"
+      ],
+      "cue_start_idx": 144,
+      "cue_end_idx": 193,
+      "start_sec": 413,
+      "end_sec": 535
+    },
+    {
+      "kp_index": 4,
+      "kp_title": "Cypher语法：约束与索引",
+      "kp_summary": "讲解Cypher中创建约束和索引的语法，约束用于保证数据唯一性，索引用于提升查询性能。",
+      "key_points": [
+        "约束可确保节点属性的唯一性，如电影标题唯一",
+        "约束有助于防止重复数据，保证数据质量",
+        "索引建立在节点属性上，可加速基于该属性的查询",
+        "索引能显著提升查询性能"
+      ],
+      "cue_start_idx": 194,
+      "cue_end_idx": 223,
+      "start_sec": 539,
+      "end_sec": 620
+    },
+    {
+      "kp_index": 5,
+      "kp_title": "Cypher查询语法：基础与关系查询",
+      "kp_summary": "介绍Cypher查询的核心关键词MATCH和RETURN，并通过多个示例展示如何查询节点、条件查询以及关系查询。",
+      "key_points": [
+        "MATCH用于匹配满足条件的数据，RETURN用于返回结果",
+        "支持条件查询，如按属性值范围过滤",
+        "关系查询可获取节点间的关联数据，如演员参与的电影",
+        "通过变量和箭头可表达复杂的关系路径"
+      ],
+      "cue_start_idx": 224,
+      "cue_end_idx": 298,
+      "start_sec": 622,
+      "end_sec": 864
+    },
+    {
+      "kp_index": 6,
+      "kp_title": "Cypher多跳查询与可视化示例",
+      "kp_summary": "讲解Cypher中的多跳查询语法，用于获取与某节点相隔多跳的所有关联数据，并通过可视化示例展示查询结果。",
+      "key_points": [
+        "多跳查询通过指定跳数（如1、2）获取间接关系数据",
+        "语法中使用变量表示关系，并指定跳数范围",
+        "查询结果可进行去重操作",
+        "可视化示例清晰展示节点间的多跳连接关系"
+      ],
+      "cue_start_idx": 299,
+      "cue_end_idx": 338,
+      "start_sec": 867,
+      "end_sec": 993
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "section": "11-06",
+  "title": "本章总结",
+  "course_id": "RAG101",
+  "total_cues": 24,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "本章总结：Agent与RAG结合",
+      "kp_summary": "本章总结了Agent与RAG结合的方式，包括Agent的基本概念、ReAct设计思路以及基于此设计的AIG Router。",
+      "key_points": [
+        "Agent利用大语言模型进行思考规划，并通过记忆和工具自动执行任务",
+        "Agent是通往AGI的有效途径，也是AI落地的重要方向",
+        "ReAct（Reasoning+Action）通过推理指导行动，行动观察辅助推理",
+        "基于ReAct设计了AIG Router，可自动选择不同AIG，提高检索针对性和效率"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 23,
+      "start_sec": 0,
+      "end_sec": 83
+    }
+  ]
+}

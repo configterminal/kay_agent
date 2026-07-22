@@ -1,0 +1,70 @@
+{
+  "section": "06-04",
+  "title": "挑战：RAG如何读取多样性文档（文本、表格和布局分析）",
+  "course_id": "RAG101",
+  "total_cues": 75,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "文档解析概述与HTML解析",
+      "kp_summary": "介绍不同文档需要不同解析方法，并重点讲解HTML文档的解析方法，包括Web Based Loader和BSHTMLoader，以及定制化解析技巧。",
+      "key_points": [
+        "不同文档格式需要不同的解析方法",
+        "LangChain的Document Loaders封装了常用解析方法",
+        "HTML解析通过Beautiful Soup识别标记提取内容",
+        "Web Based Loader用于在线HTML，BSHTMLoader用于本地HTML",
+        "通用解析按顺序拼接内容，定制化需了解文档结构"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 26,
+      "start_sec": 0,
+      "end_sec": 193
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "PDF文档解析方法",
+      "kp_summary": "讲解PDF文档的解析挑战，重点介绍PyMuPDF的版面识别和表格提取能力，以及基于机器视觉的解析方法。",
+      "key_points": [
+        "PDF是开放标准，但自动精准识别内容有挑战",
+        "PyMuPDF可识别版面、提取文本和图片，但需额外处理表格",
+        "PyMuPDF通过Fitz读取文档，表格可转为Pandas DataFrame",
+        "机器视觉方法如PPStructure、MadeU、RAGFlow可智能提取布局和表格"
+      ],
+      "cue_start_idx": 27,
+      "cue_end_idx": 45,
+      "start_sec": 199,
+      "end_sec": 329
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "其他文档格式与Office文档解析",
+      "kp_summary": "介绍Markdown、XML等格式通过unstructured库统一解析，以及Office文档（Excel、PPT、Word）在LangChain中的解析方法和定制化库。",
+      "key_points": [
+        "unstructured库可统一解析Markdown、XML、JSON等格式",
+        "Excel用Excel Loader，PPT用PowerPoint Loader，底层基于unstructured",
+        "Word用Docx2Txt Loader，只能提取文本",
+        "定制化需求可使用OpenPYXL、Python-PPTX、Python-Docx提取表格和图片"
+      ],
+      "cue_start_idx": 46,
+      "cue_end_idx": 56,
+      "start_sec": 340,
+      "end_sec": 421
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "RAGFlow与Deep DOC文档解析",
+      "kp_summary": "介绍RAGFlow的Deep DOC库，基于机器视觉处理PDF文档，包括OCR文本识别、布局识别和表格解析，并展示具体效果。",
+      "key_points": [
+        "RAGFlow的Deep DOC基于机器视觉处理文档",
+        "将PDF转为图片，用OCR识别文字，布局识别模型识别标题、表格等",
+        "TSR模型解析表格的行列和合并单元格",
+        "支持PDF、Word、Excel、PPT等多种格式",
+        "实际项目需选择合适的解析方法并可能定制开发"
+      ],
+      "cue_start_idx": 57,
+      "cue_end_idx": 74,
+      "start_sec": 428,
+      "end_sec": 544
+    }
+  ]
+}

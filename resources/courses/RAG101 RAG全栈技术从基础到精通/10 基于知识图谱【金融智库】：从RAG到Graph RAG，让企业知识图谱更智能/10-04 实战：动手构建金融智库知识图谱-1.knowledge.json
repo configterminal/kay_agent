@@ -1,0 +1,116 @@
+{
+  "section": "10-04",
+  "title": "实战：动手构建金融智库知识图谱-1",
+  "course_id": "RAG101",
+  "total_cues": 320,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "安装与导入PY2NEO库",
+      "kp_summary": "介绍如何安装PY2NEO库，并导入Graph、节点、关系等核心类，以及JSON解析和进度条工具。",
+      "key_points": [
+        "通过pip install py2neo安装库",
+        "从py2neo导入Graph、Node、Relationship",
+        "导入json库用于数据解析",
+        "导入打印和进度条相关类"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 12,
+      "start_sec": 0,
+      "end_sec": 52
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "连接NEO4J图数据库",
+      "kp_summary": "讲解如何通过指定URI、端口、用户名、密码和数据库名称来建立与NEO4J图数据库的连接。",
+      "key_points": [
+        "指定NEO4J的URI（bolt开头）",
+        "设置服务器地址和端口（默认7687）",
+        "提供用户名和密码",
+        "指定要访问的数据库名称",
+        "通过Graph类建立连接"
+      ],
+      "cue_start_idx": 13,
+      "cue_end_idx": 25,
+      "start_sec": 55,
+      "end_sec": 106
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "解析公司事件提取数据",
+      "kp_summary": "读取公司事件提取数据的JSONL文件，解析每一行JSON数据，并展示数据结构和关键字段。",
+      "key_points": [
+        "指定公司事件数据文件路径",
+        "逐行读取JSONL文件并用json.loads解析",
+        "将解析结果存入列表",
+        "展示数据样例：包含标题、内容、事件类型和属性",
+        "明确后续构建三元组的目标：公司-事件类型关系"
+      ],
+      "cue_start_idx": 26,
+      "cue_end_idx": 82,
+      "start_sec": 109,
+      "end_sec": 315
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "解析投资关系数据",
+      "kp_summary": "读取投资关系数据的JSON文件，展示其中三种数据类型：投资者、公司、专利，并说明各字段含义。",
+      "key_points": [
+        "指定投资关系数据文件路径并直接读取",
+        "数据包含投资者、公司、专利三种类型",
+        "投资者数据含ID、名称、投资公司和轮次",
+        "公司数据含名称、ID、别名、地址、专利ID",
+        "专利数据含名称、类型和ID"
+      ],
+      "cue_start_idx": 83,
+      "cue_end_idx": 123,
+      "start_sec": 319,
+      "end_sec": 432
+    },
+    {
+      "kp_index": 4,
+      "kp_title": "数据预处理：建立ID映射",
+      "kp_summary": "针对投资关系数据中投资者和专利使用ID引用的问题，建立ID到对象属性的字典映射，便于后续关系构建。",
+      "key_points": [
+        "创建ID字典，key为ID，value为对象属性",
+        "遍历数据对象，提取ID和对应数据",
+        "将ID与对象属性存入字典",
+        "实现ID到具体信息的转换"
+      ],
+      "cue_start_idx": 124,
+      "cue_end_idx": 150,
+      "start_sec": 436,
+      "end_sec": 522
+    },
+    {
+      "kp_index": 5,
+      "kp_title": "数据预处理：公司名称一致性处理",
+      "kp_summary": "提取公司事件数据和投资关系数据中的公司名称，通过包含关系建立别名到全称的映射，并过滤无效名称。",
+      "key_points": [
+        "从事件数据中提取公司主体名称（过滤非公司值）",
+        "从投资关系数据中提取公司全称",
+        "以投资关系全称为基准，通过包含关系建立映射",
+        "建立事件公司名称到投资关系全称的字典",
+        "展示映射示例：小米→小米科技有限公司"
+      ],
+      "cue_start_idx": 151,
+      "cue_end_idx": 294,
+      "start_sec": 526,
+      "end_sec": 954
+    },
+    {
+      "kp_index": 6,
+      "kp_title": "确定实体与关系并准备构建",
+      "kp_summary": "总结数据中的四个实体（公司、事件类型、投资者、专利）和三组关系（公司-事件、投资者-公司、公司-专利），为后续构建图数据库做准备。",
+      "key_points": [
+        "识别四个实体：公司、事件类型、投资者、专利",
+        "确定三组关系：公司发生事件、投资者投资公司、公司拥有专利",
+        "为后续构建节点和边奠定基础"
+      ],
+      "cue_start_idx": 295,
+      "cue_end_idx": 319,
+      "start_sec": 959,
+      "end_sec": 1044
+    }
+  ]
+}

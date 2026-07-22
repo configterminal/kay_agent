@@ -1,0 +1,24 @@
+{
+  "section": "04-08",
+  "title": "本章总结",
+  "course_id": "RAG101",
+  "total_cues": 21,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "本章总结：Embedding模型核心要点",
+      "kp_summary": "总结了本章关于Embedding模型在RAG系统中的重要性、训练原理、主流中文模型及选型方法。",
+      "key_points": [
+        "Embedding模型将语义相近的内容在向量空间中距离拉近",
+        "主流模型基于Transformer编码器的BERT架构",
+        "训练过程包括完形填空和下一句预测",
+        "GTE和BGE是主流中文模型，增加对比学习和度量学习",
+        "选型可从MTEB基准测试入手，结合自建数据迭代测试"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 20,
+      "start_sec": 0,
+      "end_sec": 76
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "section": "03-11",
+  "title": "实战：使用大语言模型（本地和API、GPU和CPU）-1",
+  "course_id": "RAG101",
+  "total_cues": 288,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "实战概览与GPU设备查看",
+      "kp_summary": "介绍本集实战的四种调用大语言模型的方式，并讲解如何通过英伟达SMI查看GPU设备信息及设置CUDA_VISIBLE_DEVICES环境变量。",
+      "key_points": [
+        "四种调用方式：ModScope、HuggingFace Transformers、HTTP调用星火Spark、HTTP调用本地Ollama部署模型",
+        "覆盖本地GPU、在线API、CPU部署三种场景",
+        "通过nvidia-smi查看GPU驱动、CUDA版本、显存、利用率",
+        "通过CUDA_VISIBLE_DEVICES环境变量指定程序可见的显卡"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 43,
+      "start_sec": 0,
+      "end_sec": 173
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "大语言模型输出随机性参数",
+      "kp_summary": "详细讲解控制大语言模型输出随机性的四个重要参数：温度、TopK、TopP和MaxTokens，并通过代码演示温度参数对概率分布的影响。",
+      "key_points": [
+        "温度：平滑调整概率，小于1使概率集中，大于1使概率平均化",
+        "TopK：在前K个最大概率Token中随机选择",
+        "TopP：在累计概率达到P的Token中动态选择",
+        "MaxTokens：限制生成的最大Token数量",
+        "通过代码演示温度=1、0.1、10时概率分布的变化"
+      ],
+      "cue_start_idx": 44,
+      "cue_end_idx": 166,
+      "start_sec": 175,
+      "end_sec": 520
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "使用ModelScope调用千问2本地模型",
+      "kp_summary": "介绍千问2开源模型系列，演示如何通过ModelScope下载模型文件，并编写代码实现模型加载、分词器初始化、配置设置及推理函数。",
+      "key_points": [
+        "千问2系列：0.5B、1.5B、7B、72B及MoE版本",
+        "通过ModelScope或HuggingFace下载模型文件",
+        "安装ModelScope包，导入AutoModel、AutoTokenizer等类",
+        "加载模型、分词器、配置，设置设备为auto",
+        "编写推理函数，设置温度、TopK、TopP、MaxTokens参数",
+        "使用Chat模板组织提示词，进行模型推理并解码输出"
+      ],
+      "cue_start_idx": 167,
+      "cue_end_idx": 287,
+      "start_sec": 524,
+      "end_sec": 1056
+    }
+  ]
+}

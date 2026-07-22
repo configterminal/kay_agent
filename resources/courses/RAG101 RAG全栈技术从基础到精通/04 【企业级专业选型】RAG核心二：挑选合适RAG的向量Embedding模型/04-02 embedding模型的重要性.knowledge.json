@@ -1,0 +1,24 @@
+{
+  "section": "04-02",
+  "title": "embedding模型的重要性",
+  "course_id": "RAG101",
+  "total_cues": 27,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "Embedding的定义与重要性",
+      "kp_summary": "本段介绍了embedding的概念、生成过程及其在RAG流程中的关键作用，强调embedding质量直接影响检索相关性。",
+      "key_points": [
+        "Embedding是将数据对象映射为固定大小连续数值数组的技术",
+        "Embedding向量维度通常为几百到几千，每个维度代表语义属性",
+        "语义相似的对象在向量空间中距离更近，反之更远",
+        "RAG通过计算问题与文档embedding的相似性来选择上下文",
+        "Embedding质量好坏直接决定能否检索到相关上下文，避免干扰"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 26,
+      "start_sec": 0,
+      "end_sec": 151
+    }
+  ]
+}

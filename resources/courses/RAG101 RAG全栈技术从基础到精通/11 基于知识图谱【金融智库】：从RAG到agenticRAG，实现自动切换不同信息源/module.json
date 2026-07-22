@@ -1,0 +1,10 @@
+{
+  "module_id": "RAG101-ch11",
+  "chapter": "11",
+  "title": "基于知识图谱【金融智库】：从RAG到agenticRAG，实现自动切换不同信息源",
+  "difficulty": "beginner",
+  "tags": [],
+  "skills": [
+    "Agent"
+  ]
+}

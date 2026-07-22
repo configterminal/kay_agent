@@ -1,0 +1,12 @@
+{
+  "module_id": "RAG101-ch07",
+  "chapter": "07",
+  "title": "【企业员工智能问答助手-实现V1.0版】搭建制度问答baseline RAG",
+  "difficulty": "beginner",
+  "tags": [],
+  "skills": [
+    "检索增强",
+    "企业问答实战",
+    "Prompt Engineering"
+  ]
+}

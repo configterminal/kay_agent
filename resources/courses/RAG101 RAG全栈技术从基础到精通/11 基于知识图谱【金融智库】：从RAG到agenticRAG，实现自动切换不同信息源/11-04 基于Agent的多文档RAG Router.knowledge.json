@@ -1,0 +1,23 @@
+{
+  "section": "11-04",
+  "title": "基于Agent的多文档RAG Router",
+  "course_id": "RAG101",
+  "total_cues": 42,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "基于Agent的多文档RAG Router",
+      "kp_summary": "本段介绍了使用Reactor思路实现RAG路由器的原因和具体方法，通过分析问题属性，将用户问题路由到对应的知识库（如制度RAG或金融智库RAG），以提高检索效率和针对性。",
+      "key_points": [
+        "多文档RAG场景下，全库检索会增加不相关信息和无效检索的风险",
+        "设计路由对问题进行分析，只检索与问题领域一致的知识库",
+        "通过Reactor模式实现路由，将不同RAG作为文档检索工具",
+        "提示词中定义工具说明和分类逻辑，按步骤执行思考、行动、观察"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 41,
+      "start_sec": 0,
+      "end_sec": 152
+    }
+  ]
+}

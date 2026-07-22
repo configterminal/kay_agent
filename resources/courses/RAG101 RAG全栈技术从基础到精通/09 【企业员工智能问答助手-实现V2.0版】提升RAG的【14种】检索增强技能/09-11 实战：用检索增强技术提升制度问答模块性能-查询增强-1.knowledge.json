@@ -1,0 +1,102 @@
+{
+  "section": "09-11",
+  "title": "实战：用检索增强技术提升制度问答模块性能-查询增强-1",
+  "course_id": "RAG101",
+  "total_cues": 191,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "LangChain框架概述与LLM封装",
+      "kp_summary": "介绍LangChain框架的四个主要组件（LLM、提示词模板、Chain、输出解析器），并详细讲解如何将开源大语言模型封装成符合LangChain要求的LLM类。",
+      "key_points": [
+        "LangChain框架包含LLM、提示词模板、Chain、输出解析器四个核心部分",
+        "通过继承LLM类并重写Guncall方法封装开源模型",
+        "以千问2模型为例，展示封装过程",
+        "封装后的LLM类可被LangChain直接调用"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 21,
+      "start_sec": 0,
+      "end_sec": 123
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "提示词模板的基本用法",
+      "kp_summary": "讲解LangChain中提示词模板（PromptTemplate）的核心功能：通过变量替换生成不同提示词，并演示具体代码实现。",
+      "key_points": [
+        "提示词模板用于替换文本中的变量",
+        "通过PromptTemplate类创建模板",
+        "模板包含变量列表和提示词文本",
+        "调用format方法传入变量值生成最终提示词",
+        "示例：生成包含指定词数的推文提示词"
+      ],
+      "cue_start_idx": 22,
+      "cue_end_idx": 43,
+      "start_sec": 136,
+      "end_sec": 334
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "Few-Shot提示词模板",
+      "kp_summary": "介绍LangChain中FewShotPromptTemplate的使用方法，通过提供示例让大语言模型学习输出格式，并演示完整代码流程。",
+      "key_points": [
+        "Few-Shot学习通过提供示例引导模型输出",
+        "设计示例：问题与适合小孩子的回答",
+        "使用FewShotPromptTemplate组合前缀、示例和后缀",
+        "示例提示词模板与输入提示词模板分开定义",
+        "最终生成包含示例的完整提示词"
+      ],
+      "cue_start_idx": 44,
+      "cue_end_idx": 73,
+      "start_sec": 347,
+      "end_sec": 650
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "Chain组件的构建与执行",
+      "kp_summary": "讲解LangChain中Chain的核心概念，展示如何将提示词模板和大语言模型串联成步骤链条，并演示两种构建Chain的方法。",
+      "key_points": [
+        "Chain将多个步骤串联，上一个步骤输出传入下一个步骤",
+        "使用竖线运算符快速构建简单Chain",
+        "通过invoke方法传入变量执行Chain",
+        "LLMChain类提供另一种构建方式",
+        "Chain输出包含输入变量和生成结果"
+      ],
+      "cue_start_idx": 74,
+      "cue_end_idx": 113,
+      "start_sec": 659,
+      "end_sec": 888
+    },
+    {
+      "kp_index": 4,
+      "kp_title": "输出解析器的使用",
+      "kp_summary": "介绍OutputParser的功能：在提示词中指定输出格式，并解析大语言模型生成的结果为结构化数据，以逗号分隔列表为例演示。",
+      "key_points": [
+        "OutputParser用于格式化模型输出",
+        "在提示词中嵌入格式要求（如逗号分隔列表）",
+        "解析器将文本结果转换为结构化数据（如列表）",
+        "通过Chain串联提示词模板、LLM和解析器",
+        "最终输出可直接使用的结构化结果"
+      ],
+      "cue_start_idx": 114,
+      "cue_end_idx": 178,
+      "start_sec": 895,
+      "end_sec": 1212
+    },
+    {
+      "kp_index": 5,
+      "kp_title": "准备RAG Pipeline",
+      "kp_summary": "总结LangChain组件知识，并开始准备检索增强技术所需的RAG Pipeline，包括导入依赖和连接已有知识库。",
+      "key_points": [
+        "LangChain组件介绍完毕，可开始实现检索增强方法",
+        "复制Baseline中的RAG流程作为基础",
+        "导入Embedding模型、大语言模型和Chroma数据库",
+        "连接之前创建的制度知识库集合"
+      ],
+      "cue_start_idx": 179,
+      "cue_end_idx": 190,
+      "start_sec": 1216,
+      "end_sec": 1283
+    }
+  ]
+}

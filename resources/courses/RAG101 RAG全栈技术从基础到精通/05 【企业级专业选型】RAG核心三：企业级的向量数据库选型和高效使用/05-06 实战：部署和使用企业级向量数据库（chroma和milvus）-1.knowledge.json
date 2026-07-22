@@ -1,0 +1,85 @@
+{
+  "section": "05-06",
+  "title": "实战：部署和使用企业级向量数据库（chroma和milvus）-1",
+  "course_id": "RAG101",
+  "total_cues": 262,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "Chroma安装与部署",
+      "kp_summary": "介绍Chroma向量数据库的安装和full down部署，包括关键参数（持久化路径、host、port）及启动演示。",
+      "key_points": [
+        "Chroma是简单易用的AI原生向量数据库",
+        "安装：直接通过pip install完成",
+        "部署：使用chroma run命令，支持持久化路径、host、port参数",
+        "启动后服务运行在localhost:8000，数据存储在本地data目录"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 23,
+      "start_sec": 0,
+      "end_sec": 89
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "Chroma数据库连接与集合创建",
+      "kp_summary": "讲解如何通过HTTP客户端连接Chroma数据库，并创建向量集合，包括指定embedding模型和相似度计算方法。",
+      "key_points": [
+        "通过ChromaDB的HTTP客户端指定host和port建立连接",
+        "创建embedding函数，使用sentence transformer加载模型",
+        "使用create collection创建向量集合，指定名称和embedding函数",
+        "可设置元数据，如相似度计算方法（余弦相似度）",
+        "Chroma默认使用HNSW索引"
+      ],
+      "cue_start_idx": 24,
+      "cue_end_idx": 69,
+      "start_sec": 93,
+      "end_sec": 294
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "Chroma数据插入与查看",
+      "kp_summary": "演示如何向Chroma向量集合中添加文档数据，包括指定文档、ID和元数据，并查看集合中的元素。",
+      "key_points": [
+        "使用add操作插入文档，需指定文档内容、ID和可选元数据",
+        "元数据可用于后续过滤检索",
+        "通过peek函数查看集合中的元素，包括ID、向量、元数据和文档",
+        "Chroma自动创建HNSW索引，无需手动操作"
+      ],
+      "cue_start_idx": 70,
+      "cue_end_idx": 116,
+      "start_sec": 298,
+      "end_sec": 468
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "Chroma向量检索与混合检索",
+      "kp_summary": "介绍Chroma的检索方式，包括通过ID检索、向量检索以及结合元数据或文档的混合检索。",
+      "key_points": [
+        "通过get collection获取向量集合对象",
+        "支持通过ID检索，返回文档、向量和元数据",
+        "向量检索：使用query方法，指定查询文本和返回数量",
+        "混合检索：结合元数据过滤（支持等于、大于、小于等多种条件）",
+        "支持文档过滤：使用whereDocument参数进行文本匹配后向量检索"
+      ],
+      "cue_start_idx": 117,
+      "cue_end_idx": 216,
+      "start_sec": 473,
+      "end_sec": 781
+    },
+    {
+      "kp_index": 4,
+      "kp_title": "Milvus安装与连接",
+      "kp_summary": "介绍Milvus向量数据库的安装部署方式（Docker）以及Python客户端PyMilvus的连接操作。",
+      "key_points": [
+        "Milvus是云原生向量数据库，通过Docker部署",
+        "官方提供Docker Compose配置文件方便启动",
+        "Python中使用需安装PyMilvus包",
+        "通过Connection.connect方法指定host和port建立连接"
+      ],
+      "cue_start_idx": 217,
+      "cue_end_idx": 261,
+      "start_sec": 783,
+      "end_sec": 894
+    }
+  ]
+}

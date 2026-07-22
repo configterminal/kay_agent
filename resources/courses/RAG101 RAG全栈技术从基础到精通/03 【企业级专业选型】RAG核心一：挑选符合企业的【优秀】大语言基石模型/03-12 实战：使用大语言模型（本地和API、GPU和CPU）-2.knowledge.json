@@ -1,0 +1,148 @@
+{
+  "section": "03-12",
+  "title": "实战：使用大语言模型（本地和API、GPU和CPU）-2",
+  "course_id": "RAG101",
+  "total_cues": 277,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "千问2模型推理与测试",
+      "kp_summary": "讲解千问2模型推理后的输出处理，包括提取输出token、解码为文本，并进行测试演示。",
+      "key_points": [
+        "提取输出token并解码为文本",
+        "测试提示词输入与模型输出",
+        "展示输入文本中的系统指令和用户指令",
+        "指出当前非流式输出速度较慢，后续将讲解流式输出"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 22,
+      "start_sec": 1,
+      "end_sec": 85
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "ChatGLM3模型介绍与加载",
+      "kp_summary": "介绍ChatGLM3开源大语言模型的背景，并通过transformers库加载模型和分词器，配置半精度推理。",
+      "key_points": [
+        "ChatGLM3是智谱AI开源的模型，有6B和9B等版本",
+        "可通过ModelScope或HuggingFace下载模型文件",
+        "从transformers导入模型和分词器类",
+        "初始化分词器和模型，设定设备为auto",
+        "设置半精度推理以节省内存和提高效率"
+      ],
+      "cue_start_idx": 23,
+      "cue_end_idx": 58,
+      "start_sec": 91,
+      "end_sec": 280
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "ChatGLM3非流式推理",
+      "kp_summary": "编写ChatGLM3的非流式推理函数，通过chat函数进行推理并测试，展示模型回复。",
+      "key_points": [
+        "定义推理函数，输入提示词和历史消息",
+        "使用chat函数进行非流式推理",
+        "设定温度、top_p、top_k和最大token数等参数",
+        "测试提示词“你好”，模型给出回复"
+      ],
+      "cue_start_idx": 59,
+      "cue_end_idx": 79,
+      "start_sec": 282,
+      "end_sec": 356
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "ChatGLM3流式推理",
+      "kp_summary": "修改推理函数实现ChatGLM3的流式推理，通过stream_chat函数返回迭代器，并演示流式输出效果。",
+      "key_points": [
+        "使用stream_chat函数进行流式推理",
+        "流式输出返回迭代器，需遍历并yield内容",
+        "测试提示词“介绍一下自己”，展示流畅输出",
+        "流式输出在交互上更舒适"
+      ],
+      "cue_start_idx": 80,
+      "cue_end_idx": 104,
+      "start_sec": 360,
+      "end_sec": 478
+    },
+    {
+      "kp_index": 4,
+      "kp_title": "LangChain框架中使用开源模型",
+      "kp_summary": "介绍LangChain框架，并演示如何通过继承LLM类在LangChain中使用ChatGLM3等开源大语言模型。",
+      "key_points": [
+        "LangChain是开源框架，提供工具套件和接口",
+        "继承LLM类并重写推理函数",
+        "将ChatGLM3的推理代码写入重写函数",
+        "实例化类并传入提示词即可调用",
+        "其他开源模型也可类似操作"
+      ],
+      "cue_start_idx": 105,
+      "cue_end_idx": 125,
+      "start_sec": 480,
+      "end_sec": 581
+    },
+    {
+      "kp_index": 5,
+      "kp_title": "讯飞星火大模型API介绍",
+      "kp_summary": "介绍讯飞星火大模型的API版本、请求参数格式，以及注册应用获取密钥的流程。",
+      "key_points": [
+        "星火大模型有Lite、Pro、Max等多个API版本",
+        "支持Python SDK和HTTP API两种方式",
+        "请求参数包括模型类型、流式输出、温度等",
+        "需在平台注册应用获取HTTP和SDK密钥"
+      ],
+      "cue_start_idx": 126,
+      "cue_end_idx": 152,
+      "start_sec": 586,
+      "end_sec": 690
+    },
+    {
+      "kp_index": 6,
+      "kp_title": "Python SDK调用星火大模型",
+      "kp_summary": "通过安装官方Python SDK，使用ChatSparkLLM类实现非流式调用星火大模型，并展示输出结果。",
+      "key_points": [
+        "安装sparkai-python SDK并更新到最新版",
+        "声明应用ID、密钥和模型版本",
+        "使用ChatSparkLLM类实例化并传入参数",
+        "构建提示词并封装为星火支持的格式",
+        "执行推理并打印输出结果"
+      ],
+      "cue_start_idx": 153,
+      "cue_end_idx": 190,
+      "start_sec": 694,
+      "end_sec": 817
+    },
+    {
+      "kp_index": 7,
+      "kp_title": "HTTP和OpenAI兼容接口调用星火",
+      "kp_summary": "演示通过HTTP API和兼容OpenAI的接口两种方式调用星火大模型，实现流式输出。",
+      "key_points": [
+        "HTTP方式通过requests库POST请求URL",
+        "传入模型、消息、流式输出等参数和密钥",
+        "流式输出需不断解析返回结果",
+        "OpenAI兼容接口使用openai库，传入星火URL和密钥",
+        "调用chat.completions.create实现流式推理"
+      ],
+      "cue_start_idx": 191,
+      "cue_end_idx": 241,
+      "start_sec": 820,
+      "end_sec": 988
+    },
+    {
+      "kp_index": 8,
+      "kp_title": "CPU上使用Ollama部署模型",
+      "kp_summary": "介绍在CPU设备上通过Ollama部署大语言模型，并使用OpenAI兼容接口调用本地服务。",
+      "key_points": [
+        "Ollama是方便的CPU部署工具，通过脚本安装",
+        "使用ollama serve启动服务，ollama run运行模型",
+        "Ollama提供HTTP接口，端口默认11434",
+        "通过OpenAI兼容接口调用，URL指向本地服务",
+        "API Key可随意填写，支持流式输出"
+      ],
+      "cue_start_idx": 242,
+      "cue_end_idx": 276,
+      "start_sec": 994,
+      "end_sec": 1115
+    }
+  ]
+}

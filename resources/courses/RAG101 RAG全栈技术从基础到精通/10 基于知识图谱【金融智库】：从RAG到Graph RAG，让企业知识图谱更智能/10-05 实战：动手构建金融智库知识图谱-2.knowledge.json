@@ -1,0 +1,89 @@
+{
+  "section": "10-05",
+  "title": "实战：动手构建金融智库知识图谱-2",
+  "course_id": "RAG101",
+  "total_cues": 538,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "构建事件类型节点",
+      "kp_summary": "讲解如何从公司事件数据中提取事件类型，并使用Py2Neo的Node和merge方法创建事件类型节点并入库。",
+      "key_points": [
+        "遍历公司事件数据，提取事件title和内容",
+        "遍历label提取事件类型（event type）",
+        "使用Node创建事件类型节点，指定label和属性",
+        "通过Graph的merge方法将节点入库，以名称为唯一标识",
+        "merge函数实现无则创建、有则合并的功能"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 47,
+      "start_sec": 0,
+      "end_sec": 146
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "构建公司节点与事件关系",
+      "kp_summary": "讲解如何遍历事件类型属性，提取主体（公司）和其他属性，创建公司节点，并建立公司与事件类型之间的Happen关系及属性。",
+      "key_points": [
+        "遍历事件类型属性，提取主体（公司名称）和其他属性",
+        "将公司名称映射到投资关系数据中的全称",
+        "使用Node创建公司节点，并通过merge入库",
+        "使用Relationship建立公司到事件类型的Happen关系",
+        "将其他属性（如标题、内容）作为关系属性，通过create入库"
+      ],
+      "cue_start_idx": 48,
+      "cue_end_idx": 191,
+      "start_sec": 150,
+      "end_sec": 462
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "构建投资者关系中的实体与关系",
+      "kp_summary": "讲解如何从投资关系数据中创建公司节点、专利节点以及投资者节点，并建立公司与专利、投资者与公司之间的关系。",
+      "key_points": [
+        "遍历投资关系数据，提取公司属性并创建公司节点",
+        "遍历公司专利ID，转换为名称后创建专利节点",
+        "使用merge将专利节点入库",
+        "建立公司拥有专利的关系并入库",
+        "遍历投资者数据，创建投资者节点",
+        "将投资者投资的公司ID转换为公司节点，建立投资关系并设置时间、轮次属性"
+      ],
+      "cue_start_idx": 192,
+      "cue_end_idx": 355,
+      "start_sec": 464,
+      "end_sec": 837
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "Cypher查询示例：事件与公司",
+      "kp_summary": "通过Cypher查询示例，演示如何查询发生特定事件类型的公司，以及按条件筛选公司的事件信息。",
+      "key_points": [
+        "使用MATCH查询事件类型节点，通过Happen关系找到公司",
+        "返回公司名称和事件标题",
+        "通过Graph.run执行Cypher并遍历结果",
+        "使用WHERE条件筛选公司名称包含特定关键词",
+        "返回公司名称、事件标题和事件类型名称"
+      ],
+      "cue_start_idx": 356,
+      "cue_end_idx": 454,
+      "start_sec": 839,
+      "end_sec": 1048
+    },
+    {
+      "kp_index": 4,
+      "kp_title": "Cypher查询示例：投资者与公司",
+      "kp_summary": "通过多个Cypher查询示例，演示如何查询投资关系、公司事件以及多跳关系查询。",
+      "key_points": [
+        "查询投资特定公司的投资者",
+        "查询投资者投资的公司及其发生的事件类型",
+        "查询投资特定公司的投资者还投资了哪些其他公司",
+        "通过MATCH和WHERE实现多跳关系查询",
+        "展示查询结果，如投资者、公司及事件类型"
+      ],
+      "cue_start_idx": 455,
+      "cue_end_idx": 537,
+      "start_sec": 1049,
+      "end_sec": 1221
+    }
+  ]
+}

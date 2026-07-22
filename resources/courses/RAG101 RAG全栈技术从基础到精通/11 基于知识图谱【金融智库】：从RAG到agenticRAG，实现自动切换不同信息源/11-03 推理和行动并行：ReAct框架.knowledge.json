@@ -1,0 +1,40 @@
+{
+  "section": "11-03",
+  "title": "推理和行动并行：ReAct框架",
+  "course_id": "RAG101",
+  "total_cues": 90,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "ReAct框架原理与对比",
+      "kp_summary": "介绍了ReAct框架的基本概念，即推理（Reason）与行动（Action）相结合，并通过对比直接回答、纯推理、纯搜索等模式，说明ReAct通过Thought-Action-Observation迭代循环的优势。",
+      "key_points": [
+        "ReAct = Reason + Action，即推理与行动相结合",
+        "纯推理缺乏外部信息，效果不佳；纯行动可能方向错误",
+        "ReAct在推理指导下行动，行动反馈支持更好推理",
+        "对比四种回答模式：直接回答、纯推理、纯搜索、ReAct",
+        "ReAct通过Thought→Action→Observation多次迭代找到正确答案"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 68,
+      "start_sec": 0,
+      "end_sec": 219
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "ReAct提示词结构详解",
+      "kp_summary": "详细讲解了ReAct框架的提示词组成，包括工具定义、Thought-Action-Observation步骤以及迭代终止条件（Final Answer）。",
+      "key_points": [
+        "提示词首先给出可用工具及其功能、参数说明",
+        "核心步骤：Thought（思考决定动作）→ Action（执行动作）→ Observation（观察结果）",
+        "迭代可重复多次，直到找到Final Answer",
+        "Action Input用于指定工具参数",
+        "完整提示词结构确保推理与行动协同工作"
+      ],
+      "cue_start_idx": 69,
+      "cue_end_idx": 89,
+      "start_sec": 223,
+      "end_sec": 281
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "section": "03-03",
+  "title": "国内外大模型产品必知必会",
+  "course_id": "RAG101",
+  "total_cues": 46,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "国内外大模型产品概览",
+      "kp_summary": "本节介绍了截至2023-2024年国内外主要大模型产品，包括老牌大厂和AI独角兽，并区分了开源模型和闭源模型两类。",
+      "key_points": [
+        "国内外大模型公司包括Meta、谷歌、百度、阿里等老牌大厂，以及Cockere、Antropiq、国内六小腹等AI独角兽。",
+        "开源模型代表有Meta的Llama系列、阿里的通义千问、智谱的GLM系列、深度求索的D-SIC等。",
+        "闭源模型主要通过AI助手或API提供服务，如百度的文心一言、月之暗面的KimiChat、OpenAI的GPT系列等。",
+        "开源模型可本地部署，闭源模型通过API调用，各有适用场景。"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 45,
+      "start_sec": 0,
+      "end_sec": 221
+    }
+  ]
+}

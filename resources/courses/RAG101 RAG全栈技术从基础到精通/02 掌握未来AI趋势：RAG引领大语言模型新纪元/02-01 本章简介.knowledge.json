@@ -1,0 +1,24 @@
+{
+  "section": "02-01",
+  "title": "本章简介",
+  "course_id": "RAG101",
+  "total_cues": 11,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "本章简介与学习路径",
+      "kp_summary": "介绍本章将讲解大模型应用为何需要RAG、核心组成部分、技术栈、市场前景及课程项目内容。",
+      "key_points": [
+        "先了解应用场景和组成部分以增强学习动力",
+        "讲解大模型应用为什么需要RAG",
+        "介绍RAG的核心组成部分及当前争议",
+        "概述RAG技术栈和市场前景",
+        "介绍本次课程涉及的项目内容"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 10,
+      "start_sec": 0,
+      "end_sec": 53
+    }
+  ]
+}

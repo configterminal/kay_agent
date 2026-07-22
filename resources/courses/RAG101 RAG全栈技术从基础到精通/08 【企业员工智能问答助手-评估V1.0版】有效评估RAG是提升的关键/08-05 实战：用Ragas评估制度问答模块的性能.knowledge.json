@@ -1,0 +1,54 @@
+{
+  "section": "08-05",
+  "title": "实战：用Ragas评估制度问答模块的性能",
+  "course_id": "RAG101",
+  "total_cues": 66,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "构建RAG Pipeline",
+      "kp_summary": "重新构建制度问答助手的RAG pipeline，包括加载知识库、构建问答流程，并返回上下文信息用于后续评估。",
+      "key_points": [
+        "引入模型和Chroma数据库连接",
+        "加载知识库并构建检索器",
+        "构建问答pipeline，检索相关文档并生成答案",
+        "返回上下文信息列表供评估使用"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 14,
+      "start_sec": 0,
+      "end_sec": 122
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "构建Ragas评估数据集",
+      "kp_summary": "构建Ragas评估所需的四部分数据集：问题、标准答案、上下文信息和生成答案，其中前两部分手动提供，后两部分由RAG pipeline生成。",
+      "key_points": [
+        "评估数据集包含问题、标准答案、上下文信息和生成答案",
+        "手动提供问题和标准答案",
+        "通过RAG pipeline生成上下文信息和答案",
+        "将四部分组合成dataset对象"
+      ],
+      "cue_start_idx": 15,
+      "cue_end_idx": 32,
+      "start_sec": 126,
+      "end_sec": 260
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "执行Ragas评估并分析结果",
+      "kp_summary": "选择评估指标（忠实性、答案相关性、上下文召回和精度），配置模型并执行评估，最后分析结果以指导系统优化。",
+      "key_points": [
+        "选择四个常用评估指标：忠实性、答案相关性、上下文召回和精度",
+        "实例化大语言模型和embedding模型",
+        "配置超时时间并执行evaluate函数",
+        "分析评估结果，针对低分指标进行优化",
+        "建议在实际项目中生成更多问题以覆盖不同场景"
+      ],
+      "cue_start_idx": 33,
+      "cue_end_idx": 65,
+      "start_sec": 265,
+      "end_sec": 447
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "section": "09-14",
+  "title": "实战：用检索增强技术提升制度问答模块性能-融合检索",
+  "course_id": "RAG101",
+  "total_cues": 123,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "融合检索概念与BM25稀疏检索实现",
+      "kp_summary": "介绍融合检索的概念（结合稀疏检索和稠密检索），并详细讲解如何实现基于BM25的稀疏检索，包括安装库、分词处理、创建检索器及测试检索结果。",
+      "key_points": [
+        "融合检索结合了稀疏检索（BM25）和稠密检索（语义检索）",
+        "使用jieba进行中文分词，为BM25提供词频统计基础",
+        "通过Rank BM25库创建BM25检索器，并设置检索返回条数",
+        "测试BM25检索结果，发现相关文档但排序不理想"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 72,
+      "start_sec": 0,
+      "end_sec": 265
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "稠密检索器与融合检索器构建",
+      "kp_summary": "实现稠密检索器，并将BM25稀疏检索器与稠密检索器通过Ensemble Retriever融合，设置权重后测试融合检索效果，最后将结果用于RAG生成。",
+      "key_points": [
+        "将向量集合转换为稠密检索器（as_retriever）",
+        "使用Ensemble Retriever融合BM25和稠密检索器，设置权重（稠密0.7）",
+        "测试融合检索，返回结果与查询相关",
+        "将融合检索结果直接传入RAG Pipeline，由大模型生成答案"
+      ],
+      "cue_start_idx": 73,
+      "cue_end_idx": 122,
+      "start_sec": 270,
+      "end_sec": 427
+    }
+  ]
+}

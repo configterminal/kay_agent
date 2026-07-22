@@ -1,0 +1,178 @@
+{
+  "section": "06-06",
+  "title": "实战：实现制度问答模块数据读取和切割",
+  "course_id": "RAG101",
+  "total_cues": 495,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "LangChain文档格式介绍",
+      "kp_summary": "介绍LangChain中Document类的两个属性：页面内容和元数据，并演示如何创建Document对象。",
+      "key_points": [
+        "LangChain中文档以Document类封装",
+        "Document由页面内容和元数据组成",
+        "通过Document类传入页面内容和元数据构建文档",
+        "后续文档解析方法返回的都是Document格式"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 13,
+      "start_sec": 0,
+      "end_sec": 92
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "HTML文档解析方法",
+      "kp_summary": "讲解使用LangChain的Web-based Loader和BSHTMLoader解析HTML文档，并演示如何通过Beautiful Soup进行定制化解析。",
+      "key_points": [
+        "Web-based Loader用于解析URL内容",
+        "BSHTMLoader用于解析本地HTML文件",
+        "两种方法都基于Beautiful Soup库",
+        "解析结果不区分代码块等特殊内容",
+        "可通过Beautiful Soup定制提取代码块等信息"
+      ],
+      "cue_start_idx": 14,
+      "cue_end_idx": 99,
+      "start_sec": 96,
+      "end_sec": 457
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "PDF文档解析方法",
+      "kp_summary": "介绍使用PyMuPDF Loader和原始PyMuPDF库解析PDF文档，并演示如何提取表格信息。",
+      "key_points": [
+        "PyMuPDF Loader将PDF解析为多个Document",
+        "该方法不保留表格格式，仅拼接文本",
+        "原始PyMuPDF可提取表格并转为DataFrame",
+        "支持定制化解析表格信息"
+      ],
+      "cue_start_idx": 100,
+      "cue_end_idx": 150,
+      "start_sec": 461,
+      "end_sec": 637
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "通用文档解析工具Instructure",
+      "kp_summary": "介绍Instructure库作为通用文档解析工具，可识别不同文件格式并调用对应解析器，提供文本位置和类别信息。",
+      "key_points": [
+        "Instructure可识别多种文件格式",
+        "通过Instructure Loader加载和解析文档",
+        "解析结果包含位置信息和类别信息",
+        "类别信息可能不准确"
+      ],
+      "cue_start_idx": 151,
+      "cue_end_idx": 179,
+      "start_sec": 641,
+      "end_sec": 748
+    },
+    {
+      "kp_index": 4,
+      "kp_title": "Office文档解析：PPT",
+      "kp_summary": "讲解使用LangChain的PPT Loader和Python PPTX库解析PPT文档，包括文本、表格和图片的提取。",
+      "key_points": [
+        "PPT Loader不识别图片和表格信息",
+        "Python PPTX可定制解析文本、表格和图片",
+        "通过遍历Slides和Shapes提取内容",
+        "支持保存图片和提取表格数据"
+      ],
+      "cue_start_idx": 180,
+      "cue_end_idx": 235,
+      "start_sec": 752,
+      "end_sec": 927
+    },
+    {
+      "kp_index": 5,
+      "kp_title": "Office文档解析：Word和Excel",
+      "kp_summary": "介绍使用LangChain的Docx2txt Loader和Python DOCX库解析Word文档，以及使用OpenPYXL库解析Excel文件。",
+      "key_points": [
+        "Docx2txt Loader仅拼接Word文本",
+        "Python DOCX可定制解析段落和表格",
+        "OpenPYXL用于Excel文件读取和解析",
+        "支持处理合并单元格信息",
+        "可遍历单元格获取值和位置"
+      ],
+      "cue_start_idx": 236,
+      "cue_end_idx": 307,
+      "start_sec": 934,
+      "end_sec": 1248
+    },
+    {
+      "kp_index": 6,
+      "kp_title": "RAG Flow中的Deep DLC文档解析",
+      "kp_summary": "介绍RAG Flow开源框架中的Deep DLC工具，包括视觉处理（OCR和布局识别）和文档解析功能，并演示PDF解析效果。",
+      "key_points": [
+        "Deep DLC包含视觉处理和文档解析两部分",
+        "视觉处理包括OCR和布局识别",
+        "支持多种文件格式解析",
+        "PDF解析过程包括图片转换、OCR和表格识别",
+        "能正确识别文本和表格信息"
+      ],
+      "cue_start_idx": 308,
+      "cue_end_idx": 359,
+      "start_sec": 1253,
+      "end_sec": 1471
+    },
+    {
+      "kp_index": 7,
+      "kp_title": "文本分块方法概述与统计分析",
+      "kp_summary": "介绍三种分块方法（递归文本分块、基于向量的语义分块、基于模型的分块），并演示对文档进行句子长度统计分析。",
+      "key_points": [
+        "三种分块方法：递归、基于向量、基于模型",
+        "使用PyMuPDF Loader加载演示文档",
+        "对文档进行句子长度统计分析",
+        "统计平均长度、最大长度、最小长度和百分位数"
+      ],
+      "cue_start_idx": 360,
+      "cue_end_idx": 389,
+      "start_sec": 1476,
+      "end_sec": 1661
+    },
+    {
+      "kp_index": 8,
+      "kp_title": "递归文本分块实现",
+      "kp_summary": "演示递归文本分块的具体实现，包括参数设置（块大小、重叠字符数、分隔符）和两种分块方式（一次性处理与分步处理）。",
+      "key_points": [
+        "实例化递归文本分块对象，设置块大小和重叠字符数",
+        "针对中文语境加入中文分隔符",
+        "块大小可根据句子统计信息调整",
+        "支持load_and_split和split_document两种方式",
+        "分块结果保持相对完整，块间有重叠"
+      ],
+      "cue_start_idx": 390,
+      "cue_end_idx": 431,
+      "start_sec": 1668,
+      "end_sec": 1871
+    },
+    {
+      "kp_index": 9,
+      "kp_title": "基于向量的语义分块",
+      "kp_summary": "演示基于向量的语义分块方法，包括指定Embedding模型、设置分块参数（阈值策略、句子分隔符、滑动窗口大小）以及分块结果展示。",
+      "key_points": [
+        "需指定Embedding模型（如BGE-gem3）",
+        "设置分块阈值策略（如百分位法）",
+        "句子分隔符用于最小处理单元",
+        "滑动窗口大小控制上下文范围",
+        "分块结果语义相对完整"
+      ],
+      "cue_start_idx": 432,
+      "cue_end_idx": 467,
+      "start_sec": 1874,
+      "end_sec": 2024
+    },
+    {
+      "kp_index": 10,
+      "kp_title": "基于模型的分块方法",
+      "kp_summary": "演示基于BERT模型的分块方法，使用ModelScope的pipeline进行文本分块，并展示分块结果。",
+      "key_points": [
+        "使用阿里达摩院的BERT文档分割模型",
+        "通过ModelScope的pipeline实现分块",
+        "需传入分块文本并去除换行符",
+        "分块结果语义相对完整"
+      ],
+      "cue_start_idx": 468,
+      "cue_end_idx": 494,
+      "start_sec": 2027,
+      "end_sec": 2134
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "section": "12-04",
+  "title": "实战：gradio整合两大RAG项目（2）",
+  "course_id": "RAG101",
+  "total_cues": 347,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "界面组件构建",
+      "kp_summary": "讲解代码中如何构建Gradio界面的各个组件，包括问题输入框、按钮等。",
+      "key_points": [
+        "问题输入框使用多模态TestBot，支持文本和文件上传",
+        "界面包含四个按钮：隐藏左边列、重置、清除等",
+        "所有组件构建完成后，接下来添加事件处理"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 22,
+      "start_sec": 0,
+      "end_sec": 66
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "事件处理机制概述",
+      "kp_summary": "介绍Gradio事件处理的基本机制，包括输入输出与组件的对应关系。",
+      "key_points": [
+        "事件处理是界面设计最重要的部分",
+        "输入输出都是Gradio组件，但函数内部使用组件的值",
+        "Gradio自动将返回文本渲染到对应组件"
+      ],
+      "cue_start_idx": 23,
+      "cue_end_idx": 53,
+      "start_sec": 69,
+      "end_sec": 169
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "清除与重置按钮事件",
+      "kp_summary": "详细讲解Clear、Undo、Reset按钮的事件处理逻辑和实现。",
+      "key_points": [
+        "ClearButton清除所有组件内容，设置为初始值",
+        "Undo回退到上一次QA，移除最近一次对话",
+        "Reset功能与Clear相同，恢复初始状态"
+      ],
+      "cue_start_idx": 54,
+      "cue_end_idx": 110,
+      "start_sec": 171,
+      "end_sec": 324
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "隐藏/显示按钮事件",
+      "kp_summary": "讲解隐藏和显示左边列按钮的事件处理逻辑。",
+      "key_points": [
+        "按钮通过切换标签名称实现隐藏/显示状态",
+        "通过更新左边列的可见性属性来控制显示",
+        "使用True/False状态控制可见性"
+      ],
+      "cue_start_idx": 111,
+      "cue_end_idx": 135,
+      "start_sec": 327,
+      "end_sec": 401
+    },
+    {
+      "kp_index": 4,
+      "kp_title": "提交事件处理逻辑",
+      "kp_summary": "详细讲解文本框提交事件的处理逻辑，包括输入验证和RAG Pipeline调用。",
+      "key_points": [
+        "提交事件是系统最重要的部分，处理用户问题输入",
+        "先判断输入是否为空，为空则显示欢迎信息",
+        "调用RAG Router的文本补全方法获取回答",
+        "返回结果包括模型生成答案和上下文信息"
+      ],
+      "cue_start_idx": 136,
+      "cue_end_idx": 251,
+      "start_sec": 405,
+      "end_sec": 760
+    },
+    {
+      "kp_index": 5,
+      "kp_title": "应用初始加载与部署",
+      "kp_summary": "讲解应用初始加载事件和两种部署方式，重点介绍FastAPI多进程部署。",
+      "key_points": [
+        "初始加载事件显示欢迎信息",
+        "支持Gradio原生启动和FastAPI多进程部署",
+        "通过FastAPI部署可实现多进程并发",
+        "使用Uvicorn启动FastAPI应用，可指定进程数"
+      ],
+      "cue_start_idx": 252,
+      "cue_end_idx": 294,
+      "start_sec": 763,
+      "end_sec": 910
+    },
+    {
+      "kp_index": 6,
+      "kp_title": "系统功能演示与总结",
+      "kp_summary": "实际演示RAG系统的使用，包括不同问题的回答和按钮功能测试，并总结项目。",
+      "key_points": [
+        "测试制度问答助手，展示参考信息和表格",
+        "测试金融智库RAG Pipeline，展示企业转型问题",
+        "测试无关问题，系统返回无法回答",
+        "演示Undo、Clear、Reset按钮功能",
+        "总结项目整合了制度问答和金融智库两个RAG Pipeline"
+      ],
+      "cue_start_idx": 295,
+      "cue_end_idx": 346,
+      "start_sec": 915,
+      "end_sec": 1141
+    }
+  ]
+}

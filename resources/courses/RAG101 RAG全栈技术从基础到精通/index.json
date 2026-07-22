@@ -1,0 +1,10 @@
+{
+  "course_id": "RAG101",
+  "title": "RAG全栈技术从基础到精通",
+  "industry": "IT",
+  "full_title": "RAG全栈技术从基础到精通，打造高精准AI应用",
+  "persona_target": "all",
+  "difficulty": "beginner",
+  "tags": ["RAG", "AI", "大模型", "向量数据库", "检索增强", "知识图谱", "Agent"],
+  "description": "从零掌握 RAG 全栈：Embedding、向量库、检索增强、Graph RAG、企业问答实战"
+}

@@ -1,0 +1,24 @@
+{
+  "section": "08-01",
+  "title": "本章介绍",
+  "course_id": "RAG101",
+  "total_cues": 6,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "本章介绍：RAG系统评估",
+      "kp_summary": "本章将介绍RAG系统评估的重要性、评估标准、三大步骤、自动化评估框架IGAS，以及实战评估。",
+      "key_points": [
+        "AI应用开发需根据评估结果逐步优化",
+        "RAG评估是判断项目好坏和优化方向的标准",
+        "梳理RAG评估标准与三大步骤",
+        "重点介绍自动化评估框架IGAS",
+        "实战：利用IGAS评估已构建的RAG系统"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 5,
+      "start_sec": 0,
+      "end_sec": 43
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "section": "05-02",
+  "title": "全方位对比：主流向量数据库",
+  "course_id": "RAG101",
+  "total_cues": 230,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "向量数据库基本概念",
+      "kp_summary": "介绍向量数据库的定义、作用及其在RAG系统中的关键性，并与关系型数据库进行对比。",
+      "key_points": [
+        "向量数据库是存储向量及其对应文档的数据库",
+        "提供高效存储、查询和处理向量的能力",
+        "在RAG系统中查询性能是关键指标",
+        "与关系型数据库在持久化、增删改查、相似度计算、数据存储和索引等方面有显著差异"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 59,
+      "start_sec": 0,
+      "end_sec": 185
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "主流向量数据库分类",
+      "kp_summary": "对当前主流向量数据库按专用/传统和开源/商业进行分类，并引出Chroma和Milvus两个重点。",
+      "key_points": [
+        "按左右分类：专用向量数据库（如Chroma、Milvus）与传统数据库扩展（如ES、Redis、ClickHouse）",
+        "按上下分类：开源产品与商业产品",
+        "重点讲解Chroma和Milvus两个开源向量数据库"
+      ],
+      "cue_start_idx": 60,
+      "cue_end_idx": 76,
+      "start_sec": 189,
+      "end_sec": 242
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "Chroma向量数据库详解",
+      "kp_summary": "详细介绍Chroma的特点、部署方式、操作流程，包括创建集合、添加文档和查询。",
+      "key_points": [
+        "Chroma是AI原生的开源向量数据库，支持服务端和本地部署",
+        "安装简单，通过pip install即可",
+        "支持多种语言调用和主流AI框架集成",
+        "操作流程：启动服务、创建集合（指定Embedding模型）、添加文档（自动向量化）、查询（支持元数据过滤）"
+      ],
+      "cue_start_idx": 77,
+      "cue_end_idx": 143,
+      "start_sec": 245,
+      "end_sec": 445
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "Milvus向量数据库详解",
+      "kp_summary": "详细介绍Milvus的特点、部署方式、操作流程，包括字段声明、创建集合、索引构建和查询。",
+      "key_points": [
+        "Milvus是云原生的开源向量数据库，支持本地、服务端和分布式集群部署",
+        "功能强大，支持GPU加速、元数据过滤、访问权限控制",
+        "操作流程：连接服务、声明字段Schema、创建集合、插入数据、手动创建索引、查询（支持元数据过滤）",
+        "与Chroma不同，Milvus需要手动构建索引并指定索引类型和相似度计算方法"
+      ],
+      "cue_start_idx": 144,
+      "cue_end_idx": 204,
+      "start_sec": 447,
+      "end_sec": 637
+    },
+    {
+      "kp_index": 4,
+      "kp_title": "Chroma与Milvus对比总结",
+      "kp_summary": "从部署、数据管理、相似度度量、服务管理等方面对比Chroma和Milvus，给出选型建议。",
+      "key_points": [
+        "部署上：Milvus云原生支持分布式，Chroma分布式尚不成熟",
+        "数据管理：两者都支持增删改查和备份恢复",
+        "相似度度量和索引算法：Milvus更丰富",
+        "服务管理：Milvus支持访问权限控制和监控，Chroma暂无",
+        "选型建议：Chroma适合中小型项目，Milvus适合中大型项目"
+      ],
+      "cue_start_idx": 205,
+      "cue_end_idx": 229,
+      "start_sec": 640,
+      "end_sec": 706
+    }
+  ]
+}

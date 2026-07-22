@@ -1,0 +1,25 @@
+{
+  "section": "07-03",
+  "title": "项目技术选型",
+  "course_id": "RAG101",
+  "total_cues": 41,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "项目技术选型总览",
+      "kp_summary": "本节介绍了RAG项目的整体技术选型，包括Embedding模型、向量数据库、大语言模型、文档解析与分块工具以及应用框架的选择。",
+      "key_points": [
+        "Embedding模型选用BGE M3，输出1024维，支持8K Token输入，内存约2GB",
+        "向量数据库选用Chroma，适合文档量少、无扩展性要求的场景",
+        "大语言模型优先选用开源最强的清问2 72B，也可使用闭源模型",
+        "文档解析采用RITFLOW的Deep DOC，分块结合LAN Chain策略",
+        "应用框架使用LAN Chain，前端框架使用Gradle",
+        "技术选型在项目执行过程中可动态调整"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 40,
+      "start_sec": 0,
+      "end_sec": 94
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "section": "04-04",
+  "title": "主流中文embedding模型",
+  "course_id": "RAG101",
+  "total_cues": 95,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "MTEB基准测试与中文embedding模型概览",
+      "kp_summary": "介绍MTEB基准测试及其排行榜，并引出两种主流中文embedding模型：GTE和BGE。",
+      "key_points": [
+        "MTEB是评估embedding模型的基准测试，提供排行榜。",
+        "MTEB涵盖多种检索任务，展示中文模型排名。",
+        "主流模型包括BERT架构改进版和基于大模型的版本。",
+        "重点介绍GTE和BGE两种BERT架构改进模型。"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 11,
+      "start_sec": 0,
+      "end_sec": 57
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "GTE模型：度量学习与对比学习",
+      "kp_summary": "详细讲解阿里巴巴GTE模型的两种训练方法：度量学习和对比学习，包括原理、数据构造和目标。",
+      "key_points": [
+        "GTE在BERT基础上加入度量学习和对比学习。",
+        "度量学习：计算句子向量余弦相似度，使相关句子相似度趋近1，不相关趋近0。",
+        "度量学习使用配对数据（如新闻摘要-内容、代码注释-代码）。",
+        "对比学习：构建三元组（Q, A, I），使相关文本距离小，不相关距离大。",
+        "对比学习在有标签数据上微调，符合embedding模型定义。"
+      ],
+      "cue_start_idx": 12,
+      "cue_end_idx": 54,
+      "start_sec": 60,
+      "end_sec": 244
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "BGE M3模型：多语言、多检索、多粒度",
+      "kp_summary": "介绍BGE系列M3模型的三大功能及其与GTE的差异，强调其混合检索能力。",
+      "key_points": [
+        "M3支持多语言、多检索类型（密集、稀疏、多向量）和多文本粒度（字词、段落、文档）。",
+        "M3与GTE训练方式类似，但细节不同：使用BERT变种LoftTA。",
+        "M3计算相似度时融合密集检索、稀疏检索和多向量检索。",
+        "密集检索是全局角度，多向量检索从局部细粒度进行语义检索。",
+        "M3是从总体到局部、从语义到文本匹配的混合检索模型。"
+      ],
+      "cue_start_idx": 55,
+      "cue_end_idx": 94,
+      "start_sec": 249,
+      "end_sec": 376
+    }
+  ]
+}

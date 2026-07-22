@@ -1,0 +1,67 @@
+{
+  "section": "09-07",
+  "title": "检索后增强：重排序技术(Re-rank)",
+  "course_id": "RAG101",
+  "total_cues": 84,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "重排序的必要性与目的",
+      "kp_summary": "解释了为什么需要对检索到的文档进行重排序，包括解决相似但不相关的问题、减少上下文长度对LLM的影响等。",
+      "key_points": [
+        "检索到的文档基于相似度，可能相似但不相关",
+        "Embedding模型内在原因导致高相似度低相关性",
+        "过多文档送入LLM会降低准确性和速度",
+        "重排序旨在筛选出更相关、更准确的文档分块"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 25,
+      "start_sec": 0,
+      "end_sec": 126
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "重排序在RAG中的定位",
+      "kp_summary": "说明重排序是检索后增强策略，位于检索模块之后，对文档进行再次排序处理。",
+      "key_points": [
+        "重排序是对检索到的文档进行再次排序",
+        "属于检索后增强策略",
+        "位于检索模块之后"
+      ],
+      "cue_start_idx": 26,
+      "cue_end_idx": 30,
+      "start_sec": 130,
+      "end_sec": 146
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "重排序算法与模型架构",
+      "kp_summary": "介绍了基于Cross-encoder的重排序算法原理，以及常用的Cohere和BGE re-rank模型。",
+      "key_points": [
+        "主流算法基于Cross-encoder架构",
+        "直接对查询和候选文档进行相关性打分",
+        "常用模型包括Cohere在线模型和BGE本地模型",
+        "BGE re-rank模型可在Hugging Face下载"
+      ],
+      "cue_start_idx": 31,
+      "cue_end_idx": 61,
+      "start_sec": 150,
+      "end_sec": 258
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "重排序推理过程与效果",
+      "kp_summary": "描述了重排序模型的推理流程，包括分词、模型打分和排序，并强调其提升检索和生成准确性的作用。",
+      "key_points": [
+        "推理过程包含分词和模型打分",
+        "输入为问题和文档的匹配对",
+        "根据分数对文档进行重排序",
+        "重排序是RAG必备模块，能提高检索和生成准确性"
+      ],
+      "cue_start_idx": 62,
+      "cue_end_idx": 83,
+      "start_sec": 259,
+      "end_sec": 333
+    }
+  ]
+}

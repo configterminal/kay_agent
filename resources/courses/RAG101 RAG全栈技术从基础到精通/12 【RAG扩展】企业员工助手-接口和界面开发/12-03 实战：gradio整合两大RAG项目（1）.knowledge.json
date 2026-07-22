@@ -1,0 +1,73 @@
+{
+  "section": "12-03",
+  "title": "实战：gradio整合两大RAG项目（1）",
+  "course_id": "RAG101",
+  "total_cues": 269,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "界面布局概览",
+      "kp_summary": "介绍员工助手Gradio界面的整体布局，包括左右分栏、状态信息、参考文档、聊天界面和功能按钮。",
+      "key_points": [
+        "整体界面为左右布局",
+        "左侧显示状态信息和参考文档（含表格）",
+        "右侧为聊天界面，包含对话展示、输入框和复位按钮",
+        "用户输入问题后，答案和上下文信息分别展示在右侧和左侧"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 26,
+      "start_sec": 0,
+      "end_sec": 78
+    },
+    {
+      "kp_index": 1,
+      "kp_title": "项目框架与模块划分",
+      "kp_summary": "讲解整个项目的模块框架，包括Model、提示池、RAG路由、RAG pipeline、UI和Assets等模块的功能与关系。",
+      "key_points": [
+        "Model模块存储大模型和Embedding模型",
+        "提示池模块存放RAG构建中的提示词模板",
+        "Util模块封装制度问答和金融智库两个RAG pipeline",
+        "Router模块基于React思维实现RAG路由，根据问题类型选择pipeline",
+        "UI模块负责界面设计和事件处理",
+        "入口文件为ERAC.py，调用UI并启动服务"
+      ],
+      "cue_start_idx": 27,
+      "cue_end_idx": 97,
+      "start_sec": 83,
+      "end_sec": 346
+    },
+    {
+      "kp_index": 2,
+      "kp_title": "UI代码结构详解",
+      "kp_summary": "详细讲解UI模块的代码结构，分为初始设置、RAG路由调用和界面设计三部分，并介绍事件处理函数。",
+      "key_points": [
+        "UI代码分为初始设置、调用RAG路由执行pipeline、界面UI设计三部分",
+        "初始设置包括方言词、状态信息等固定值",
+        "事件处理函数包括Undo、Reset、Clear、Hide Reset和Get Response",
+        "Get Response调用LN Response类执行RAG pipeline",
+        "Build方法负责设计界面布局和组件"
+      ],
+      "cue_start_idx": 98,
+      "cue_end_idx": 157,
+      "start_sec": 350,
+      "end_sec": 529
+    },
+    {
+      "kp_index": 3,
+      "kp_title": "界面构建过程演示",
+      "kp_summary": "通过代码和渲染结果对照，详细演示Gradio界面构建过程，包括标题、Tab、行/列布局、左右两列的具体组件设计。",
+      "key_points": [
+        "通过Blocks创建应用并设置样式主题和标题",
+        "使用HTML组件显示标题“企业员工助手E-RAG”",
+        "所有组件放在一个Tab内，Tab名称为E-RAG",
+        "整体布局为一行两列，左右列宽度比例1:3",
+        "左侧分为两行：第一行显示运行状态，第二行显示参考信息和表格",
+        "右侧包含Chatbot组件、问题输入框和重置/清理按钮"
+      ],
+      "cue_start_idx": 158,
+      "cue_end_idx": 268,
+      "start_sec": 532,
+      "end_sec": 800
+    }
+  ]
+}

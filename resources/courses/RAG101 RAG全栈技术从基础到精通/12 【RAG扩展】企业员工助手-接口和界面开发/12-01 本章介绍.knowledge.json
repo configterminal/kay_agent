@@ -1,0 +1,24 @@
+{
+  "section": "12-01",
+  "title": "本章介绍",
+  "course_id": "RAG101",
+  "total_cues": 36,
+  "knowledge_points": [
+    {
+      "kp_index": 0,
+      "kp_title": "本章介绍：界面开发与项目部署",
+      "kp_summary": "本章将整合制度问答助手、金融智库和RAG Router三个模块，通过Gradio开发界面，并讲解项目部署。",
+      "key_points": [
+        "整合制度问答助手、金融智库和RAG Router三个模块",
+        "通过Gradio开发对外服务的界面",
+        "介绍Gradio库的使用和界面设计拆解",
+        "说明项目部署的要点",
+        "实战讲解整个开发过程"
+      ],
+      "cue_start_idx": 0,
+      "cue_end_idx": 35,
+      "start_sec": 0,
+      "end_sec": 71
+    }
+  ]
+}
