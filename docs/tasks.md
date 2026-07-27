@@ -27,6 +27,32 @@
   3. 预警结果写入 response 的 `pending_options` 或独立告警通道
 - **相关文档**：`docs/architecture/emotion.md`
 
+### reflection-loop — Agent 反思循环（ResumeAgent 优先）
+
+- **状态**：方案已设计，待实现
+- **来源**：质量观测需求 (2026-07-27)
+- **问题**：
+  - ResumeAgent 等关键产出（简历）只走一次 ReAct 调用，质量不稳定
+  - 现有门禁是硬规则（密度+审核），缺少 LLM 自我评价驱动的质量闭环
+- **方案**：Reflection 模式 — GENERATE → REFLECT → (REVISE → REFLECT)*
+  - LLM 生成初稿后，自己评价（5 维度打分），不合格就改
+  - 最多 3 轮，pass_threshold ≥ 8/10
+- **涉及文件**：
+  - `src/agents/reflection.py` — **新建**：`reflect_on_output()` + `build_reflection_cycle()`
+  - `src/agents/resume.py` — 返回 Agent 时包装反思循环
+  - `src/agents/supervisor.py` — `_dispatch_to_agent()` 中接入
+- **相关文档**：`docs/architecture/agents/reflection-loop.md`
+
+### memory-topic-recall — 会话内话题回溯检索
+
+- **状态**：方案设计中
+- **来源**：记忆架构调研 (2026-07-27)
+- **问题**：
+  - 当前近窗裁剪是机械的（只看条数），用户跳回历史话题时细节丢失
+  - 摘要粒度太粗，无法检索 "之前那个父子文档索引" 的完整上下文
+- **方案**：Store 新增 `thread_blocks` 命名空间 + probe 节点语义检索历史对话块
+- **相关文档**：待撰写
+
 ---
 
 ## P2 — 待优化

@@ -1211,6 +1211,12 @@ def _dispatch_to_agent(
             emotion=emotion,
             student_id=int(student_id or 1),
         )
+        from src.agents.reflection import build_reflection_cycle
+        agent = build_reflection_cycle(
+            agent,
+            task_context="简历优化（fact/target 双模式）",
+            dimensions=["角色匹配度", "量化成果", "技能分层", "格式规范", "完整性"],
+        )
 
     elif agent_name == INTERVIEW_AGENT:
         from src.agents.interview import build_interview_agent

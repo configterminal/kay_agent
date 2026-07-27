@@ -23,6 +23,7 @@
 - [输出 Schema](agents/schemas.md) — Agent 结构化输出定义
 - [Prompt 模块](agents/prompts.md) — 多层 Prompt 组装架构
 - [服务生命周期](service-lifecycle.md) — 启动加载、请求复用、关闭释放
+- [**Agent 反思循环**](agents/reflection-loop.md) — LLM 自评 → 修改 → 再评（ResumeAgent 优先接入）
 - [**性能问题**](performance.md) — chat/简历延迟基线、双重检索与 Resume 串行 LLM、优化待办
 - [**RAGAS 评测方案**](eval/ragas-plan.md) — 单轮/多轮作用域与 faithfulness（后续启用）
 - [对话持久化](ui/conversation-persistence.md) — 聊天记录三层存储、前端 localStorage
