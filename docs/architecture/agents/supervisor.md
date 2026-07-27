@@ -330,9 +330,9 @@ decide_node 确定性路径：
 
 ### 未实现 Agent 探路改派 QA
 
-仅 **`interview_agent`** 仍占位。命中后若 Probe `top_score ≥ 0.35` 且有条目，改派 `qa_agent`。
+**所有 6 个 Agent 均已接通**，`UNIMPLEMENTED_AGENTS = frozenset()` 为空。
 
-**`jobmatch_agent` / `resume_agent` 已接通**，不在 `UNIMPLEMENTED_AGENTS`。
+**`interview_agent` / `jobmatch_agent` / `resume_agent` 均已接通**，不在 `UNIMPLEMENTED_AGENTS`。
 
 典型场景：
 - 「面试技巧」「简历怎么写」「怎么跳槽」→ `qa_agent`

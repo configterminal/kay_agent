@@ -89,7 +89,7 @@ resources/courses/
 
 ### 3.2 同步算法 `sync_course_catalog()`
 
-模块：`src/db/catalog_sync.py`（待建）
+模块：`src/db/catalog_sync.py`（已完成）
 
 ```
 扫描 resources/courses/
@@ -156,9 +156,9 @@ RecommendAgent 工具链：
 
 **原则**：画像以 **SQLite `students` 为权威**；Redis MemoryStore 可存 `profile_notes` 补充自由文本（Phase 2）。
 
-### 4.2 工具 `update_student_profile`（待建）
+### 4.2 工具 `update_student_profile`（已完成）
 
-位置：`src/tools/shared_tools.py` 或 `src/tools/profile_tools.py`
+位置：`src/tools/shared_tools.py`
 
 ```python
 @tool
@@ -281,15 +281,15 @@ RecommendAgent
 
 ---
 
-## 8. 相关文件（规划）
+## 8. 相关文件
 
 | 文件 | 职责 |
 |------|------|
-| `src/db/catalog_sync.py` | 扫描 resources → upsert course_modules |
-| `src/tools/profile_tools.py` 或 `shared_tools.py` | `update_student_profile` |
-| `src/tools/recommend_tools.py` | 增强匹配与分轨 |
-| `src/agents/prompts/recommend.py` | 画像写入与推荐流程 |
-| `src/main.py` lifespan | 启动时 `sync_course_catalog()` |
+| `src/db/catalog_sync.py` | ✅ 扫描 resources → upsert course_modules |
+| `src/tools/shared_tools.py` | ✅ `update_student_profile` |
+| `src/tools/recommend_tools.py` | ✅ 增强匹配与分轨 |
+| `src/agents/prompts/recommend.py` | ✅ 画像写入与推荐流程 |
+| `src/main.py` lifespan | ✅ 启动时 `sync_course_catalog()` |
 | `resources/courses/*/index.json` | 补充 persona_target、tags、description |
 
 ---

@@ -87,6 +87,7 @@ docker run -d --name redis-stack -p 6380:6379 -p 8002:8001 redis/redis-stack:lat
 │  ② MemoryStore → set_store() 全局单例                         │
 │  ②.5 sync_course_catalog() → course_modules                  │
 │  ②.6 sync_job_catalog() → job_roles + skill_mapping          │
+│  ②.7 sync_graph() → Neo4j 知识图谱（后台线程异步）              │
 │  ③ Milvus Lite：get_client() + ensure_collection()            │
 │  ④ BM25：warmup_bm25()                                       │
 │  ⑤ 编译 Supervisor Graph → app.state.graph                    │
@@ -100,6 +101,7 @@ docker run -d --name redis-stack -p 6380:6379 -p 8002:8001 redis/redis-stack:lat
 | MemoryStore | `memory/store.py` | `set_store` / `get_store` |
 | 课程目录 | `db/catalog_sync.py` | lifespan `sync_course_catalog` |
 | 岗位模板 | `db/job_catalog_sync.py` | lifespan `sync_job_catalog` |
+| 知识图谱 | `graph/` | lifespan 后台线程 `sync_graph()` |
 | Milvus | `vectordb/schema.py` | lifespan 触发 |
 | BM25 | `vectordb/hybrid_search.py` | `warmup_bm25()` |
 | Graph | `agents/supervisor.py` | `build_supervisor_graph()` → `app.state.graph` |

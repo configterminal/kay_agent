@@ -113,12 +113,12 @@ langgraph-checkpoint: 4.1.1
 langgraph-prebuilt:  1.1.0
 ```
 
-### Qdrant
+### Milvus
 
 ```
 位置:   f:\jupyter\
-版本:   qdrant-client 1.12.0
-模式:   内存模式可用，生产用 Docker 版持久化
+版本:   pymilvus（Milvus Lite）
+模式:   本地文件持久化（milvus_lite），生产可切换 Milvus Server
 ```
 
 ### Pydantic
@@ -264,10 +264,10 @@ f:/agent/
 - [x] 数据库 (`src/db/`) — 9 张表 SQLAlchemy ORM + 初始化
 - [x] 记忆系统 (`src/memory/`) — RedisSaver + MemoryStore
 - [x] 上下文预算 — Store.summaries + 近窗组 prompt（见 `src/memory/context.py`）
-- [x] 情感系统 (`src/emotion/detector.py`) — 7 种情绪实时检测 + 预警
+- [x] 情感系统 (`src/emotion/detector.py`) — 7 种情绪实时检测；落库与预警 → P1 任务（[`docs/tasks.md`](docs/tasks.md)）
 - [x] 导师人格 (`src/llm/base.py` — CoachStyle 枚举 + Prompt 注入)
 - [x] 传统 RAG 编排 (`src/vectordb/`) — 重写 / 混合检索 / 精排适配 / 父子文档
-- [x] 工具层 (`src/tools/`) — 34 个工具函数
+- [x] 工具层 (`src/tools/`) — 多个 Agent 工具函数（`@tool` 装饰 + 内部辅助）
 - [x] 输出 Schema (`src/schemas/`)
 - [x] Prompt 模块 (`src/agents/prompts/`)
 - [x] Supervisor — 证据驱动路由 + 业务优先闲聊分流
@@ -294,7 +294,7 @@ f:/agent/
 
 ### 待讨论/待优化
 - [x] Graph RAG（Neo4j）— Phase 1 建图 + lifespan 增量同步；Phase 2 图检索通路，按问题类型路由
-- [ ] WebSearch 兜底接入
+- [ ] WebSearch 兜底接入（部分：`resume_tools.py` 已有 DuckDuckGo 搜索，未作为通用工具开放）
 - [ ] 端到端联调与 SSE（面试语音等仍可加强）
 - [x] Chat SSE 流式主路径（`/api/chat/stream`）
 - [ ] build_index() 接入 lifespan 自动触发（当前手动）

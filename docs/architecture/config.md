@@ -11,8 +11,11 @@
                   │  ├─ llm_provider                 │
                   │  ├─ deepseek / openai / …        │
                   │  ├─ redis / sqlite / milvus      │
+                  │  ├─ neo4j                        │  ← 图数据库配置
                   │  ├─ embedding                    │  ← model / dimension
-                  │  └─ inference                    │  ← backend + URL 等
+                  │  ├─ inference                    │  ← backend + URL 等
+                  │  ├─ context_budget               │  ← summaries / 近窗 token 预算
+                  │  └─ speech                       │  ← ASR / TTS 配置
                   │       embedding_backend          │
                   │       reranker_backend           │
                   │       embedding_base_url         │

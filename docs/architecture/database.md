@@ -11,19 +11,19 @@
 │  ┌──────────────────┐       ┌──────────────────┐           │
 │  │ id (PK)          │       │ id (PK)          │           │
 │  │ username (UNIQUE) │       │ module_id (UNIQUE)│          │
-│  │ display_name     │       │ title            │           │
-│  │ persona          │       │ description      │           │
-│  │ major            │       │ industry         │           │
-│  │ university       │       │ difficulty       │           │
-│  │ company          │       │ prerequisites    │           │
-│  │ job_title        │       │ estimated_hours  │           │
-│  │ years_of_exp     │       │ lesson_count     │           │
-│  │ target_role      │       │ persona_target   │           │
-│  │ skill_level      │       └──────────────────┘           │
-│  │ enrolled_modules │                                       │
-│  │ career_paths     │       job_roles                      │
-│  │ created_at       │       ┌──────────────────┐           │
-│  │ updated_at       │       │ id (PK)          │           │
+│  │ display_name     │       │ course_id        │           │
+│  │ persona          │       │ level            │           │
+│  │ major            │       │ title            │           │
+│  │ university       │       │ description      │           │
+│  │ company          │       │ industry         │           │
+│  │ job_title        │       │ difficulty       │           │
+│  │ years_of_exp     │       │ prerequisites    │           │
+│  │ target_role      │       │ estimated_hours  │           │
+│  │ skill_level      │       │ lesson_count     │           │
+│  │ enrolled_modules │       │ persona_target   │           │
+│  │ career_paths     │       └──────────────────┘           │
+│  │ created_at       │                                       │
+│  │ updated_at       │       job_roles                      │
 │  └──────────────────┘       │ role_id (UNIQUE) │           │
 │         │                   │ title            │           │
 │         │ 1:N               │ industry         │           │

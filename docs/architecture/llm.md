@@ -19,7 +19,7 @@ Agent / Supervisor / RAG
        │   ├── ChatDeepSeek（云端对话 / 情绪 / 路由 / 重写）
        │   └── embed() → EmbeddingProvider（见推理抽象层）
        │
-       ├── OpenAIProvider（预留）
+       ├── OpenAIProvider（部分实现：ChatOpenAI get_model() 可用，analyze_emotion() 未实现）
        └── AnthropicProvider（预留）
 ```
 
