@@ -3,9 +3,13 @@ import { ref, reactive, onMounted, watch, computed } from 'vue'
 import Sidebar from './components/Sidebar.vue'
 import ChatView from './components/ChatView.vue'
 import InterviewStage from './components/interview/InterviewStage.vue'
+import { useVoiceChat } from './composables/useVoiceChat.js'
 
-const API_ORIGIN = 'http://localhost:8000'
+const API_ORIGIN = 'http://127.0.0.1:8000'
 const API_BASE = `${API_ORIGIN}/api`
+
+// ── TTS 播放（全局单例）──
+const { speak: ttsSpeak } = useVoiceChat()
 
 const currentThreadId = ref(null)
 const messages = ref([])
@@ -13,6 +17,8 @@ const conversationList = ref([])
 const isLoading = ref(false)
 const error = ref('')
 const studentId = ref(1)
+/** 语音模式：开启后 LLM 输出口语 + 自动 TTS */
+const voiceMode = ref(false)
 /** 底部 VideoDock 当前片段（与 ResumeDock 互斥） */
 const videoClip = ref(null)
 /** 底部 ResumeDock 当前 artifact */
@@ -336,6 +342,9 @@ async function sendMessage(text, extra = {}) {
   if (extra.selected_option_id != null) {
     body.selected_option_id = extra.selected_option_id
   }
+  if (voiceMode.value) {
+    body.voice_mode = true
+  }
 
   const patchAssistant = (patch) => {
     const cur = messages.value[assistantIdx]
@@ -420,6 +429,10 @@ async function sendMessage(text, extra = {}) {
             })
           }
           loadConversations()
+          // 语音模式：自动播报回复
+          if (ev.voice_mode && ev.content) {
+            ttsSpeak(ev.content).catch(e => console.warn('[TTS] 自动播放异常:', e))
+          }
         } else if (ev.type === 'error') {
           throw new Error(ev.detail || '流式处理失败')
         }
@@ -495,6 +508,7 @@ async function deleteConversation(threadId) {
         :error="error"
         :videoClip="videoClip"
         :resumeArtifact="resumeArtifact"
+        :voiceMode="voiceMode"
         @send="sendMessage"
         @selectOption="onSelectOption"
         @playCitation="onPlayCitation"
@@ -502,6 +516,7 @@ async function deleteConversation(threadId) {
         @openResume="onOpenResume"
         @closeResume="closeResume"
         @enterInterview="enterInterview"
+        @toggleVoiceMode="voiceMode = !voiceMode"
       />
     </main>
     <InterviewStage

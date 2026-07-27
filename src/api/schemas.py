@@ -25,6 +25,10 @@ class ChatRequest(BaseModel):
         default=None,
         description="前端点击选项时传入；与手输 id 等价",
     )
+    voice_mode: bool = Field(
+        default=False,
+        description="语音模式：开启后 LLM 输出适合 TTS 朗读的自然口语",
+    )
 
 
 class Citation(BaseModel):

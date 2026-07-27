@@ -10,6 +10,7 @@ defineProps({
   isLoading: Boolean,
   videoClip: Object,
   resumeArtifact: Object,
+  voiceMode: Boolean,
 })
 
 const emit = defineEmits([
@@ -20,6 +21,7 @@ const emit = defineEmits([
   'openResume',
   'closeResume',
   'enterInterview',
+  'toggleVoiceMode',
 ])
 </script>
 
@@ -61,7 +63,9 @@ const emit = defineEmits([
     <!-- Input area -->
     <ChatInput
       :disabled="isLoading"
+      :voiceMode="voiceMode"
       @send="emit('send', $event)"
+      @toggleVoiceMode="emit('toggleVoiceMode')"
     />
   </div>
 </template>

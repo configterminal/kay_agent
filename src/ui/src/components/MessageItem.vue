@@ -4,6 +4,7 @@ import { marked } from 'marked'
 import DOMPurify from 'dompurify'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github-dark.css'
+import { useVoiceChat } from '../composables/useVoiceChat.js'
 
 const props = defineProps({
   message: {
@@ -14,6 +15,19 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['selectOption', 'playCitation', 'openResume', 'enterInterview'])
+
+// ── TTS 播放 ──
+const { isSpeaking: ttsSpeaking, speak: ttsSpeak, stopSpeaking: ttsStop } = useVoiceChat({
+  onError: (msg) => console.warn('[TTS]', msg),
+})
+
+function toggleTts() {
+  if (ttsSpeaking.value) {
+    ttsStop()
+  } else {
+    ttsSpeak(props.message.content).catch(() => {})
+  }
+}
 
 /** 仅面试相关助手消息显示「进入面试」 */
 const showInterviewEnter = computed(() => {
@@ -255,6 +269,14 @@ function toggleDislike() {
       <div class="message-footer">
         <span class="message-time">{{ timeStr }}</span>
         <div v-if="message.role === 'assistant'" class="message-actions">
+          <button
+            class="action-btn"
+            :class="{ active: ttsSpeaking }"
+            @click="toggleTts"
+            :title="ttsSpeaking ? '停止朗读' : '朗读回复'"
+          >
+            {{ ttsSpeaking ? '🔊' : '🔈' }}
+          </button>
           <button
             class="action-btn"
             :class="{ active: copied }"

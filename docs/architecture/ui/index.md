@@ -1,6 +1,7 @@
 # Web UI — ChatGPT 风格界面
 
-> Vue 3 + Vite 构建
+> Vue 3 + Vite 构建  
+> 语音 I/O：`useVoiceChat` 适配层，不侵入对话逻辑。🎤 输入经 ASR 转文字 → 送入 LLM；语音模式下 LLM 直接输出口语 → TTS 自动朗读（口语转换是 LLM 职责，非前端清洗）。
 
 ## 整体布局
 
@@ -18,7 +19,7 @@
 │  ──────────  │  └──────────┘ └──────────┘ └──────────┘       │
 │  历史对话     │                                                   │
 │  · 刚 学习报告 │  ┌─────────────────────────────────────────┐    │
-│  · 昨 RAG     │  │ 输入问题...                          ↑   │    │
+│  · 昨 RAG     │  │ [🎧] 输入问题...              [🎤] [↑]   │    │
 │  · 周 哈希     │  └─────────────────────────────────────────┘    │
 │              │   AI 助教仅供参考，关键信息以课程内容为准。          │
 │ ──────────   │                                                   │
@@ -27,6 +28,10 @@
 │              │  └───────────────────────────────────────────┘   │
 └──────────────┴───────────────────────────────────────────────────┘
 ```
+
+- 🎧 = 语音模式开关（点击切换，开启后助教回复自动 TTS 朗读）
+- 🎤 = 麦克风按钮（录音 → ASR → 文本填入输入框）  
+- 🔊 = 每条助理消息底部喇叭按钮（手动朗读该条回复）
 
 答案跳转课程视频（citations → `/media` → seek）见 [video-jump.md](video-jump.md)。  
 简历优化结果 A4/PDF 预览与下载见 [resume-pdf.md](resume-pdf.md)。  
@@ -72,6 +77,9 @@
 | 交互 | 实现 |
 |------|------|
 | 输入 | Enter 发送，Shift+Enter 换行，自动调整高度 |
+| 语音输入 | 🎤 点击录音 → VAD 自动切句 → ASR → 文本填入输入框 |
+| 语音模式 | 🎧 一键切换；开启后 LLM 直接输出口语（无 Markdown/Emoji），回复完毕自动 TTS 朗读 |
+| 手动朗读 | 每条助理消息底部 🔈 按钮，点击朗读该条回复（非语音模式下可用） |
 | 发送中 | 按钮禁用 + 打字指示器 |
 | Markdown | 助手回复支持代码块、列表、加粗 |
 | 反馈 | 点赞/踩 → 写入后端 |
@@ -92,15 +100,24 @@
 ## 组件树
 
 ```
-App.vue
+App.vue                         ← voiceMode 状态；流式完成自动 ttsSpeak()
 ├── Sidebar.vue
-├── ChatView.vue
-│   ├── WelcomeCard.vue      # 可「进入面试」
-│   ├── MessageItem.vue      # citations / 简历 / 进入面试 CTA
+├── ChatView.vue                ← 转发 voiceMode prop + toggleVoiceMode event
+│   ├── WelcomeCard.vue         # 可「进入面试」
+│   ├── MessageItem.vue         # citations / 简历 / 进入面试 CTA / 🔈 手动朗读
 │   ├── VideoDock.vue
 │   ├── ResumeDock.vue
-│   └── ChatInput.vue
-└── InterviewStage.vue       # 全屏游戏态（与聊天互斥；DEV 下 DEBUG 文字入口）
-    ├── PortraitAvatar.vue   # Avatar 插槽 P0
-    └── useInterviewSession  # Voice（含 submitText 调试）
+│   └── ChatInput.vue           # 🎧语音模式 + 🎤录音 + ↑发送
+└── InterviewStage.vue          # 全屏游戏态（与聊天互斥；DEV 下 DEBUG 文字入口）
+    ├── PortraitAvatar.vue      # Avatar 插槽 P0
+    └── useInterviewSession     # Voice（含 submitText 调试）
 ```
+
+### 语音相关 composable
+
+| 模块 | 用途 |
+|------|------|
+| `useVoiceChat.js` | 聊天语音 I/O：录音（VAD→ASR→文本）+ TTS 播放（直接送 TTS，不本地清洗——口语由 LLM 生成时保证） |
+| `useInterviewSession.js` | 面试场语音：开麦常听 / VAD 切句 / barge-in / 相同 ASR/TTS 端点 |
+
+两个 composable 复用同一套后端 ASR/TTS 端点（`/interview/asr`、`/interview/tts`），但 `useVoiceChat` 的 TTS 部分（`isSpeaking`、`speak`、`stopSpeaking`）是**模块级单例**——所有 MessageItem 共享同一个播放状态。

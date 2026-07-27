@@ -1,7 +1,7 @@
 # AI 助教系统 — 总体架构
 
-> 状态：设计定稿（目标架构） | 最后更新：2026-07-17  
-> 本文描述**最新目标架构**。Embedding / Rerank 为**可插拔推理抽象**（http / local / algo），详见 [推理抽象层](inference-services.md)。语音 ASR/TTS 见 [模拟面试多模态](ui/interview-multimodal.md)。
+> 状态：设计定稿（目标架构） | 最后更新：2026-07-24  
+> 本文描述**最新目标架构**。Embedding / Rerank 为**可插拔推理抽象**（http / local / algo），详见 [推理抽象层](inference-services.md)。语音 ASR/TTS 见 [模拟面试多模态](ui/interview-multimodal.md)；聊天语音 I/O 见 [Web UI](ui/index.md)。
 
 ---
 
@@ -23,9 +23,11 @@
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │  表现层          Vue 3（src/ui）ChatGPT 风格对话界面              │
+│                  语音 I/O：🎤 麦克风录音 + 🔊 TTS 朗读              │
 ├─────────────────────────────────────────────────────────────────┤
 │  接入层          FastAPI（src/main.py + src/api）                  │
-│                  CORS /chat /student /readyz                      │
+│                  CORS /chat /chat/stream /student /readyz          │
+│                  + 语音端点：/interview/asr /interview/tts          │
 ├─────────────────────────────────────────────────────────────────┤
 │  编排层          Supervisor StateGraph（probe→decide→dispatch…） │
 │                  QA / Progress / Recommend / JobMatch / …*        │
@@ -38,17 +40,21 @@
 │  推理抽象层    │  数据与记忆层            │  外部 LLM             │
 │  Embedding     │  SQLite / Milvus Lite   │  DeepSeek Chat        │
 │  Reranker      │  Redis Stack            │  （OpenAI 兼容）       │
-│  Provider      │  （Checkpointer+Store）  │                       │
+│  ASR/TTS       │  （Checkpointer+Store）  │                       │
+│  Provider      │                         │                       │
 │  http|local|   │                         │                       │
 │  algo          │                         │                       │
 └───────────────┴─────────────────────────┴───────────────────────┘
 
-* Interview：文字 + ASR/TTS + **全屏面试场 P0**；**CosyVoice-300M 本机试用通过**。JobMatch / Resume 已接通。
+* Interview：文字 + ASR/TTS + **全屏面试场 P0**；**CosyVoice-300M 本机试用通过**。
+  聊天语音：🎤 录音→ASR→输入框 + 回复→TTS→自动朗读（[Web UI](ui/index.md)）。
+  JobMatch / Resume 已接通。
 ```
 
 **分层原则**：
 
 - **编排与实现分离** — RAG / Agent 只调 `embed()` / `rerank()`；后端由 `EMBEDDING_BACKEND` / `RERANKER_BACKEND` 选择。语音同理：`transcribe()` / `synthesize()`，由 `ASR_BACKEND` / `TTS_BACKEND` 选择。
+- **语音 I/O 是适配层** — 聊天语音（`useVoiceChat`）不侵入对话逻辑：🎤 输入经 ASR 转文字送入 LLM；LLM 回复经 TTS 朗读。语音模式开关仅控制输入方式 + 输出是否自动朗读，文字通道不变。
 - **当前默认 `local`（本机 GPU）** — 开发与联调无需 TEI；`http` 为可选外置（TEI），便于日后生产拆分；`algo` 为非神经网络向量化（**不可与 BGE 索引混用**）。
 - **数据面就近** — SQLite、Milvus Lite、BM25 索引仍由业务侧管理（MVP 阶段不拆）。
 
@@ -58,12 +64,12 @@
 
 ```
                     ┌──────────────┐
-  浏览器 ──────────►│ Vue :5173    │
+  浏览器 ──────────►│ Vue :5173    │  语音 I/O：🎤 → ASR / TTS → 🔊
                     └──────┬───────┘
                            │ /api
                     ┌──────▼───────┐
                     │ FastAPI :8000│  业务编排 + Provider 门面
-                    │  Graph+RAG   │
+                    │  Graph+RAG   │  + speech ASR/TTS 端点
                     └──┬───┬───┬───┘
            ┌───────────┘   │   └───────────┐
            ▼               ▼               ▼
@@ -76,9 +82,15 @@
            ▲               ▲
            │        ┌──────┴──────┐
            └────────┤ Redis       │  Checkpointer + Store
-                    │ Milvus Lite │  向量库
-                    │ SQLite      │  学员与进度
-                    └─────────────┘
+           ┌────────┤ Milvus Lite │  向量库
+           │        │ SQLite      │  学员与进度
+           │        └─────────────┘
+           │
+    ┌──────┴──────┐
+    │ CosyVoice   │  TTS sidecar（可选；conda 环境 :8092）
+    │ SenseVoice  │  ASR 本地 GPU
+    │ Edge TTS     │  TTS 兜底（免费在线）
+    └─────────────┘
 ```
 
 `backend=local` 时无 TEI 框，权重在 FastAPI 进程内。`backend=algo` 时无神经网络推理服务。
@@ -96,13 +108,13 @@
 
 ---
 
-## 4. 请求主链路
+## 4. 请求主链路（文字模式）
 
 ```
-学员消息
+学员消息（键盘输入）
     │
     ▼
-POST /api/chat/ 或 /api/chat/stream  { thread_id, message, selected_option_id? }
+POST /api/chat/stream  { thread_id, message, voice_mode: false }
     │
     ├─① SQLite 查学员（存在性校验）
     │
@@ -110,20 +122,13 @@ POST /api/chat/ 或 /api/chat/stream  { thread_id, message, selected_option_id? 
             │     Checkpointer key = 请求中的 thread_id（每会话独立状态）
             │     stream 时：probe/decide/dispatch → status；Agent LLM → token；结束 → done
             │
-            ├─ probe
-            │     · 轻量向量探路 Top3（不 rewrite、不 rerank）
-            │     · embed() → 当前 EmbeddingProvider
-            │     · EmotionDetector.detect（全链路唯一一次）
-            │     · Store 读 coach_style / weak_areas / thread 摘要
+            ├─ probe（与语音模式相同）
             │
-            ├─ decide
-            │     · ⓪ 本线程 pending_options 选号（点击/手输）→ 粘性路由
-            │     · ① 业务确定性规则 → ② 纯闲聊收窄 → ③ LLM 路由
-            │     · 单意图必须带 task_queue.input（学员原话或改写后的选项）
+            ├─ decide（与语音模式相同）
             │
             ├─ dispatch
-            │     · 闲聊 → Supervisor 短回复
-            │     · 否则 → 子 Agent（QA 走完整 RAG，消费 state.emotion）
+            │     · voice_mode=false → 路由到 qa_text 节点
+            │     · QA 走完整 RAG，System Prompt = QA_ROLE_PROMPT（允许 Markdown / 列表 / Emoji）
             │     · 回复含编号列表 → 写入本线程 pending_options，经 options 回传前端
             │
             ├─ aggregate / recovery
@@ -133,6 +138,50 @@ POST /api/chat/ 或 /api/chat/stream  { thread_id, message, selected_option_id? 
                     ▼
             run_supervisor → {content, emotion, options} → ChatResponse / SSE done
 ```
+
+## 4a. 请求主链路（语音模式）
+
+## 4a. 请求主链路（语音模式）
+
+```
+学员消息（🎤 录音 → ASR 转文字 / 键盘输入）
+    │
+    ▼
+POST /api/chat/stream  { thread_id, message, voice_mode: true }
+    │
+    ├─① SQLite 查学员
+    │
+    └─② Supervisor.graph.invoke（initial_state.voice_mode = True）
+            │
+            ├─ probe / decide（与文字模式相同）
+            │
+            ├─ dispatch
+            │     · voice_mode=true → 路由到 qa_voice 节点
+            │     · qa_voice 与 qa_text 共用同一套工具和检索逻辑，仅 System Prompt 不同
+            │       （QA_ROLE_PROMPT_VOICE = QA_ROLE_PROMPT 基础上追加语音输出规范）
+            │     · LLM 直接输出口语：无 Markdown、无 Emoji、无表格、短句、数字口语化
+            │     · 其他 Agent（Progress/Recommend/…）：不受影响，始终走文字 prompt
+            │
+            └─ final_response
+                    │
+                    ▼
+            SSE done { voice_mode: true, content: "口语文本" }
+                    │
+                    ▼
+            前端 ttsSpeak(content) → 直接送 /interview/tts → 浏览器 Audio 播放
+            （不做 stripForSpeech 清洗——口语转换是 LLM 的职责）
+```
+
+**语音模式 vs 文字模式 — 唯一区别**：dispatch 时根据 `voice_mode` 路由到不同 QA 节点。
+
+| 对比 | 文字模式 | 语音模式 |
+|------|---------|---------|
+| QA 节点 | `qa_text` | `qa_voice` |
+| System Prompt | `QA_ROLE_PROMPT` | `QA_ROLE_PROMPT_VOICE` |
+| 工具/检索 | 共用 | 共用 |
+| LLM 输出 | Markdown / 列表 / Emoji | 自然口语 / 无标记 / 数字口语化 |
+| 前端处理 | 渲染 Markdown | 直接送 TTS（不额外清洗） |
+| TTS 朗读 | 手动点 🔈 | 自动朗读 |
 
 > 会话隔离详见 [Supervisor § 会话隔离与结构化选项](agents/supervisor.md)。
 
@@ -151,12 +200,17 @@ POST /api/chat/ 或 /api/chat/stream  { thread_id, message, selected_option_id? 
 
 ```
                     Supervisor
-         ┌─────┬─────┼─────┬──────┬──────┐
-         ▼     ▼     ▼     ▼      ▼      ▼
-        QA  Progress Rec  JobMatch  Resume  Interview*
+         ┌─────┬─────┼─────┬──────┬──────┬──────┐
+         ▼     ▼     ▼     ▼      ▼      ▼      ▼
+      qa_text qa_voice Progress Rec  JobMatch Resume Interview*
+         │     │
+         └──┬──┘
+        共用工具 + 检索逻辑；仅 System Prompt 不同
 ```
 
-已实现：QA、Progress、Recommend、JobMatch、Resume、Interview（文字 + 全屏语音面试场 P0）。
+QA Agent 分两个编译节点（`qa_text` / `qa_voice`），dispatch 时根据 `state.voice_mode` 路由。二者共用同一套工具函数和 RAG 检索流水线，仅 System Prompt 不同——`qa_voice` 的输出规范要求 LLM 直接输出适合 TTS 朗读的自然口语。
+
+已实现：QA（两节点）、Progress、Recommend、JobMatch、Resume、Interview（文字 + 全屏语音面试场 P0）。
 
 ### 5.2 Decide 优先级（业务优先闲聊分流）
 
@@ -249,6 +303,7 @@ Checkpointer 要求 `dispatch` 写回 `AIMessage`，否则近窗与断点恢复�
 | 会话隔离 thread_id + pending_options（可点/手输） | 已落地 |
 | 上下文预算（summaries + 近窗，禁全量进 Agent） | 已落地 |
 | InterviewAgent（文字）+ speech API + 全屏面试场 P0 | **已落地并联调**；DEBUG 仅开发态；**Cosy 300M 本机试用通过** |
+| 聊天语音 I/O（🎤→ASR→输入框 / 回复→TTS→朗读） | **已落地**；`useVoiceChat` 全局单例；复用面试 ASR/TTS 端点；语音模式一键切换 |
 | HTTP TEI 生产化（Windows CPU） | 实验中，暂不作为默认 |
 
 ---

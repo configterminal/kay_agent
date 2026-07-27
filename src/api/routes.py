@@ -154,6 +154,7 @@ def chat(request: ChatRequest, req: Request):
             message=request.message,
             thread_id=thread_id,
             selected_option_id=request.selected_option_id,
+            voice_mode=bool(request.voice_mode),
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"处理消息失败: {str(e)}")
@@ -207,6 +208,7 @@ def chat_stream(request: ChatRequest, req: Request):
     student_id = request.student_id
     message = request.message
     selected_option_id = request.selected_option_id
+    voice_mode = bool(request.voice_mode)
 
     def event_generator():
         t0 = time.perf_counter()
@@ -234,7 +236,7 @@ def chat_stream(request: ChatRequest, req: Request):
                     thread_id=thread_id,
                     result=result,
                 )
-                done = {"type": "done", **response.model_dump()}
+                done = {"type": "done", "voice_mode": voice_mode, **response.model_dump()}
                 q.put(done)
             except Exception as e:
                 q.put({"type": "error", "detail": str(e)})

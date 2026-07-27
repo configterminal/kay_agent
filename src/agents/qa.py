@@ -12,7 +12,7 @@ QAAgent — 智能答疑 Agent。
 from langgraph.prebuilt import create_react_agent
 
 from src.agents.prompts import build_system_prompt
-from src.agents.prompts.qa import QA_ROLE_PROMPT
+from src.agents.prompts.qa import QA_ROLE_PROMPT, QA_ROLE_PROMPT_VOICE
 from src.llm.base import LLMProvider
 from src.tools.qa_tools import search_course_content, get_lesson_content, get_qa_history
 from src.tools.shared_tools import get_student_profile, update_student_profile
@@ -22,6 +22,7 @@ from src.tools.graph_tools import search_course_graph
 def build_qa_agent(
     coach_style: str = "encouraging",
     emotion: str = "neutral",
+    voice_mode: bool = False,
 ):
     """
     构建 QAAgent — LangGraph ReAct Agent。
@@ -29,6 +30,7 @@ def build_qa_agent(
     参数：
         coach_style: 导师人格
         emotion: 当前情绪状态（由 Supervisor 传入）
+        voice_mode: 语音模式（True 时用 QA_ROLE_PROMPT_VOICE，LLM 输出自然口语）
     """
     llm = LLMProvider.create().get_model(temperature=0.3)
 
@@ -41,8 +43,9 @@ def build_qa_agent(
         update_student_profile,
     ]
 
+    role_prompt = QA_ROLE_PROMPT_VOICE if voice_mode else QA_ROLE_PROMPT
     system_prompt = build_system_prompt(
-        role_prompt=QA_ROLE_PROMPT,
+        role_prompt=role_prompt,
         coach_style=coach_style,
         emotion=emotion,
     )

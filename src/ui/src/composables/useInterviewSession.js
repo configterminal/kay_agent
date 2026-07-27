@@ -3,7 +3,7 @@
  * 主路径为语音；不触碰 Avatar DOM；只暴露 state 与 audioLevel。
  */
 
-const API_ORIGIN = 'http://localhost:8000'
+const API_ORIGIN = 'http://127.0.0.1:8000'
 const API_BASE = `${API_ORIGIN}/api`
 
 /** @typedef {'idle'|'boot'|'listening'|'capturing'|'transcribing'|'thinking'|'speaking'|'error'} InterviewState */

@@ -1,7 +1,8 @@
 # 模拟面试多模态（全屏游戏态）
 
-> 状态：**P0 已落地**；**语音主路径（开麦 + VAD + WAV ASR）已切**；TTS 默认 Edge | 最后更新：2026-07-18  
-> Agent：[interview.md](../agents/interview.md) · 推理插拔：[inference-services.md](../inference-services.md)
+> 状态：**P0 已落地**；**语音主路径（开麦 + VAD + WAV ASR）已切**；TTS 默认 Edge | 最后更新：2026-07-24  
+> Agent：[interview.md](../agents/interview.md) · 推理插拔：[inference-services.md](../inference-services.md)  
+> 聊天语音 I/O（独立于面试场）：见 [Web UI 总览](index.md)
 
 ## 1. 原则
 

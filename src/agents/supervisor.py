@@ -45,6 +45,7 @@ logger = logging.getLogger(__name__)
 
 # Agent 路由名称
 QA_AGENT = "qa_agent"
+QA_VOICE_AGENT = "qa_voice_agent"
 PROGRESS_AGENT = "progress_agent"
 RECOMMEND_AGENT = "recommend_agent"
 JOBMATCH_AGENT = "jobmatch_agent"
@@ -54,7 +55,7 @@ SHARED_TOOLS = "shared_tools"
 SUPERVISOR_SELF = "supervisor"  # Supervisor 自行回复
 
 ALL_AGENTS = [
-    QA_AGENT, PROGRESS_AGENT, RECOMMEND_AGENT,
+    QA_AGENT, QA_VOICE_AGENT, PROGRESS_AGENT, RECOMMEND_AGENT,
     JOBMATCH_AGENT, RESUME_AGENT, INTERVIEW_AGENT,
 ]
 
@@ -124,6 +125,7 @@ class SupervisorState(TypedDict):
     resume_artifact_id: str                       # 本轮 Resume 终稿 artifact
     resume_mode: str                              # fact | target
     resume_title: str                             # Dock 标题
+    voice_mode: bool                              # 语音模式：true 时 QA 路由到 qa_voice_agent
 
 
 # ── Python 确定性路由 ─────────────────────────────────────
@@ -158,7 +160,8 @@ DETERMINISTIC_RULES: list[tuple[list[str], str, str]] = [
 
     # ── 模拟面试（仅「发起练习」类强信号）──
     (["模拟面试", "面试题", "面试评估", "面试报告",
-      "开始面试", "面试练习", "来场面试", "来一场面试"],
+      "开始面试", "开始一场面试", "面试练习", "来场面试", "来一场面试",
+      "进行一次面试", "做一次面试"],
      INTERVIEW_AGENT, "关键词命中: 模拟面试"),
 
     # ── 岗位/课程覆盖匹配（已接通；勿再被探路改派 QA）──
@@ -674,8 +677,6 @@ def _llm_route(text: str, called: list[str], probe_evidence: dict, chat_history:
     return decision
 
 
-# ── 节点实现 ──────────────────────────────────────────────
-
 def probe_node(state: SupervisorState) -> dict:
     """
     Probe 节点 — 探路 + 情绪检测 + Store 上下文读取。
@@ -1056,6 +1057,11 @@ def dispatch_node(state: SupervisorState) -> dict:
         agent_name = task.get("agent", "")
         task_input = task.get("input") or last_user_msg
 
+        # 语音模式：qa_agent → qa_voice_agent
+        vm = state.get("voice_mode")
+        if vm and agent_name == QA_AGENT:
+            agent_name = QA_VOICE_AGENT
+
         called.append(agent_name)
         call_count[agent_name] = call_count.get(agent_name, 0) + 1
 
@@ -1176,7 +1182,11 @@ def _dispatch_to_agent(
 
     if agent_name == QA_AGENT:
         from src.agents.qa import build_qa_agent
-        agent = build_qa_agent(coach_style=coach_style, emotion=emotion)
+        agent = build_qa_agent(coach_style=coach_style, emotion=emotion, voice_mode=False)
+
+    elif agent_name == QA_VOICE_AGENT:
+        from src.agents.qa import build_qa_agent
+        agent = build_qa_agent(coach_style=coach_style, emotion=emotion, voice_mode=True)
 
     elif agent_name == PROGRESS_AGENT:
         from src.agents.progress import build_progress_agent
@@ -1616,8 +1626,6 @@ def build_supervisor_graph() -> StateGraph:
     graph.add_node("dispatch", dispatch_node)
     graph.add_node("aggregate", aggregate_node)
     graph.add_node("recovery", recovery_node)
-
-    # 设置入口
     graph.set_entry_point("probe")
 
     # probe → decide (无条件)
@@ -1678,6 +1686,7 @@ def run_supervisor(
     message: str,
     thread_id: str | None = None,
     selected_option_id: int | None = None,
+    voice_mode: bool = False,
 ) -> dict:
     """
     运行 Supervisor 处理单条学员消息的便捷入口。
@@ -1698,6 +1707,7 @@ def run_supervisor(
         message: 学员的最新消息
         thread_id: 会话 ID（与前端 / QAHistory 一致）；缺省时退化为单学员单会话
         selected_option_id: 前端点击选项时传入的 id
+        voice_mode: 语音模式，开启后 LLM 直接输出适合 TTS 朗读的口语
 
     返回：
         {content, emotion, emotion_confidence, options, pending_agent,
@@ -1731,8 +1741,10 @@ def run_supervisor(
         "routing_confidence": 0.0,
         "selected_option_id": selected_option_id,
         "conversation_summary": "",
+        "voice_mode": voice_mode,
         # active/focus 故意省略，保留 checkpoint 中的会话焦点
     }
+    logger.info("run_supervisor: initial_state.voice_mode=%s", voice_mode)
 
     config_dict = {
         "configurable": {"thread_id": tid},
