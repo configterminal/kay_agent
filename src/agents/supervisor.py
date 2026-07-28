@@ -118,7 +118,7 @@ class SupervisorState(TypedDict):
     selected_option_id: int | None                # 本轮前端点击传入的选项 id
     thread_id: str                                # 与 Checkpointer / Store.summaries 共用
     conversation_summary: str                     # 本轮从 Store 读取的会话摘要（进模型用）
-    # 课程作用域：Hard 正式选课 / Soft 临时聊课（见 docs/architecture/rag/course-scope.md）
+    # 课程作用域：Hard 正式选课 / Soft 临时聊课（见 .specify/specs/rag/course-scope.md）
     active_course_id: str                         # Hard：已确认报名的课
     focus_course_id: str                          # 最近激活话题缓存（非永久锁课）
     analogy_citations: list[dict]                 # 类比课来源（与 citations 分区）
@@ -1121,6 +1121,12 @@ def dispatch_node(state: SupervisorState) -> dict:
     except Exception as e:
         logger.warning("滚动摘要更新失败（不阻塞主回复）: %s", e)
 
+    # ── 话题块切分写入 ──
+    try:
+        _maybe_save_thread_block(state, messages_after)
+    except Exception as e:
+        logger.warning("话题块切分写入失败（不阻塞主回复）: %s", e)
+
     # 合并本轮 QA 主 citations / 类比 citations（非 QA 为空）
     from src.agents.citations import normalize_citations
     merged_citations: list[dict] = []
@@ -1155,6 +1161,85 @@ def dispatch_node(state: SupervisorState) -> dict:
         "resume_title": resume_title,
         **pending_upd,
     }
+
+
+def _maybe_save_thread_block(state: dict, messages_after: list) -> None:
+    """
+    当全量 messages 超过 summary_trigger_messages 时，
+    把超出近窗的旧消息作为一个话题块写入 Store。
+
+    首版：整个超出部分视为一个块（LLM 提取话题名）。
+    后续可升级为真正的话题边界切分。
+    """
+    from src.config import config
+    from src.memory.context import (
+        save_thread_block,
+        get_thread_blocks,
+        _recent_message_limit,
+        _format_messages_for_summary,
+        _extract_topic_from_messages,
+    )
+
+    student_id = int(state.get("student_id") or 0)
+    thread_id = str(state.get("thread_id") or "")
+    if not student_id or not thread_id:
+        return
+
+    trigger = config.context.summary_trigger_messages
+    if len(messages_after) < trigger:
+        return
+
+    recent_n = _recent_message_limit()
+    if len(messages_after) <= recent_n:
+        return
+
+    # 找出近窗之外的消息
+    old_part = list(messages_after[:-recent_n])
+    if not old_part:
+        return
+
+    # 检查是否已切过块（避免重复切同一段）
+    existing_blocks = get_thread_blocks(student_id, thread_id)
+    covered_count = 0
+    for blk in existing_blocks:
+        covered_count = max(covered_count, int(blk.get("end_msg_index") or 0))
+
+    if covered_count >= len(old_part):
+        return  # 旧消息已被覆盖
+
+    # 只切「尚未覆盖」的增量部分
+    delta = old_part[covered_count:]
+    if not delta:
+        return
+
+    # 提取话题名
+    topic = _extract_topic_from_messages(delta)
+
+    # 生成摘要文本（使用已有的格式化函数）
+    transcript = _format_messages_for_summary(delta)
+    summary = transcript[:300] if transcript else ""
+
+    # 计算时间段
+    time_range = ""
+    try:
+        from datetime import datetime
+        # 尝试从消息中提取时间范围；简单取首尾消息索引
+        start_idx = covered_count + 1
+        end_idx = len(old_part)
+        time_range = f"消息 #{start_idx} - #{end_idx}"
+    except Exception:
+        time_range = ""
+
+    save_thread_block(
+        student_id=student_id,
+        thread_id=thread_id,
+        topic=topic,
+        summary=summary,
+        start_msg_index=covered_count + 1,
+        end_msg_index=len(old_part),
+        message_count=len(delta),
+        time_range=time_range,
+    )
 
 
 def _dispatch_to_agent(

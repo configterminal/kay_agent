@@ -15,7 +15,7 @@ description: >-
 | 文件 | 用途 |
 |------|------|
 | [COPY_PROMPTS.md](COPY_PROMPTS.md) | 复制到其他 Agent 视口 |
-| 架构 | [`docs/architecture/ui/interview-multimodal.md`](../../docs/architecture/ui/interview-multimodal.md) |
+| 架构 | [`.specify/specs/ui/interview-multimodal.md`](../../.specify/specs/ui/interview-multimodal.md) |
 | sidecar | [`services/cosyvoice_tts/`](../../services/cosyvoice_tts/) |
 
 ## 原则

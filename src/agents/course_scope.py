@@ -4,7 +4,7 @@
 临时聊不锁课：每轮按「本轮话 + 近窗」解析 turn_course。
 代称（那个/详细点/继续）跟当前激活主题或内容线索，可跨课；禁止探路写死 Soft。
 正式选课 Hard 仍严格单课。
-见 docs/architecture/rag/course-scope.md 与 course-scope-dialogues.md。
+见 .specify/specs/rag/course-scope.md 与 course-scope-dialogues.md。
 """
 
 from __future__ import annotations

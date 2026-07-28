@@ -184,7 +184,7 @@ f:/agent/
 ├── .gitignore
 ├── CLAUDE.md               # 本文件
 ├── README.md
-├── docs/
+├── .specify/               # 项目文档（Spec-Kit）
 │   ├── requirements.md     # 需求与架构文档
 │   └── architecture/       # 架构设计图
 │       ├── index.md        # 目录索引
@@ -264,7 +264,7 @@ f:/agent/
 - [x] 数据库 (`src/db/`) — 9 张表 SQLAlchemy ORM + 初始化
 - [x] 记忆系统 (`src/memory/`) — RedisSaver + MemoryStore
 - [x] 上下文预算 — Store.summaries + 近窗组 prompt（见 `src/memory/context.py`）
-- [x] 情感系统 (`src/emotion/detector.py`) — 7 种情绪实时检测；落库与预警 → P1 任务（[`docs/tasks.md`](docs/tasks.md)）
+- [x] 情感系统 (`src/emotion/detector.py`) — 7 种情绪实时检测；落库与预警 → P1 任务（[`.specify/tasks.md`](.specify/tasks.md)）
 - [x] 导师人格 (`src/llm/base.py` — CoachStyle 枚举 + Prompt 注入)
 - [x] 传统 RAG 编排 (`src/vectordb/`) — 重写 / 混合检索 / 精排适配 / 父子文档
 - [x] 工具层 (`src/tools/`) — 多个 Agent 工具函数（`@tool` 装饰 + 内部辅助）
@@ -274,7 +274,8 @@ f:/agent/
 - [x] 会话隔离 — Checkpointer `thread_id` 与前端一致；`pending_options` 结构化选项（可点/手输 id）
 - [x] QAAgent / ProgressAgent / RecommendAgent / JobMatchAgent / ResumeAgent / InterviewAgent（文字）
 - [x] FastAPI 后端 + Vue 3 前端
-- [x] Chat SSE 流式（`/api/chat/stream`：状态字 + token；见 `docs/architecture/ui/chat-stream.md`）
+- [x] Chat SSE 流式（`/api/chat/stream`：状态字 + token；见 `.specify/specs/ui/chat-stream.md`）
+- [x] Graph 启动编译复用
 - [x] Graph 启动编译复用
 - [x] 可插拔推理抽象（http / local / algo）；**当前默认 local GPU**
 - [x] 可插拔语音 `src/speech/`（ASR/TTS；默认 local；http 占位）
@@ -285,7 +286,7 @@ f:/agent/
 - [x] Interview 全屏游戏态 UI（Stage / Avatar P0 / Voice VAD+barge-in；DEV 调试文字入口）
 - [x] 面试 TTS 引擎发现 / prepare / release（Edge 兜底；Cosy sidecar 可选）
 - [x] CosyVoice-300M-Instruct 本机试用（conda `cosyvoice` + cu128；当前默认改回 Edge，Cosy 后续再开）
-- [ ] 下一阶段（见 `docs/architecture/ui/interview-multimodal.md` §9）：性能 P0 / 真麦 VAD / Avatar P1–P2
+- [ ] 下一阶段（见 `.specify/specs/ui/interview-multimodal.md` §9）：性能 P0 / 真麦 VAD / Avatar P1–P2
 
 ### 占位（待实现）
 - [x] JobMatchAgent — 课程覆盖匹配 MVP（非实时市场）
@@ -303,38 +304,7 @@ f:/agent/
 
 ## 开发规范
 
-### 代码风格
-- 每个模块、类、公开方法必须有简短的中文注释说明用途
-- 复杂逻辑加行内注释解释"为什么这样做"
-- 函数保持单一职责，不超过 50 行为佳
-- 命名：模块用 snake_case，类用 PascalCase，函数和变量用 snake_case
-
-### 开发工作流
-
-**每次代码改动必须遵守 [开发工作流](docs/workflow.md)**：
-
-1. 需求讨论 → 2. 方案设计（你审核） → 3. 接口定义（你确认） → 4. 编码+评审循环（>4轮打断找你） → 5. 你最终审查 → 6. 同步文档 → 7. 提交
-
-**核心规则**：
-- 加新模块、改架构、跨 2+ 文件 → 先方案文档到 `docs/architecture/`
-- 编码阶段前后端并行，各自自测
-- reviewer Agent 单独审查，评审记录写入 `docs/review/`
-- 阻塞问题必须修；建议问题由你最终审查时决定
-- 文档同步紧跟代码合入，不拖延
-
-### Prompt 管理规范
-- Agent System Prompt 统一由 `src/agents/prompts/` 模块运行时组装
-- 组装公式：shared_base(L2-L5) + coach(L6) + emotion(L7) + role(L1)
-- 共享规则（安全、工具协议）只改 shared.py 一处
-- 各 Agent 专属职责只改对应文件
-
-### 禁止事项
-- ❌ 硬编码任何课程数据
-- ❌ 跨模块直接 import 内部实现
-- ❌ 无注释的复杂逻辑
-- ❌ 未经用户同意擅自降级技术方案（如 RedisSaver → MemorySaver）
-- ❌ 遇到兼容性问题时绕过而非解决
-- ❌ **禁止修改、覆盖、截断 `.env` 文件**——该文件包含用户私密配置，损坏不可恢复
+详见 [`.specify/constitution.md`](.specify/constitution.md) — 代码风格、禁止事项、Prompt 管理、工作流全部集中管理。
 
 ## 后续规划
 

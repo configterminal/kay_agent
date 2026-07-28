@@ -9,6 +9,7 @@
 - [数据库](database.md) — SQLite 表结构、关系、数据访问策略
 - [**课程目录与画像推荐**](course-catalog-recommend.md) — `course_modules` / 画像 / Recommend；岗位模板见 JobMatch
 - [记忆系统](memory.md) — RedisSaver 短期 + Store 长期，**上下文预算（summaries + 近窗）**，情感分析策略
+  - [话题回溯检索](memory/topic-recall.md) — 会话内语义召回历史对话块
 - [情感系统](emotion.md) — 7 种情绪实时检测，提示词策略，预警规则
 - [RAG 系统](rag/index.md) — 传统 RAG 完整流水线（查询重写、混合检索、重排序、父子文档）
 - [工具层](tools/qa.md) — Agent 工具定义与实现
@@ -27,5 +28,6 @@
 - [**性能问题**](performance.md) — chat/简历延迟基线、双重检索与 Resume 串行 LLM、优化待办
 - [**RAGAS 评测方案**](eval/ragas-plan.md) — 单轮/多轮作用域与 faithfulness（后续启用）
 - [对话持久化](ui/conversation-persistence.md) — 聊天记录三层存储、前端 localStorage
+  - [对话垃圾桶](ui/conversation-trash.md) — 软删除/恢复/彻底删除三层状态
 - [答案跳转视频](ui/video-jump.md) — citations 从工具结果解析 → `/media` → 底部播放器 seek
 - [**Chat 流式（SSE）**](ui/chat-stream.md) — `/api/chat/stream` 状态字 + token；`/chat/` 保留

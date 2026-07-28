@@ -43,7 +43,7 @@ f:/agent/
 │       ├── run_ragas_single.py   # L2
 │       ├── run_scope_multiturn.py# L3（可先规则，再挂 RAGAS）
 │       └── run_retrieval_eval.py # L1
-└── docs/architecture/eval/ragas-plan.md  # 本文件
+└── .specify/specs/eval/ragas-plan.md  # 本文件
 ```
 
 `.gitignore` 增加：`eval/runs/`。

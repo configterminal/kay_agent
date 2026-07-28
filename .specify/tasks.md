@@ -25,23 +25,20 @@
   1. Supervisor `probe_node` 在 `detect()` 后调用 `record(session_id, result)`
   2. `record()` 后调用 `should_alert(session_id)` 判断是否触发预警
   3. 预警结果写入 response 的 `pending_options` 或独立告警通道
-- **相关文档**：`docs/architecture/emotion.md`
+- **相关文档**：`.specify/specs/emotion.md`
 
 ### reflection-loop — Agent 反思循环（ResumeAgent 优先）
 
-- **状态**：方案已设计，待实现
+- **状态**：✅ 已完成 — ResumeAgent 已接入，Phase 2/3 待排期
 - **来源**：质量观测需求 (2026-07-27)
-- **问题**：
-  - ResumeAgent 等关键产出（简历）只走一次 ReAct 调用，质量不稳定
-  - 现有门禁是硬规则（密度+审核），缺少 LLM 自我评价驱动的质量闭环
-- **方案**：Reflection 模式 — GENERATE → REFLECT → (REVISE → REFLECT)*
-  - LLM 生成初稿后，自己评价（5 维度打分），不合格就改
-  - 最多 3 轮，pass_threshold ≥ 8/10
-- **涉及文件**：
-  - `src/agents/reflection.py` — **新建**：`reflect_on_output()` + `build_reflection_cycle()`
-  - `src/agents/resume.py` — 返回 Agent 时包装反思循环
-  - `src/agents/supervisor.py` — `_dispatch_to_agent()` 中接入
-- **相关文档**：`docs/architecture/agents/reflection-loop.md`
+- **提交**：`c6eb29d` (2026-07-27)
+- **已实现**：
+  - `src/agents/reflection.py` — `reflect_on_output()` + `build_reflection_cycle()`
+  - ResumeAgent 路径接入，GENERATE → REFLECT → (REVISE → REFLECT)* 最多 3 轮
+  - 5 维评分 + SSE status 事件（reflect/revise phase）
+- **后续**：
+  - Phase 2: QA / JobMatch 接入反思循环
+  - Phase 3: Reflexion 长记忆（反思失败经验存入 Store）
 
 ### memory-topic-recall — 会话内话题回溯检索
 

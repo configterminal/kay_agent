@@ -17,6 +17,8 @@ from src.api.schemas import (
     InterviewTtsRequest, InterviewAsrResponse, SpeechReadyResponse,
     SpeechEnginesResponse, SpeechPrepareResponse, SpeechReleaseResponse,
     TtsEngineItem,
+    TopicBlock, ThreadTopicsResponse, ThreadTopicSummary, StudentTopicsResponse,
+    TrashRequest, TrashResponse,
 )
 from src.agents.citations import normalize_citations
 from src.db.init_db import get_session
@@ -27,7 +29,14 @@ from src.agents.supervisor import (
     delete_thread_checkpoint,
 )
 from src.agents.stream_events import set_stream_callback, reset_stream_callback
-from src.memory.context import delete_thread_summary
+from src.memory.context import (
+    delete_thread_summary,
+    trash_thread,
+    restore_thread,
+    purge_thread,
+    is_thread_trashed,
+    get_trashed_thread_ids,
+)
 from src.perf import get_perf_logger, log_timing
 from src.resume.artifact import (
     get_resume_artifact,
@@ -193,7 +202,7 @@ def chat(request: ChatRequest, req: Request):
 def chat_stream(request: ChatRequest, req: Request):
     """
     聊天主路径：SSE 流式（status → token* → done | error）。
-    协议见 docs/architecture/ui/chat-stream.md。
+    协议见 .specify/specs/ui/chat-stream.md。
     """
     thread_id = (request.thread_id or "").strip() or (
         f"stu_{request.student_id}_{int(time.time())}"
@@ -281,7 +290,7 @@ def chat_stream(request: ChatRequest, req: Request):
 # ── 历史对话列表（按 thread 聚合） ──────────────────
 
 @router.get("/conversations/", response_model=ConversationList)
-def get_conversations(student_id: int):
+def get_conversations(student_id: int, include_trashed: int = 0):
     """查询学员的会话列表（按 thread_id 聚合，每 thread 一条）"""
     from sqlalchemy import func
     with get_session() as session:
@@ -298,10 +307,18 @@ def get_conversations(student_id: int):
             .limit(50)
             .all()
         )
-        # 二次查询取每个 thread 的第一条 question
-        conversations = []
+
+        # 垃圾桶过滤：默认排除已删除会话
+        if not include_trashed:
+            trashed = get_trashed_thread_ids(student_id)
+        else:
+            trashed = set()
+
+        conversations: list[ConversationItem] = []
         for row in rows:
             tid = row.thread_id
+            if tid and tid in trashed:
+                continue
             first_q = (
                 session.query(QAHistory.question)
                 .filter(QAHistory.thread_id == tid)
@@ -312,6 +329,7 @@ def get_conversations(student_id: int):
                 thread_id=tid or "",
                 title=(first_q.question if first_q else "新对话"),
                 created_at=row.first_at.isoformat() if row.first_at else "",
+                is_trashed=is_thread_trashed(student_id, tid or ""),
             ))
         return ConversationList(student_id=student_id, conversations=conversations)
 
@@ -438,6 +456,55 @@ def delete_conversation(thread_id: str, req: Request):
             pass
 
     return {"success": True, "deleted": count}
+
+
+# ── 对话垃圾桶 ──────────────────────────────────────
+
+@router.put("/threads/{thread_id}/trash", response_model=TrashResponse)
+def trash_action(thread_id: str, student_id: int, body: TrashRequest):
+    """软删除 / 恢复 / 彻底清除某个会话。"""
+    tid = (thread_id or "").strip()
+    if not tid:
+        raise HTTPException(status_code=400, detail="thread_id 不能为空")
+    if not student_id:
+        raise HTTPException(status_code=400, detail="缺少 student_id")
+
+    action = (body.action or "").strip().lower()
+    if action not in ("trash", "restore", "purge"):
+        raise HTTPException(status_code=400, detail=f"无效 action: {action}，允许 trash/restore/purge")
+
+    if action == "trash":
+        ok = trash_thread(student_id, tid)
+        return TrashResponse(ok=ok, action="trash", thread_id=tid)
+
+    if action == "restore":
+        ok = restore_thread(student_id, tid)
+        return TrashResponse(ok=ok, action="restore", thread_id=tid)
+
+    if action == "purge":
+        # ① 删除 QAHistory 记录（数据库层面）
+        from src.db.init_db import get_session
+        from src.db.schema import QAHistory
+        deleted_messages = 0
+        with get_session() as session:
+            deleted_messages = (
+                session.query(QAHistory)
+                .filter(QAHistory.thread_id == tid)
+                .delete()
+            )
+            session.commit()
+
+        # ② 删除 Store 数据（thread_blocks + summary + trash 标记）
+        deleted = purge_thread(student_id, tid)
+
+        return TrashResponse(
+            ok=True, action="purge", thread_id=tid,
+            deleted={
+                "blocks": deleted["blocks"],
+                "summary": deleted["summary"],
+                "messages": deleted_messages,
+            },
+        )
 
 
 # ── 学员信息 ──────────────────────────────────────
@@ -631,3 +698,143 @@ def interview_tts(body: InterviewTtsRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"TTS 失败: {e}") from e
     return Response(content=result.audio, media_type=result.mime or "audio/mpeg")
+
+
+# ── 会话内话题块检索 ───────────────────────────────
+
+@router.get("/threads/{thread_id}/topics", response_model=ThreadTopicsResponse)
+def get_thread_topics(thread_id: str, student_id: int):
+    """返回单个会话的话题块列表。"""
+    from src.memory.context import get_thread_blocks
+
+    tid = (thread_id or "").strip()
+    if not tid:
+        return ThreadTopicsResponse(thread_id=thread_id, topics=[], count=0)
+    if not student_id:
+        raise HTTPException(status_code=400, detail="缺少 student_id")
+
+    blocks = get_thread_blocks(student_id=student_id, thread_id=tid)
+    topics = [TopicBlock(
+        block_id=b.get("block_id", ""),
+        topic=b.get("topic", ""),
+        summary=b.get("summary", ""),
+        message_count=int(b.get("message_count") or 0),
+        created_at=b.get("created_at", ""),
+        time_range=b.get("time_range", ""),
+    ) for b in blocks]
+
+    return ThreadTopicsResponse(
+        thread_id=tid,
+        topics=topics,
+        count=len(topics),
+    )
+
+
+@router.get("/student/{student_id}/topics", response_model=StudentTopicsResponse)
+def get_student_topics(student_id: int, time_range: str = "7d", limit: int = 20):
+    """
+    返回学员全部会话的话题汇总。
+
+    time_range: 7d / 30d / all，按会话创建时间筛选。
+    limit: 最多返回的会话数，默认 20。
+    """
+    from datetime import datetime, timedelta, timezone
+    from src.memory.context import get_thread_blocks
+    from src.db.init_db import get_session as _get_db_session
+    from src.db.schema import QAHistory
+
+    if not student_id:
+        raise HTTPException(status_code=400, detail="缺少 student_id")
+
+    # 计算时间截断
+    now = datetime.now(timezone.utc)
+    if time_range == "7d":
+        cutoff = now - timedelta(days=7)
+    elif time_range == "30d":
+        cutoff = now - timedelta(days=30)
+    else:  # "all"
+        cutoff = None
+
+    # 从 QAHistory 中获取该学员的所有 thread_id（按时间筛选）
+    with _get_db_session() as session:
+        from sqlalchemy import func
+        query = (
+            session.query(
+                QAHistory.thread_id,
+                func.min(QAHistory.created_at).label("first_at"),
+            )
+            .filter(QAHistory.student_id == student_id)
+            .filter(QAHistory.thread_id.isnot(None))
+            .filter(QAHistory.thread_id != "")
+        )
+        if cutoff is not None:
+            query = query.filter(QAHistory.created_at >= cutoff)
+        query = (
+            query.group_by(QAHistory.thread_id)
+            .order_by(func.min(QAHistory.created_at).desc())
+            .limit(limit)
+        )
+        rows = query.all()
+
+    if not rows:
+        return StudentTopicsResponse(
+            student_id=student_id,
+            time_range=time_range,
+            threads=[],
+            thread_count=0,
+            total_topics=0,
+        )
+
+    threads: list[ThreadTopicSummary] = []
+    total_topics = 0
+
+    # 一次性获取所有垃圾桶 thread_id（避免 N+1 Store 读取）
+    from src.memory.context import get_trashed_thread_ids
+    trashed_ids = get_trashed_thread_ids(student_id)
+
+    with _get_db_session() as session:
+        for row in rows:
+            tid = row.thread_id
+            # 会话标题：首条消息
+            first_q = (
+                session.query(QAHistory.question)
+                .filter(QAHistory.thread_id == tid)
+                .order_by(QAHistory.created_at.asc())
+                .first()
+            )
+            # 消息数
+            msg_count = (
+                session.query(func.count(QAHistory.id))
+                .filter(QAHistory.thread_id == tid)
+                .scalar()
+            ) or 0
+
+            # 话题块
+            blocks = get_thread_blocks(student_id=student_id, thread_id=tid)
+            topics = [TopicBlock(
+                block_id=b.get("block_id", ""),
+                topic=b.get("topic", ""),
+                summary=b.get("summary", ""),
+                message_count=int(b.get("message_count") or 0),
+                created_at=b.get("created_at", ""),
+                time_range=b.get("time_range", ""),
+            ) for b in blocks]
+
+            total_topics += len(topics)
+            threads.append(ThreadTopicSummary(
+                thread_id=tid,
+                thread_title=(first_q.question if first_q else "新对话"),
+                created_at=row.first_at.isoformat() if row.first_at else "",
+                topic_count=len(topics),
+                message_count=int(msg_count or 0),
+                topics=topics,
+                is_trashed=(tid in trashed_ids),
+            ))
+
+    return StudentTopicsResponse(
+        student_id=student_id,
+        time_range=time_range,
+        threads=threads,
+        thread_count=len(threads),
+        total_topics=total_topics,
+    )

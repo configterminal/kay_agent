@@ -45,6 +45,6 @@ poetry run uvicorn src.main:app --reload --port 8000
 
 ## 文档
 
-- [总体架构](docs/architecture/overview.md)（入口必读）
-- [需求与架构](docs/requirements.md)
-- [架构设计图目录](docs/architecture/index.md)
+- [总体架构](.specify/specs/overview.md)（入口必读）
+- [需求与架构](.specify/specs/index.md)
+- [项目宪法与开发规范](.specify/constitution.md)
