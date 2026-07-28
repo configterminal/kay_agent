@@ -23,5 +23,6 @@ jupyter/
 eval/runs/
 
 # 本地截图杂项
+.vscode/
 neo4j-browser-empty.png
 
