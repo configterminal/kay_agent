@@ -3,6 +3,7 @@ import { ref, reactive, onMounted, watch, computed } from 'vue'
 import Sidebar from './components/Sidebar.vue'
 import ChatView from './components/ChatView.vue'
 import InterviewStage from './components/interview/InterviewStage.vue'
+import HistoryView from './views/HistoryView.vue'
 import { useVoiceChat } from './composables/useVoiceChat.js'
 
 const API_ORIGIN = 'http://127.0.0.1:8000'
@@ -29,6 +30,7 @@ const viewMode = ref('chat')
 const interviewOpening = ref('')
 
 const showInterview = computed(() => viewMode.value === 'interview')
+const showHistory = computed(() => viewMode.value === 'history')
 
 function resolveMediaUrl(url) {
   if (!url) return ''
@@ -89,10 +91,20 @@ function enterInterview(opts = {}) {
   viewMode.value = 'interview'
 }
 
+function enterHistory() {
+  videoClip.value = null
+  resumeArtifact.value = null
+  viewMode.value = 'history'
+}
+
 async function exitInterview() {
   viewMode.value = 'chat'
   interviewOpening.value = ''
   await loadConversations()
+}
+
+function exitHistory() {
+  viewMode.value = 'chat'
 }
 
 /**
@@ -476,33 +488,28 @@ function createConversation() {
   error.value = ''
 }
 
-async function deleteConversation(threadId) {
-  try {
-    await fetch(`${API_BASE}/conversations/${threadId}`, { method: 'DELETE' })
-  } catch (e) { /* ignore */ }
-  try { localStorage.removeItem(storageKey(threadId)) } catch (e) { /* ignore */ }
-  if (currentThreadId.value === threadId) {
-    currentThreadId.value = null
-    messages.value = []
-    localStorage.setItem('chat_current_thread', '')
-  }
-  loadConversations()
-}
 </script>
 
 <template>
   <div class="app-layout">
     <Sidebar
-      :activeView="'chat'"
+      :activeView="viewMode"
       :studentInfo="studentInfo"
       :conversationList="conversationList"
       :currentThreadId="currentThreadId"
       @newChat="createConversation"
       @switchConversation="switchConversation"
-      @deleteConversation="deleteConversation"
+      @refreshConversations="loadConversations"
+      @enterHistory="enterHistory"
     />
     <main class="main-area">
+      <HistoryView
+        v-if="showHistory"
+        :studentId="studentId"
+        @back="exitHistory"
+      />
       <ChatView
+        v-else
         :messages="messages"
         :isLoading="isLoading"
         :error="error"

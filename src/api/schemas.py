@@ -143,6 +143,7 @@ class ConversationItem(BaseModel):
     thread_id: str
     title: str
     created_at: str
+    is_trashed: bool = Field(default=False, description="是否在垃圾桶中")
 
 
 class ConversationList(BaseModel):
@@ -240,3 +241,57 @@ class SpeechReleaseResponse(BaseModel):
     """释放本场拉起的 Cosy"""
     released: bool = False
     selected: str = "edge"
+
+
+# ── 对话垃圾桶 ─────────────────────────────────────
+
+class TrashRequest(BaseModel):
+    """垃圾桶操作请求"""
+    action: str = Field(description="trash | restore | purge")
+
+
+class TrashResponse(BaseModel):
+    """垃圾桶操作响应"""
+    ok: bool = Field(default=True)
+    action: str = Field(default="")
+    thread_id: str = Field(default="")
+    deleted: dict | None = Field(default=None, description="purge 时返回 {blocks, summary}")
+
+
+# ── 会话内话题块检索 ────────────────────────────────
+
+class TopicBlock(BaseModel):
+    """单个话题块"""
+    block_id: str = Field(description="块编号，如 block_1")
+    topic: str = Field(description="话题名（≤15 字）")
+    summary: str = Field(default="", description="片断摘要")
+    message_count: int = Field(default=0, description="消息数量")
+    created_at: str = Field(default="", description="块创建时间 ISO 格式")
+    time_range: str = Field(default="", description="时间段，如 '10:00 - 10:03'")
+
+
+class ThreadTopicsResponse(BaseModel):
+    """单个会话的话题块列表"""
+    thread_id: str
+    topics: list[TopicBlock] = Field(default_factory=list)
+    count: int = Field(default=0, description="话题块数量")
+
+
+class ThreadTopicSummary(BaseModel):
+    """一个会话的话题汇总信息"""
+    thread_id: str
+    thread_title: str = Field(default="", description="会话标题（首条消息）")
+    created_at: str = Field(default="")
+    topic_count: int = Field(default=0)
+    message_count: int = Field(default=0)
+    topics: list[TopicBlock] = Field(default_factory=list)
+    is_trashed: bool = Field(default=False, description="是否在垃圾桶中")
+
+
+class StudentTopicsResponse(BaseModel):
+    """学员全部会话的话题汇总"""
+    student_id: int
+    time_range: str = Field(default="")
+    threads: list[ThreadTopicSummary] = Field(default_factory=list)
+    thread_count: int = Field(default=0)
+    total_topics: int = Field(default=0)

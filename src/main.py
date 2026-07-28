@@ -20,16 +20,125 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse, Response
 
 from src.api.routes import router
-from src.config import config
+from src.config import config, PROJECT_ROOT
 from src.perf import setup_perf_logging, timed, log_timing
+from pathlib import Path
+
+
+# ── 环境核查 ──────────────────────────────────────────────
+
+def _preflight_check() -> None:
+    """启动前环境核查。致命项不通过 → SystemExit(1)。"""
+    import logging
+    import sys
+
+    logger = logging.getLogger("preflight")
+    fatal = False
+
+    def _ok(msg: str) -> None:
+        print(f"   [OK] {msg}")
+
+    def _warn(msg: str) -> None:
+        print(f"   [!!] {msg}")
+
+    def _fail(msg: str) -> None:
+        nonlocal fatal
+        fatal = True
+        print(f"   [XX] {msg}")
+
+    print("+-- 环境核查 -------------------------------------------+")
+
+    # ① .env
+    env_file = config.model_config.get("env_file") or ".env"
+    if Path(env_file).exists():
+        _ok(f".env 存在")
+    else:
+        _warn(f".env 文件未找到 ({env_file})")
+
+    # ② DeepSeek API Key
+    key = config.deepseek.api_key or ""
+    if key and key != "sk-xxx":
+        _ok(f"DeepSeek API Key     sk-...{key[-4:]}")
+    else:
+        _fail("DEEPSEEK_API_KEY 未配置或为占位值，请检查 .env")
+
+    # ③ Redis 连通性
+    try:
+        import redis as _redis
+        r = _redis.Redis(
+            host=config.redis.host,
+            port=config.redis.port,
+            db=config.redis.db,
+            socket_connect_timeout=3,
+        )
+        r.ping()
+        _ok(f"Redis Stack         {config.redis.host}:{config.redis.port}")
+    except Exception as e:
+        _fail(f"Redis 不可达 ({config.redis.host}:{config.redis.port}): {e}")
+
+    # ④ Neo4j 连通性（可选）
+    try:
+        from src.graph.client import check_connection
+        neo_ok, neo_msg = check_connection()
+        if neo_ok:
+            _ok(f"Neo4j               {neo_msg}")
+        else:
+            _warn(f"Neo4j 不可达: {neo_msg} (图检索将不可用)")
+    except Exception as e:
+        _warn(f"Neo4j 连接检查失败: {e} (图检索将不可用)")
+
+    # ⑤ Milvus 数据目录
+    milvus_path = PROJECT_ROOT / "milvus_lite"
+    try:
+        milvus_path.mkdir(parents=True, exist_ok=True)
+        _ok(f"Milvus 数据目录      {milvus_path}")
+    except Exception as e:
+        _fail(f"Milvus 数据目录不可写: {milvus_path} ({e})")
+
+    # ⑥ 日志目录可写
+    log_dir = PROJECT_ROOT / "logs"
+    try:
+        log_dir.mkdir(parents=True, exist_ok=True)
+        _ok(f"日志目录            {log_dir}")
+    except Exception as e:
+        _fail(f"日志目录不可写: {log_dir} ({e})")
+
+    # ⑦ 磁盘空间
+    try:
+        import shutil
+        usage = shutil.disk_usage(str(PROJECT_ROOT))
+        free_gb = usage.free / (2 ** 30)
+        if free_gb >= 1:
+            _ok(f"磁盘空间            {free_gb:.1f} GB 可用")
+        else:
+            _warn(f"磁盘空间不足 ({free_gb:.1f} GB)，建议清理")
+    except Exception:
+        pass  # 忽略磁盘检查失败
+
+    print("+-------------------------------------------------------+")
+
+    if fatal:
+        print("+-------------------------------------------------------+")
+        print("| [XX] 致命项未通过，终止启动。请修复后重试。           |")
+        print("+-------------------------------------------------------+")
+        logger.error("环境核查致命项未通过，终止启动")
+        sys.exit(1)
+    else:
+        print("+-------------------------------------------------------+")
+        print("| [OK] 环境核查通过，启动服务                            |")
+        print("+-------------------------------------------------------+")
+        logger.info("环境核查通过")
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """启动：推理 warmup → 轻资源预热 → 编译 Graph；关闭时清理。"""
+    """启动：环境核查 → 推理 warmup → 轻资源预热 → 编译 Graph；关闭时清理。"""
     log_path = setup_perf_logging()
     t_boot = __import__("time").perf_counter()
     log_timing("startup.begin", 0.0, log_file=str(log_path))
+
+    # ── 0. 环境核查 ──
+    _preflight_check()
 
     from src.vectordb.inference import wait_inference_ready
     from src.memory.store import MemoryStore, set_store

@@ -289,26 +289,127 @@ function Start-RedisIfNeeded() {
         else { Write-Info 'redis-stack already running (use -Redis to restart)' }
         return
     }
+    $exists = docker ps -a --filter "name=redis-stack" --format "{{.Names}}" 2>$null
+    if ($exists -match 'redis-stack') {
+        Write-Info 'redis-stack 容器已存在但已停止，正在启动...'
+        docker start redis-stack | Out-Null
+        if ($LASTEXITCODE -eq 0) { Write-Ok 'redis-stack started on 6380' }
+        else { Write-Err 'redis-stack 启动失败' }
+        return
+    }
     Write-Info 'starting redis-stack container...'
     docker run -d --name redis-stack -p 6380:6379 -p 8002:8001 redis/redis-stack:latest | Out-Null
     if ($LASTEXITCODE -eq 0) { Write-Ok 'redis-stack started on 6380' }
     else { Write-Err 'redis start failed - check docker' }
 }
 
+function Check-Environment {
+	Write-Host ''
+	Write-Host '┌─ 环境核查 (PowerShell) ───────────────────────────────┐' -ForegroundColor Cyan
+
+	$fatal = $false
+
+	function _ok([string]$Msg)   { Write-Host "   ✅ $Msg" }
+	function _warn([string]$Msg) { Write-Host "   ⚠️ $Msg" -ForegroundColor Yellow }
+	function _fail([string]$Msg) {
+		$script:fatal = $true
+		Write-Host "   ❌ $Msg" -ForegroundColor Red
+	}
+
+	# ① Python venv
+	if (Test-Path $VenvPython) {
+		$ver = & $VenvPython --version 2>&1
+		_ok "Python venv          $ver"
+	}
+	else {
+		_fail "venv 未找到: $VenvPython`n           请运行: python -m venv .venv"
+	}
+
+	# ② Docker 运行状态
+	$dockerOk = $false
+	try {
+		docker info 2>$null | Out-Null
+		if ($LASTEXITCODE -eq 0) { $dockerOk = $true; _ok "Docker" }
+	}
+	catch { }
+	if (-not $dockerOk) { _fail "Docker 未运行，请启动 Docker Desktop" }
+
+	# ③ Redis 容器
+	if ($dockerOk) {
+		$redisRunning = docker ps --filter "name=redis-stack" --format "{{.Names}}" 2>$null
+		$redisExists  = docker ps -a --filter "name=redis-stack" --format "{{.Names}}" 2>$null
+		if ($redisRunning -match 'redis-stack') {
+			_ok "Redis Stack         运行中 (端口 $RedisPort)"
+		}
+		elseif ($redisExists -match 'redis-stack') {
+			_warn "Redis 容器已停止，尝试启动..."
+			docker start redis-stack 2>$null | Out-Null
+			if ($LASTEXITCODE -eq 0) { _ok "Redis Stack         已启动 (端口 $RedisPort)" }
+			else { _fail "Redis 容器启动失败，请手动检查" }
+		}
+		else {
+			_warn "Redis 容器不存在，创建中..."
+			docker run -d --name redis-stack -p ${RedisPort}:6379 -p 8002:8001 redis/redis-stack:latest 2>$null | Out-Null
+			if ($LASTEXITCODE -eq 0) { _ok "Redis Stack         已创建 (端口 $RedisPort)" }
+			else { _fail "Redis 容器创建失败" }
+		}
+	}
+
+	# ④ Neo4j (可选)
+	if ($dockerOk) {
+		$neoRunning = docker ps --filter "name=neo4j" --format "{{.Names}}" 2>$null
+		if ($neoRunning -match 'neo4j') {
+			_ok "Neo4j               运行中"
+		}
+		else {
+			_warn "Neo4j 未运行 (图检索将不可用)`n            启动: docker run -d --name neo4j -p 7474:7474 -p 7687:7687 neo4j:5"
+		}
+	}
+
+	# ⑤ .env 文件
+	$envFile = Join-Path $ProjectRoot '.env'
+	if (Test-Path $envFile) {
+		_ok ".env                 已配置"
+	}
+	else {
+		_fail ".env 文件不存在: $envFile`n           请创建 .env 并配置 DEEPSEEK_API_KEY=sk-xxx"
+	}
+
+	# ⑥ 磁盘空间
+	try {
+		$disk = Get-Volume -DriveLetter ($ProjectRoot.Substring(0,1)) -ErrorAction SilentlyContinue
+		if ($disk -and $disk.SizeRemaining -gt 1GB) {
+			$freeGB = [math]::Round($disk.SizeRemaining / 1GB, 1)
+			_ok "磁盘空间             $freeGB GB 可用"
+		}
+		else {
+			$freeStr = if ($disk) { [math]::Round($disk.SizeRemaining / 1GB, 1) } else { '未知' }
+			_warn "磁盘空间不足 ($freeStr GB)"
+		}
+	}
+	catch {
+		# 忽略磁盘检查失败
+	}
+
+	Write-Host '├───────────────────────────────────────────────────────┤' -ForegroundColor Cyan
+
+	if ($fatal) {
+		Write-Host '│ ❌ 致命项未通过，终止启动。请修复后重试。            │' -ForegroundColor Red
+		Write-Host '└───────────────────────────────────────────────────────┘' -ForegroundColor Red
+		Write-Host ''
+		exit 1
+	}
+	else {
+		Write-Host '│ ✅ 环境核查通过，启动服务                             │' -ForegroundColor Green
+		Write-Host '└───────────────────────────────────────────────────────┘' -ForegroundColor Green
+		Write-Host ''
+	}
+}
+
 function Start-DevServices() {
-    if (-not (Test-Path $VenvPython)) {
-        Write-Err "venv not found: $VenvPython"
-        exit 1
-    }
+	Check-Environment
 
-    $busy8000 = Get-PortOwnerPids -Port $BackendPort
-    $busy5173 = Get-PortOwnerPids -Port $FrontendPort
-    if ($busy8000.Count -gt 0 -or $busy5173.Count -gt 0) {
-        Write-Warn 'ports busy, running stop first...'
-        Stop-DevServices
-    }
-
-    Start-RedisIfNeeded
+	Start-RedisIfNeeded
     Ensure-PidDir
 
     $reloadArg = if ($Reload) { '--reload' } else { '' }

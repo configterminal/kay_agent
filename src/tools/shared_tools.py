@@ -763,3 +763,103 @@ def get_student_progress_summary(student_id: int) -> dict:
             "total_modules": total,
             "completed_count": completed,
         }
+
+
+# ── 12. 会话内话题块检索 ─────────────────────────────────
+
+@tool
+def search_thread_blocks(
+    query: str,
+    top_k: int = 3,
+    time_range: str = "recent",
+    student_id: int = 0,
+    thread_id: str = "",
+) -> list[dict]:
+    """
+    在当前会话（或指定会话）的历史话题块中搜索匹配的话题。
+
+    每个块含 block_id、topic、summary、source_thread、created_at 字段。
+    可用于回答「我们之前聊过某某话题吗」「继续上次的 XX 话题」等回溯需求。
+
+    参数：
+        query: 搜索关键词（必填）
+        top_k: 返回数量上限，默认 3
+        time_range: "recent"（默认，最近 7 天）或 "all"（全部）
+        student_id: 学员 ID（默认取当前）
+        thread_id: 会话 ID（默认取当前）
+
+    返回：
+        匹配的话题块列表，每个含 {block_id, topic, summary, source_thread, created_at}
+    """
+    from src.memory.context import search_thread_blocks_store
+
+    sid = int(student_id or 0)
+    tid = (thread_id or "").strip()
+    if not sid or not tid:
+        return []
+    return search_thread_blocks_store(
+        student_id=sid,
+        thread_id=tid,
+        query=(query or "").strip(),
+        top_k=top_k,
+        time_range=time_range,
+    )
+
+
+@tool
+def list_thread_topics(
+    student_id: int = 0,
+    thread_id: str = "",
+) -> list[str]:
+    """
+    列出当前会话所有已记录的话题标题列表。
+
+    参数：
+        student_id: 学员 ID（默认取当前）
+        thread_id: 会话 ID（默认取当前）
+
+    返回：
+        话题标题字符串列表
+    """
+    from src.memory.context import list_thread_topics_store
+
+    sid = int(student_id or 0)
+    tid = (thread_id or "").strip()
+    if not sid or not tid:
+        return []
+    return list_thread_topics_store(student_id=sid, thread_id=tid)
+
+
+@tool
+def delete_thread_blocks(
+    before_days: int | None = None,
+    student_id: int = 0,
+    thread_id: str = "",
+) -> dict:
+    """
+    删除当前会话的历史话题块。
+
+    参数：
+        before_days: 删除 N 天前的块；None 表示删除全部
+        student_id: 学员 ID（默认取当前）
+        thread_id: 会话 ID（默认取当前）
+
+    返回：
+        {ok: bool, deleted: int, detail: str}
+    """
+    from src.memory.context import delete_thread_blocks_store
+
+    sid = int(student_id or 0)
+    tid = (thread_id or "").strip()
+    if not sid or not tid:
+        return {"ok": False, "deleted": 0, "detail": "缺少 student_id 或 thread_id"}
+    deleted = delete_thread_blocks_store(
+        student_id=sid,
+        thread_id=tid,
+        before_days=before_days,
+    )
+    return {
+        "ok": True,
+        "deleted": deleted,
+        "detail": f"已删除 {deleted} 个话题块",
+    }

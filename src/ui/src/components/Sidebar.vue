@@ -1,4 +1,6 @@
 <script setup>
+const API_ORIGIN = 'http://127.0.0.1:8000'
+
 const props = defineProps({
   activeView: String,
   studentInfo: Object,
@@ -6,11 +8,28 @@ const props = defineProps({
   currentThreadId: String,
 })
 
-const emit = defineEmits(['newChat', 'switchConversation', 'deleteConversation'])
+const emit = defineEmits(['newChat', 'switchConversation', 'enterHistory', 'refreshConversations'])
 
 function truncateTitle(title) {
   if (!title) return '新对话'
   return title.length > 18 ? title.slice(0, 18) + '...' : title
+}
+
+async function trashConversation(threadId) {
+  try {
+    const resp = await fetch(
+      `${API_ORIGIN}/api/threads/${encodeURIComponent(threadId)}/trash?student_id=${props.studentInfo?.id || 1}`,
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'trash' }),
+      },
+    )
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`)
+  } catch (e) {
+    console.error('trash failed:', e)
+  }
+  emit('refreshConversations')
 }
 </script>
 
@@ -47,12 +66,24 @@ function truncateTitle(title) {
         <span
           class="history-delete"
           title="删除会话"
-          @click.stop="emit('deleteConversation', item.thread_id)"
+          @click.stop="trashConversation(item.thread_id)"
         >🗑️</span>
       </button>
       <div v-if="!conversationList || conversationList.length === 0" class="history-empty">
         暂无历史对话
       </div>
+    </div>
+
+    <!-- 底部导航 -->
+    <div class="sidebar-nav-bottom">
+      <button
+        class="nav-item"
+        :class="{ active: activeView === 'history' }"
+        @click="emit('enterHistory')"
+      >
+        <span class="nav-icon">📊</span>
+        <span>对话历史</span>
+      </button>
     </div>
 
     <!-- Student Info -->
@@ -202,6 +233,41 @@ function truncateTitle(title) {
   color: var(--text-secondary);
   font-size: 13px;
   text-align: center;
+}
+
+/* ── 底部导航 ── */
+.sidebar-nav-bottom {
+  padding: 8px 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
+}
+
+.nav-item:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.nav-item.active {
+  background: var(--bg-hover);
+  color: var(--accent);
+}
+
+.nav-icon {
+  font-size: 16px;
+  flex-shrink: 0;
 }
 
 .sidebar-footer {
